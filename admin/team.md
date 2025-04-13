@@ -7,6 +7,10 @@ layout: default
 
 ![logo](./image.png)
 
+## Our Brand
+- Color: Black and Green 
+- Logo: (Shown above) 
+
 ## Our Values
 
 - Creativity
