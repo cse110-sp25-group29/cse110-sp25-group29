@@ -1,3 +1,6 @@
+---
+layout: default
+---
 # **Boom Boom Powell**
 
 > *CSE 110 Team 29*
