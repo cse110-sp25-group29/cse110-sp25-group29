@@ -5,6 +5,8 @@ layout: default
 
 > *CSE 110 Team 29*
 
+![logo](./image.png)
+
 ## Our Values
 
 - Creativity
