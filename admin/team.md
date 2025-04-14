@@ -1,6 +1,15 @@
+---
+layout: default
+---
 # **Boom Boom Powell**
 
 > *CSE 110 Team 29*
+
+![logo](./image.png)
+
+## Our Brand
+- Color: Black and Green 
+- Logo: (Shown above) 
 
 ## Our Values
 
