@@ -1,5 +1,7 @@
 # Pitch & Brainstorming Session 3 - 04/27/25
 
+**CSE 110** - **Team #29** - **Boom Boom Powell**
+
 **Time & Duration**: 5:00 PM – 6:00 PM  
 **Location**: Zoom  
 **Attendees**:  
