@@ -63,8 +63,8 @@
 ---
 
 ### Links: 
-- [Playing Cards](#https://docs.google.com/document/d/1RJC785CxXXKQ0q_O1_OfXzOlJulSp8r18W5ktGRVbv8/edit?usp=sharing)  
-- [Miro](#https://miro.com/app/board/uXjVI-UurqM=/)
+- [Playing Cards](https://docs.google.com/document/d/1RJC785CxXXKQ0q_O1_OfXzOlJulSp8r18W5ktGRVbv8/edit?usp=sharing)  
+- [Miro](https://miro.com/app/board/uXjVI-UurqM=/)
 
 ---
 
