@@ -1,5 +1,7 @@
 # Brainstorming Session 2 - 04/26/25
 
+**CSE 110** - **Team #29** - **Boom Boom Powell**
+
 **Time & Duration**: 1:00 PM - 2:20 PM (1 hour 20 mins)  
 **Location**: Zoom  
 **Attendees**:  

@@ -1,5 +1,7 @@
 # Brainstorming Session 1 - 04/24/25
 
+**CSE 110** - **Team #29** - **Boom Boom Powell**
+
 **Time & Duration**: 6:20 PM - 7:26 PM (1 hour 6 mins)  
 **Location**: Space outside Revelle Formal Lounge   
 **Attendees**: 
