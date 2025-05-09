@@ -2,13 +2,14 @@
 name: Team Assignment
 about: Track the progress and completion of a CSE 110 team assignment assigned on
   Canvas
-title: "[ASGN] Assignment Title"
-labels: submission
+title: "[ASGN] "
+labels:
 assignees: ''
 
 ---
 
 **Assignment Specs:** Canvas link to assignment writeup
+**Due Date**: day, mm/dd, hh:mmPM
 
 **Deliverables:** Items outlined in the writeup that need to be submitted
 - [ ] Deliverable 1
