@@ -1,4 +1,5 @@
 # Team 29 Management Contract
+repo link: https://github.com/cse110-sp25-group29/cse110-sp25-group29
 
 ## Personal Goals  
 *Everyone make a bullet point for your name and answer those questions.*
@@ -7,7 +8,8 @@
   * Benefits: Save more time and make the team work efficiently.  
 
 * Sarah  
-  * Individual hope:
+  * Individual hope: I hope to develop my UI / UX design skills and gain experience in developing good software.
+  * Benefits: The final product of our team will be visually appealing and easy to use.
 
 * Hugo  
   * Individual Goals: I hope to develop my JavaScript abilities and learn how to work on a larger project in a team.  
