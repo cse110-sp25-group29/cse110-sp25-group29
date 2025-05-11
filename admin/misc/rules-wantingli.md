@@ -1,5 +1,5 @@
 # Team 29 Management Contract
-
+*I have acknowledged all the contents of our charter.*
 ## Personal Goals  
 *Everyone make a bullet point for your name and answer those questions.*
 * **Wanting**  
