@@ -1,2 +1,3 @@
 .github/ISSUE_TEMPLATE/bug-fix.md
 .github/ISSUE_TEMPLATE/bug-report.md
+node_modules/
