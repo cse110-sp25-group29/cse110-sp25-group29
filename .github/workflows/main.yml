@@ -10,6 +10,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Run linter test
-        run: npm run lint -- --fix
+        run: npm run lint
       - name: Unit Test
         run: npm test ./admin/tests/unit.test.js  
