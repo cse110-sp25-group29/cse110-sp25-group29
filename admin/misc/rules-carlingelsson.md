@@ -29,7 +29,8 @@
   * Benefit: By furthering my skills and hopefully learning new ones as well, I hope to pull my weight when it comes to my tasks and helping my teammates finish theirs as well, enabling us to complete the project efficiently  
 
 * Vincent  
-  * Individual hope: 
+  * Individual hope: I hope to gain experience in different parts of software engineering to see which part I enjoy the most and possibly pursure it as a career. 
+  * Benefit: By being open to trying many different things, I hope to be able to float to different teams and help them out if needed. 
   
 * Xiaogeng  
   * Individual hope: I hope to improve my collaboration skills such as communication, resolve conflicts, and hope to get practical experience to build high quality software.   
