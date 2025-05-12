@@ -4,6 +4,7 @@
         "eslint": "^8.0.0"
     },
     "scripts": {
+        "lint": "eslint src/",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
     },
     "type": "module",
