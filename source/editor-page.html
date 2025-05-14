@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Testing</title>
-    <link rel="stylesheet" href="test_canvas.css">
+    <link rel="stylesheet" href="./static/css/editor-page.css">
   </head>
   <body class="body">
     <main class="main">
@@ -14,12 +14,13 @@
           <label for="pencil"> Pencil <input type="radio" id="pencil" value="1" name="tool" /> </label>
           <label for="box"   > Box    <input type="radio" id="box"    value="2" name="tool" /> </label>
           <label for="image" > Image  <input type="radio" id="image"  value="3" name="tool" /> </label>
+          <label for="text"  > Text   <input type="radio" id="text"   value="4" name="tool" /> </label>
         </fieldset>
       </form>
 
       <canvas id="business_card"></canvas>
     </main>
 
-    <script type="text/javascript" src="test_canvas.js"></script>
+    <script type="module" src="./static/js/canvas.js"></script>
   </body>
 </html>
