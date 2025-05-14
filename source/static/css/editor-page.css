@@ -1,0 +1,17 @@
+.main {
+    background-color: black;
+}
+
+#business_card {
+    width: 50vw;
+    height: 50vw;
+    background-color: aliceblue;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+fieldset {
+    margin: 5px 5px 5px 5px;
+    color: white;
+}
