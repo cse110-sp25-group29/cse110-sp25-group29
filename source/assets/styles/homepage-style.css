@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.menu-button {
+    position: absolute;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    margin-bottom: 30px;
+}
+
+.search-bar input {
+    padding: 10px;
+    width: 300px;
+    font-size: 16px;
+}
+
+.card-button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto 40px auto;
+}
+
+.row-of-wallets {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.link-to-all {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
