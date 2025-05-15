@@ -1,18 +1,11 @@
 ---
 name: Bug Report
 about: Report a non-intended behavior that needs attention.
-title: "[TAG] Default Title"
-labels: 
+title: "[BUG] "
+labels: bug
 assignees: ''
 
 ---
-**Notes for subsequent issue templates:**
-- This is a basic issue template that *other* issue templates can build on, so this template content can (and should) be edited as necessary based on the issue template being designed
-- To copy this markdown file, pull the main branch on your local machine and create a copy of `basic.md`
-- Change the `name` field to the name of the template you are designing and update the other fields as necessary
-- `[TAG]` in the title must have a 3-4 letter abbreviation of the issue template (BUG, FIX, ASGN, DOC, FTR, etc)
-- there must be *some* default labels
-- The status list must be included in every issue template
 ```
 Reminders:
 - If you know which team will be responsible for this issue, add the label for that team.
