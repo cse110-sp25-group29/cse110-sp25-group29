@@ -78,16 +78,32 @@ export class Box extends Drawable {
         this.r = Math.floor(Math.random() * 256);
         this.g = Math.floor(Math.random() * 256);
         this.b = Math.floor(Math.random() * 256);
+
+        this.onKeyDown = this.onKeyDown.bind(this);
+        this.onKeyUp = this.onKeyUp.bind(this);
+        this.shiftHeld = false;
     }
 
     init(e) {
         let scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width
         let scaleY = this.canvas.height / this.canvas.getBoundingClientRect().height
 
+        this.startMouseX = e.clientX;
+        this.startMouseY = e.clientY;
+
         this.x1 = (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX
         this.y1 = (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY
         this.x2 = (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX
         this.y2 = (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY
+
+        this.startX1 = this.x1;
+        this.startY1 = this.y1;
+        this.startX2 = this.x2;
+        this.startY2 = this.y2;
+
+        this.selectionID = 3; // bottom right corner
+
+        document.addEventListener('keydown', this.onKeyDown);
 
         return true;
     }
@@ -95,8 +111,13 @@ export class Box extends Drawable {
     onMouseDown(e) {
         this.selected = true;
 
-        this.lastX = e.clientX;
-        this.lastY = e.clientY;
+        this.startMouseX = e.clientX;
+        this.startMouseY = e.clientY;
+
+        this.startX1 = this.x1;
+        this.startY1 = this.y1;
+        this.startX2 = this.x2;
+        this.startY2 = this.y2;
 
         let scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width
         let scaleY = this.canvas.height / this.canvas.getBoundingClientRect().height
@@ -106,6 +127,8 @@ export class Box extends Drawable {
             (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY
         );
 
+        document.addEventListener('keydown', this.onKeyDown);
+
         return true;
     }
 
@@ -113,14 +136,14 @@ export class Box extends Drawable {
         let scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width
         let scaleY = this.canvas.height / this.canvas.getBoundingClientRect().height
 
-        if (this.selected) {
+        if (true) {
             let xi = 0, yi = 0;
             
             switch (this.selectionID) {
                 case 0: xi = 3; yi = 3; break;
                 case 1: xi = 1, yi = 1; break;
                 case 2: xi = 1, yi = 2; break;
-                case 3: xi = 2, yi = 2; break;
+                case 3: xi = 2, yi = 2; break; // bottom right
                 case 4: xi = 2, yi = 1; break;
                 case 5: xi = 0, yi = 1; break;
                 case 6: xi = 0, yi = 2; break;
@@ -129,18 +152,42 @@ export class Box extends Drawable {
                 case 9: break; // rotate, TBD
             }
 
+            let mouseX = (e.clientX - this.startMouseX) * scaleX;
+            let mouseY = (e.clientY - this.startMouseY) * scaleY;
+
             if (xi % 2 == 1)
-                this.x1 += (e.clientX - this.lastX) * scaleX
+                this.x1 = this.startX1 + mouseX;
             if (yi % 2 == 1)
-                this.y1 += (e.clientY - this.lastY) * scaleY
+                this.y1 = this.startY1 + mouseY;
 
             if (xi / 2 >= 1)
-                this.x2 += (e.clientX - this.lastX) * scaleX
+                this.x2 = this.startX2 + mouseX;
             if (yi / 2 >= 1)
-                this.y2 += (e.clientY - this.lastY) * scaleY
+                this.y2 = this.startY2 + mouseY;
 
-            this.lastX = e.clientX;
-            this.lastY = e.clientY;
+            // for snapping to aspect ratio
+            if (this.shiftHeld && xi % 3 !== 0 && yi % 3 !== 0) {
+                if (Math.abs(this.x1 - this.x2) >= Math.abs(this.y1 - this.y2)) {
+                    let dx = Math.abs(this.x1 - this.x2);
+                    
+                    if (yi % 2 == 1)
+                        this.y1 = this.startY2 + dx * 
+                            (this.startY2 > (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY ? -1 : 1);
+                    else
+                        this.y2 = this.startY1 + dx * 
+                            (this.startY1 > (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY ? -1 : 1);
+                } else {
+                    let dy = Math.abs(this.y1 - this.y2);
+                    
+                    if (xi % 2 == 1)
+                        this.x1 = this.startX2 + dy * 
+                            (this.startX2 > (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX ? -1 : 1);
+                    else
+                        this.x2 = this.startX1 + dy * 
+                            (this.startX1 > (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX ? -1 : 1);
+                }
+            }
+
         } else {
             this.x2 = (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX
             this.y2 = (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY
@@ -148,7 +195,28 @@ export class Box extends Drawable {
     }
 
     onMouseUp(e) {
+        document.removeEventListener('keydown', this.onKeyDown);
+        document.removeEventListener('keyup', this.onKeyUp);
+        this.shiftHeld = false;
+
         return this.selected;
+    }
+
+    onKeyDown(e) {
+        const key = e.key;
+        if (key !== 'Shift') // only handle shift (for now?)
+            return;
+
+        document.addEventListener('keyup', this.onKeyUp);
+        this.shiftHeld = true;
+    }
+
+    onKeyUp(e) {
+        const key = e.key;
+        if (key !== 'Shift') // only handle shift (for now?)
+            return;
+
+        this.shiftHeld = false;
     }
 
     drawSelf(ctx) {
