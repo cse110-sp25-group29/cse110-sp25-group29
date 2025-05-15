@@ -100,7 +100,16 @@ class Canvas {
                     document.addEventListener('mouseup', this.onMouseUp);
                 }
                 break;
-            case 3: // image tool
+            case 3: // ellipse tool
+                element = new Drawable.Ellipse(this);
+                this.draw_stack.push(element);
+                if (element.init(e)) {
+                    this.focus = element;
+                    document.addEventListener('mousemove', this.onDrag);
+                    document.addEventListener('mouseup', this.onMouseUp);
+                }
+                break;
+            case 4: // image tool
                 element = new Drawable.Image(this);
                 this.draw_stack.push(element);
                 this.focus = null;
@@ -109,7 +118,7 @@ class Canvas {
                     document.addEventListener('mouseup', this.onMouseUp);
                 }
                 break;
-            case 4: // textbox tool
+            case 5: // textbox tool
                 element = new Drawable.Textbox(this);
                 this.draw_stack.push(element);
                 this.focus = null;
