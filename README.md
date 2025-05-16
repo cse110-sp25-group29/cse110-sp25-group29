@@ -4,9 +4,70 @@
   [*About the Team*](https://cse110-sp25-group29.github.io/cse110-sp25-group29/admin/team.html)
 
 ## Quick Links
+*See the Table of Contents at the top right corner for easier navigation.*
+
 - Style Guide
 - [Team Charter](https://github.com/cse110-sp25-group29/cse110-sp25-group29/blob/main/admin/misc/rules.md)
 - [Project Board](https://github.com/orgs/cse110-sp25-group29/projects/2/)
+
+## Directory Structure
+```text
+.github/ISSUE_TEMPLATE
+admin/
+├── adr/
+├── branding/
+├── meetings/
+│   ├── img/
+│   └── ui-ux/
+│       └── images/
+├── misc/
+└── videos/
+source/
+└── assets/
+    ├── icons/
+    ├── images/
+    ├── scripts/
+    └── styles/
+specs/
+├── adrs/
+├── brainstorm/
+└── pitch/
+```
+
+### `admin`
+*Contains most of the documentation related to the team.*
+
+| Subdirectory | Contents |
+| --- | --- |
+| `adr` | warmup exercise document |
+| `branding` | Boom Boom Powell team branding materials
+| `meetings` | all meeting notes and materials |
+| `meetings/img` | images for team meeting notes |
+| `meetings/ui-ux` | UI/UX team meeting notes and materials |
+| `meetings/ui-ux/img` | images for UI/UX team meeting notes |
+| `misc` | team charter and member acknowledgements |
+| `videos` | videos made for the team |
+
+### `source`
+*Contains the source code of the project. The top level holds the HTML files*
+
+| Subdirectory | Contents |
+| --- | --- |
+| `assets` | all the peripherals to the HTML |
+| `assets/icons` | image files for the user interface |
+| `assets/images` | non-icon images |
+| `assets/scripts` | JavaScript files |
+| `assets/styles` | CSS files |
+
+### `specs`
+*Contains project documentation.*
+
+| Subdirectory | Contents |
+| --- | --- |
+| `adrs` | Architectural Decision Records |
+| `brainstorm` | materials from initial brainstorm sessions |
+| `pitch` | materials for the initial product pitch |
+
 
 ## Roles
 
