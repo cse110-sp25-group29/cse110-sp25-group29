@@ -16,6 +16,12 @@ Date: 05/16/2025 1:15pm-2:50pm
 
 ## What Happened
 
+### Prototyping
+- Updated MVP wireframe sketch
+  - Added search bar function
+  - Added editor page sidebars
+![Updated MVP wireframe](./images/wireframe-iter-2.png)
+
 ### Landing Page
 - Discussed with Hugo: multiple cards is feasible -> We want a search bar on the home page.
 - An iteration of the landing page from today
