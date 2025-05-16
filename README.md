@@ -121,7 +121,7 @@ When creating a new issue, make sure to adhere to the following:
   - Feature [FEAT]: Feature request or non-bug modifications/suggestions to source code.
   - Bug [BUG]: Report a non-intended behavior that needs attention.
 - **Add the issue to the project board.** This can be updated on the sidebar of a pre-existing issue as well, along with a bulk update by selecting multiple issues at once and adding them to the project board.
-![Example showing how to add an issue to a project board](./source/static/images/issue-proj-board-example.png)
+![Example showing how to add an issue to a project board](./source/assets/images/issue-proj-board-example.png)
 - **Specify priority, size, and iteration.** These are all applicable only to issues on the project, so this hinges on adherence to the previous requirement. Iterations are based on the weeks we are actively working on this project. Read more on [priority](#priority) and [size](#size) below.
 - **Add appropriate labels!** The descriptions of each label can be seen in the [labels page](https://github.com/cse110-sp25-group29/cse110-sp25-group29/labels).
 - **Add the assignees.** If it is already known which people will be working on the issue, add them! If not, make sure to update them once they've been decided.
@@ -140,7 +140,7 @@ When creating a new issue, make sure to adhere to the following:
 When opening a new issue, it is good practice to create a new branch dedicated for that issue. This way, we can take advantage of pull requests to minimize conflicts in development.
 
 When committing to these branches, make sure to reference the issue you are working on using the issue number. GitHub uses [several keywords](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/using-keywords-in-issues-and-pull-requests) that can be used for *closing* issues, but it is also good to simply mention the issue number so that the commit can be included in that issue's history. See example below.
-![Issue history example](./source/static/images/issue-history-example.png)
+![Issue history example](./source/assets/images/issue-history-example.png)
 
 When you're done with your addition, commit to your branch, then create a pull request. This lets the team review your addition before approving the merge, minimizing conflicts and potentially buggy or unstyle code.
 
