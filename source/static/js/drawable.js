@@ -297,10 +297,11 @@ export class Image extends Box {
     constructor(parent, src) {
         super(parent);
 
-        if (!src)
-            this.src = "effect.png";
-        else
+        if (src)
             this.src = src;
+        else {
+            this.src = this.parent.toolbar.getToolInfo()["src"];
+        }
 
         this.img = document.createElement("img");
         this.img.src = this.src;
@@ -312,8 +313,10 @@ export class Image extends Box {
 
         this.x1 = (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX
         this.y1 = (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY
-        this.x2 = this.x1 + this.img.width * scaleX / 5;
-        this.y2 = this.y1 + this.img.height * scaleY / 5;
+
+        const startupInfo = this.parent.toolbar.getToolInfo();
+        this.x2 = this.x1 + startupInfo["width"];
+        this.y2 = this.y1 + startupInfo["height"];
 
         return false;
     }
@@ -334,13 +337,14 @@ export class Textbox extends Drawable {
         this.r = Math.floor(Math.random() * 256);
         this.g = Math.floor(Math.random() * 256);
         this.b = Math.floor(Math.random() * 256);
+
+        const startupInfo = this.parent.toolbar.getToolInfo();
+        this.text = startupInfo["text"];
+        this.fontSize = startupInfo["fontSize"];
+        this.fontStyle = startupInfo["fontStyle"];
     }
 
     init(e) {
-        this.text = "Text";
-        this.fontSize = 40;
-        this.fontStyle = "Courier";
-
         let scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width
         let scaleY = this.canvas.height / this.canvas.getBoundingClientRect().height
 

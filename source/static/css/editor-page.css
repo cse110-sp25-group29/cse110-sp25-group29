@@ -1,17 +1,75 @@
+.header {
+    background-color: aqua;
+    height: 30px;
+}
+
 .main {
+    background-color: black;
+    display: grid;
+    grid-template-columns: min(200px, 20vw) auto min(200px, 20vw);
+}
+
+#toolbox {
+    background-color: cadetblue;
+}
+
+div:has(input:checked) {
     background-color: black;
 }
 
+div:has(input[id="heading"]) {
+    font-size: x-large;
+}
+
+div:has(input[id="subheading"]) {
+    font-size: large;
+}
+
+div:has(input[id="body"]) {
+    font-size: medium;
+}
+
+input:checked {
+    box-shadow: 0 0 0 3px orange;
+}
+
+input:checked + label {
+    background-color: black;
+}
+
+label {
+    width: 100px;
+}
+
+img[class="input"] {
+    width: 40px;
+    height: 40px;
+    margin: 2px 2px 2px 2px;
+}
+
+#center {
+    display: grid;
+    grid-template-rows: min(600px, 60vw) 50px;
+}
+
 #business_card {
-    width: 50vw;
-    height: 50vw;
+    width: min(540px, 54vw);
+    height: min(300px, 30vw);
     background-color: aliceblue;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: min(100px, 10vw) auto auto auto;
+    border-radius: min(15px, 1.5vw);
+}
+
+#attribute-sel {
+    background-color: darkgoldenrod;
+}
+
+#save {
+    background-color: darkkhaki;
 }
 
 fieldset {
-    margin: 5px 5px 5px 5px;
+    /* margin: 5px 5px 5px 5px; */
     color: white;
 }

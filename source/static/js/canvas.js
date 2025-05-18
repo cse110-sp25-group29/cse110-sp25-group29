@@ -7,8 +7,8 @@ window.addEventListener('DOMContentLoaded', init);
 class Canvas {
     constructor(id) {
         this.canvas = document.querySelector(id);
-        this.canvas.width = 1000;
-        this.canvas.height = 1000;
+        this.canvas.width = 1080;
+        this.canvas.height = 600;
 
         this.draw_stack = [];
         this.focus = null;
@@ -82,7 +82,7 @@ class Canvas {
             case 0: // selector tool
                 this.selector(e);
                 break;
-            case 1: // line tool
+            case 1: // line tool, doesn't exist anymore
                 element = new Drawable.Line(this);
                 this.draw_stack.push(element);
                 if (element.init(e)) {
