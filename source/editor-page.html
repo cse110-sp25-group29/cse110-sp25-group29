@@ -6,20 +6,97 @@
     <link rel="stylesheet" href="./static/css/editor-page.css">
   </head>
   <body class="body">
+    <header class="header">
+      <!-- save, delete, etc. -->
+    </header>
     <main class="main">
       <form id="toolbox">
         <fieldset>
           <legend>Tool</legend>
-          <label for="select"> Select <input type="radio" id="select" value="0" name="tool" checked/> </label>
-          <label for="pencil"> Pencil <input type="radio" id="pencil" value="1" name="tool" /> </label>
-          <label for="box"   > Box    <input type="radio" id="box"    value="2" name="tool" /> </label>
-          <label for="ellipse">Ellipse<input type="radio" id="ellipse"value="3" name="tool" /> </label>
-          <label for="image" > Image  <input type="radio" id="image"  value="4" name="tool" /> </label>
-          <label for="text"  > Text   <input type="radio" id="text"   value="5" name="tool" /> </label>
+          <label for="select">
+          <div>
+            Select<input type="radio" id="select" name="tool" value="0" checked hidden/> 
+          </div>
+          </label>
+
+          <hr>
+
+          <label for="facebook">
+          <div>
+            <input type="radio" id="facebook" name="tool" value="1" hidden/>
+            <img src="./static/img/facebook.png" class="input"/>
+          </div>
+          </label>
+
+          <label for="instagram">
+          <div>
+            <input type="radio" id="instagram" name="tool" value="2" hidden/>
+            <img src="./static/img/instagram.webp" class="input"/>
+          </div>
+          </label>
+
+          <label for="linkedin">
+          <div>
+            <input type="radio" id="linkedin" name="tool" value="3" hidden/>
+            <img src="./static/img/linkedin.png" class="input"/>
+          </div>
+          </label>
+
+          <label for="github">
+          <div>
+            <input type="radio" id="github" name="tool" value="4" hidden/>
+            <img src="./static/img/github.png" class="input"/>
+          </div>
+          </label>
+
+          <hr>
+
+          <label for="heading">
+          <div>
+            Heading<input type="radio" id="heading" name="tool" value="5" hidden/> 
+          </div>
+          </label>
+
+          <label for="subheading">
+          <div>
+            Subheading<input type="radio" id="subheading" name="tool" value="6" hidden/> 
+          </div>
+          </label>
+
+          <label for="body">
+          <div>
+            Body<input type="radio" id="body" name="tool" value="7" hidden/> 
+          </div>
+          </label>
+
+          <hr>
+
+          <label for="square">
+          <div>
+            <input type="radio" id="square" name="tool" value="8" hidden/>
+            <img src="./static/img/square.png" class="input"/>
+          </div>
+          </label>
+
+          <label for="circle">
+          <div>
+            <input type="radio" id="circle" name="tool" value="9" hidden/>
+            <img src="./static/img/circle.png" class="input"/>
+          </div>
+          </label>
         </fieldset>
       </form>
 
-      <canvas id="business_card"></canvas>
+      <section id="center">
+        <canvas id="business_card"></canvas>
+
+        <!-- probably should be something else -->
+        <div id="save"></div>
+      </section>
+
+      <section id="attribute-sel">
+
+      </section>
     </main>
 
     <script type="module" src="./static/js/canvas.js"></script>
