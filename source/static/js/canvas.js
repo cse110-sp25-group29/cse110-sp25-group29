@@ -18,6 +18,12 @@ class Canvas {
 
         this.onDrag = this.onDrag.bind(this);
         this.onMouseUp = this.onMouseUp.bind(this);
+
+        this.shiftHeld = false;
+        this.onKeyDown = this.onKeyDown.bind(this);
+        this.onKeyUp = this.onKeyUp.bind(this);
+        document.addEventListener('keydown', this.onKeyDown);
+        document.addEventListener('keyup', this.onKeyUp);
     }
 
     attachToolbar(toolbar) {
@@ -148,6 +154,96 @@ class Canvas {
         document.removeEventListener('mouseup', this.onMouseUp);
 
         this.renderCanvas();
+    }
+
+    triggerDownKey(meta, shift) {
+        if (this.focus == null || !meta) // handle movement later
+            return;
+        
+        let item_id;
+        for (let i = 0; i < this.draw_stack.length; i++) {
+            if (this.draw_stack[i] == this.focus) {
+                item_id = i;
+                break;
+            }
+        }
+
+        console.log(item_id)
+
+        if (shift) {
+            this.draw_stack.splice(item_id, 1);
+            this.draw_stack.unshift(this.focus)
+        } else if (item_id > 0) {
+            this.draw_stack[item_id] = this.draw_stack[item_id-1];
+            this.draw_stack[item_id-1] = this.focus;
+        }
+
+        this.renderCanvas();
+    }
+
+    triggerUpKey(meta, shift) {
+        if (this.focus == null || !meta) // handle movement later
+            return;
+        
+        let item_id;
+        for (let i = 0; i < this.draw_stack.length; i++) {
+            if (this.draw_stack[i] == this.focus) {
+                item_id = i;
+                break;
+            }
+        }
+
+        console.log(item_id)
+
+        if (shift) {
+            this.draw_stack.splice(item_id, 1);
+            this.draw_stack.push(this.focus)
+        } else if (item_id < this.draw_stack.length-1) {
+            this.draw_stack[item_id] = this.draw_stack[item_id+1];
+            this.draw_stack[item_id+1] = this.focus;
+        }
+
+        this.renderCanvas();
+    }
+
+    triggerDeleteKey() {
+        if (this.focus == null)
+            return;
+        
+        let item_id;
+        for (let i = 0; i < this.draw_stack.length; i++) {
+            if (this.draw_stack[i] == this.focus) {
+                item_id = i;
+                break;
+            }
+        }
+
+        this.draw_stack.splice(item_id, 1);
+        this.focus = null;
+        this.renderCanvas();
+    }
+
+    onKeyDown(e) {
+        const key = e.key;
+        if (key === 'Shift') {
+            this.shiftHeld = true;
+        }
+        else if (key == 'ArrowDown') {
+            this.triggerDownKey(e.metaKey, e.shiftKey)
+        }
+        else if (key == 'ArrowUp') {
+            this.triggerUpKey(e.metaKey, e.shiftKey)
+        }
+        else if (key == 'Delete' || key == 'Backspace') {
+            this.triggerDeleteKey()
+        }
+    }
+
+    onKeyUp(e) {
+        const key = e.key;
+        if (key === 'Shift') {
+            this.shiftHeld = false;
+        }
     }
 
     renderCanvas() {
