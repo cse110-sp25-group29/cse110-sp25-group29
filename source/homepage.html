@@ -4,35 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Card Maker App</title>
-    <link rel="stylesheet" href="./assets/styles/homepage-style.css" />
+    <link rel="stylesheet" href="assets/styles/homepage.css" />
+    <script src="assets/scripts/homepage.js"></script>
 </head>
 <body>
     <header>
-        <button class="menu-button">☰</button>
+        <!-- <button class="menu-button">☰</button> -->
         <h1>Concard</h1>
+        <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
     </header>
 
+    <div class="card-container">
+        <div class="card-button">
+          <label>New Card</label>
+          <button><span class="icon">＋</span></button>
+        </div>
+        <div class="card-button">
+          <label>Upload Card</label>
+          <button>
+            <span class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none"
+                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     viewBox="0 0 24 24">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="6" x2="12" y2="15" />
+                </svg>
+            </span>
+          </button>
+        </div>
+        <div class="card-button">
+          <label>Your Card</label>
+          <button>
+            <span class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        viewBox="0 0 24 24">
+                    <circle cx="12" cy="7" r="4" />
+                    <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
+                </svg>
+            </span>
+          </button>
+        </div>
+    </div>
+      
     <div class="search-bar">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
         <input type="text" placeholder="Search wallet, person...">
     </div>
 
-    <div class="card-button-grid">
-        <button>➕ New Card</button>
-        <button>➕ New Wallet</button>
-        <button>Scan Card</button>
-        <button>Your Card</button>
+    <div class="link-to-all">
+        <a href=""><i>View All Cards</i></a>
     </div>
 
-    <div class="row-of-wallets">
-        <button>Wallet A</button>
-        <button>Wallet B</button>
-        <button>Wallet C</button>
-        <button>Wallet D</button>
-        <button>Wallet E</button>
+    <div class="link-to-info">
+        <div class="how-it-works">
+            <a href=""><i>How it works</i></a>
+        </div>
+        <div class="github">
+            <a href="https://github.com/cse110-sp25-group29/cse110-sp25-group29" target="_blank"><i>GitHub</i></a>
+        </div>
+        <div class="team">
+            <a href="https://cse110-sp25-group29.github.io/cse110-sp25-group29/admin/team.html" target="_blank"><i>Our Team</i></a>
+        </div>
     </div>
 
-    <div clase="link-to-all">
-        <a href="">See all wallets...</a>
-    </div>
+
 </body>
 </html>
