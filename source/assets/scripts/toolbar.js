@@ -23,10 +23,10 @@ export class Toolbar {
     getToolInfo() {
         switch (this.val) {
             case 0: return {};
-            case 1: return {"src": "./static/img/facebook.png", "width": 80, "height": 80};
-            case 2: return {"src": "./static/img/instagram.webp", "width": 80, "height": 80};
-            case 3: return {"src": "./static/img/linkedin.png", "width": 80, "height": 80};
-            case 4: return {"src": "./static/img/github.png", "width": 80, "height": 80};
+            case 1: return {"src": "./icons/facebook.png", "width": 80, "height": 80};
+            case 2: return {"src": "./icons/instagram.webp", "width": 80, "height": 80};
+            case 3: return {"src": "./icons/linkedin.png", "width": 80, "height": 80};
+            case 4: return {"src": "./icons/github.png", "width": 80, "height": 80};
             case 5: return {"text": "Heading", "fontStyle": "Arial", "fontSize": 80};
             case 6: return {"text": "Subheading", "fontStyle": "Arial", "fontSize": 50};
             case 7: return {"text": "Body", "fontStyle": "Arial", "fontSize": 30};
