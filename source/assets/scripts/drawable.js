@@ -9,6 +9,9 @@ export class Drawable {
     drawFocus() {}
     overSelf(x, y) { return false; }
     overSelection(x, y) { return false; }
+
+    moveX(dx) {}
+    moveY(dy) {}
 }
 
 export class Line extends Drawable {
@@ -256,6 +259,16 @@ export class Box extends Drawable {
 
         return 0;
     }
+
+    moveX(dx) {
+        this.x1 += dx;
+        this.x2 += dx;
+    }
+
+    moveY(dy) {
+        this.y1 += dy;
+        this.y2 += dy;
+    }
 }
 
 export class Image extends Box {
@@ -375,6 +388,14 @@ export class Textbox extends Drawable {
         ctx.strokeStyle = "rgb(50, 50, 255)";
         ctx.lineWidth = 2;
         ctx.strokeRect(minX - 5, minY + 5, width + 10, height);
+    }
+
+    moveX(dx) {
+        this.x += dx;
+    }
+
+    moveY(dy) {
+        this.y += dy;
     }
 }
 

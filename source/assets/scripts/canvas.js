@@ -167,9 +167,31 @@ export class Canvas {
         this.renderCanvas();
     }
 
-    triggerDownKey(meta, shift) {
-        if (this.focus == null || !meta) // handle movement later
+    triggerLeftKey(meta, shift) {
+        if (this.focus == null)
             return;
+
+        this.focus.moveX(shift ? -1 : -10);
+        this.renderCanvas();
+    }
+
+    triggerRightKey(meta, shift) {
+        if (this.focus == null)
+            return;
+
+        this.focus.moveX(shift ? 1 : 10);
+        this.renderCanvas();
+    }
+
+    triggerDownKey(meta, shift) {
+        if (this.focus == null)
+            return;
+
+        if (!meta) {
+            this.focus.moveY(shift ? 1 : 10);
+            this.renderCanvas();
+            return;
+        }
         
         let item_id;
         for (let i = 0; i < this.draw_stack.length; i++) {
@@ -178,8 +200,6 @@ export class Canvas {
                 break;
             }
         }
-
-        console.log(item_id)
 
         if (shift) {
             this.draw_stack.splice(item_id, 1);
@@ -193,8 +213,14 @@ export class Canvas {
     }
 
     triggerUpKey(meta, shift) {
-        if (this.focus == null || !meta) // handle movement later
+        if (this.focus == null)
             return;
+
+        if (!meta) {
+            this.focus.moveY(shift ? -1 : -10);
+            this.renderCanvas();
+            return;
+        }
         
         let item_id;
         for (let i = 0; i < this.draw_stack.length; i++) {
@@ -203,8 +229,6 @@ export class Canvas {
                 break;
             }
         }
-
-        console.log(item_id)
 
         if (shift) {
             this.draw_stack.splice(item_id, 1);
@@ -244,6 +268,12 @@ export class Canvas {
         }
         else if (key == 'ArrowUp') {
             this.triggerUpKey(e.metaKey, e.shiftKey)
+        }
+        else if (key == 'ArrowLeft') {
+            this.triggerLeftKey(e.metaKey, e.shiftKey)
+        }
+        else if (key == 'ArrowRight') {
+            this.triggerRightKey(e.metaKey, e.shiftKey)
         }
         else if (key == 'Delete' || key == 'Backspace') {
             this.triggerDeleteKey()
