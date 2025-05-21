@@ -48,6 +48,8 @@ specs/
 | `misc` | team charter and member acknowledgements |
 | `videos` | videos made for the team |
 
+- `statusvideo1.mp4` has been uploaded to `/admin/videos/statusvideo1.mp4`. Also it's on [YouTube](https://www.youtube.com/watch?v=qB4SBX5r8Ps).
+
 ### `source`
 *Contains the source code of the project. The top level holds the HTML files*
 
