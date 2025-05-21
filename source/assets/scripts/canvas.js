@@ -1,11 +1,7 @@
-import * as Toolbar from "./toolbar.js"
 import * as Drawable from "./drawable.js"
-import * as AttributeMenu from "./attribute-menu.js"
 
-window.addEventListener('DOMContentLoaded', init);
-
-class Canvas {
-    constructor(id) {
+export class Canvas {
+    constructor(id, active) {
         this.canvas = document.querySelector(id);
         this.canvas.width = 1080;
         this.canvas.height = 600;
@@ -14,16 +10,31 @@ class Canvas {
         this.focus = null;
 
         this.onMouseDown = this.onMouseDown.bind(this);
-        this.canvas.addEventListener('mousedown', this.onMouseDown);
-
         this.onDrag = this.onDrag.bind(this);
         this.onMouseUp = this.onMouseUp.bind(this);
 
         this.shiftHeld = false;
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onKeyUp = this.onKeyUp.bind(this);
-        document.addEventListener('keydown', this.onKeyDown);
-        document.addEventListener('keyup', this.onKeyUp);
+        this.setActive(active);
+    }
+
+    setActive(active) {
+        this.active = active;
+
+        if (active) {
+            this.canvas.addEventListener('mousedown', this.onMouseDown);
+            document.addEventListener('keydown', this.onKeyDown);
+            document.addEventListener('keyup', this.onKeyUp);
+        } else {
+            this.shiftHeld = false;
+            this.focus = null;
+            this.canvas.removeEventListener('mousedown', this.onMouseDown);
+            document.removeEventListener('keydown', this.onKeyDown);
+            document.removeEventListener('keyup', this.onKeyUp);
+        }
+
+        this.renderCanvas();
     }
 
     attachToolbar(toolbar) {
@@ -257,10 +268,4 @@ class Canvas {
         if (this.focus != null)
             this.focus.drawFocus(ctx);
     }
-}
-
-function init() {
-    const canvas = new Canvas("#business_card")
-    canvas.attachToolbar(new Toolbar.Toolbar());
-    canvas.attachAttributeMenu(new AttributeMenu.AttributeMenu());
 }

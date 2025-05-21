@@ -88,7 +88,14 @@
       </form>
 
       <section id="center">
-        <canvas id="business_card"></canvas>
+        <div>
+          <div class="business-card">
+            <canvas id="front-card"></canvas>
+            <canvas id="back-card"></canvas>
+          </div>
+
+          <button id="flip_button"><img src="./icons/flip.png" id="flip_button_img"/></button>
+        </div>
 
         <!-- probably should be something else -->
         <div id="save"></div>
@@ -99,6 +106,6 @@
       </section>
     </main>
 
-    <script type="module" src="./scripts/canvas.js"></script>
+    <script type="module" src="./scripts/editor-page.js"></script>
   </body>
 </html>

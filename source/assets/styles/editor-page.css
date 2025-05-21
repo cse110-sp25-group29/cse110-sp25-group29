@@ -52,13 +52,46 @@ img[class="input"] {
     grid-template-rows: min(600px, 60vw) 50px;
 }
 
-#business_card {
+.business-card {
+    position: relative;
+    margin: min(100px, 10vw) auto auto auto;
+    text-align: center;
+
+    display: grid;
+    grid-template-rows: 0px auto auto;
+}
+
+#front-card, #back-card {
     width: min(540px, 54vw);
     height: min(300px, 30vw);
     background-color: aliceblue;
-    display: block;
-    margin: min(100px, 10vw) auto auto auto;
     border-radius: min(15px, 1.5vw);
+    margin: auto;
+    
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+#front-card {
+    transform: rotateY(0deg);
+}
+
+#back-card {
+    transform: rotateY(180deg);
+}
+
+#flip_button {
+    display: block;
+    margin: min(10px, 1vw) auto auto auto
+}
+
+#flip_button_img {
+    display: block;
+    margin: min(10px, 1vw) auto auto auto;
+    width: 20px;
+    height: 20px;
+    margin: 2px 2px 2px 2px;
 }
 
 #attribute-sel {
