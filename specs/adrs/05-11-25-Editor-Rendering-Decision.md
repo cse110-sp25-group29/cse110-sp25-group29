@@ -26,8 +26,7 @@ How do we allow the user to interact with the card editor in a way that is struc
 ## Decision Outcome
 
 Chosen option: “HTML canvases”, because it allows for the greatest control over what is rendered on the business card and it can be easily exported and saved for sharing.
- 
-Chosen option: "{title of option 1}", because {justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force {force} | … | comes out best (see below)}.
+
 
 ## Pros and Cons of the Options
 
