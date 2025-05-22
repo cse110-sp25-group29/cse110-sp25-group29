@@ -16,6 +16,9 @@ export default defineConfig([
         ...globals.browser
       }
     },
+    env: {
+      browser: true,
+    },
     rules: {
       "semi": ["error", "always"],
       "quotes": ["error", "double"],
