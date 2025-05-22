@@ -12,7 +12,8 @@ export default defineConfig([
       sourceType: "module",
       globals: {
         ...globals.node,
-        ...globals.jest
+        ...globals.jest,
+        ...globals.browser
       }
     },
     rules: {
