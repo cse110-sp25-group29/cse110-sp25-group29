@@ -13,7 +13,7 @@
     background-color: cadetblue;
 }
 
-div:has(input:checked) {
+#toolbox div:has(input:checked) {
     background-color: black;
 }
 
@@ -27,14 +27,6 @@ div:has(input[id="subheading"]) {
 
 div:has(input[id="body"]) {
     font-size: medium;
-}
-
-input:checked {
-    box-shadow: 0 0 0 3px orange;
-}
-
-input:checked + label {
-    background-color: black;
 }
 
 label {

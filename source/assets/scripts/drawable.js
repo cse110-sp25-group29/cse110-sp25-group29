@@ -320,6 +320,8 @@ export class Textbox extends Drawable {
         this.text = startupInfo["text"];
         this.fontSize = startupInfo["fontSize"];
         this.fontStyle = startupInfo["fontStyle"];
+        this.bold = false;
+        this.italics = false;
     }
 
     init(e) {
@@ -361,17 +363,17 @@ export class Textbox extends Drawable {
     }
 
     drawSelf(ctx) {
-        ctx.font = `${this.fontSize}px ${this.fontStyle}`;
+        ctx.font = `${this.bold ? " bold" : ""} ${this.italics ? " italic" : ""} ${this.fontSize}px ${this.fontStyle}`;
         ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
 
-        ctx.fillText(this.text, this.x, this.y, 400);
+        ctx.fillText(this.text, this.x, this.y);
     }
 
     drawFocus(ctx) {
         if (!this.selected)
             return;
 
-        ctx.font = `${this.fontSize}px ${this.fontStyle}`;
+        ctx.font = `${this.bold ? " bold" : ""} ${this.italics ? " italic" : ""} ${this.fontSize}px ${this.fontStyle}`;
         ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
             
         const text = ctx.measureText(this.text);

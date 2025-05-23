@@ -6,10 +6,10 @@ window.addEventListener('DOMContentLoaded', init);
 
 function init() {
     const front_canvas = new Canvas.Canvas("#front-card", true);
-    const back_canvas = new Canvas.Canvas("#back-card", true);
+    const back_canvas = new Canvas.Canvas("#back-card", false);
 
     const toolbar = new Toolbar.Toolbar();
-    const attributeMenu = new AttributeMenu.AttributeMenu();
+    const attributeMenu = new AttributeMenu.AttributeMenu("#attribute-sel");
 
     front_canvas.attachToolbar(toolbar);
     front_canvas.attachAttributeMenu(attributeMenu);
@@ -17,7 +17,7 @@ function init() {
     back_canvas.attachToolbar(toolbar);
     back_canvas.attachAttributeMenu(attributeMenu);
 
-    const flipButton = document.querySelector("#flip_button")
+    const flipButton = document.querySelector("#flip_button");
     flipButton.addEventListener('click', () => {
         let active = front_canvas.active;
         front_canvas.setActive(!active);
