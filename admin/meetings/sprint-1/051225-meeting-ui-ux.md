@@ -14,7 +14,7 @@ Aarav, Sarah
 
 ## Notes  
 
-![Wireframe Sketch Screenshot](images/Wireframe.png)
+![Wireframe Sketch Screenshot](../img/Wireframe.png)
 
 ### Another UI Draft
 *(see sketch above)*  
@@ -26,14 +26,14 @@ Aarav, Sarah
 - **Example:**  
   > User creates a module called **“Project Exhibit”** – it has a logo, a heading, and two bullets for a project summary. Every time the user wants to add a project to the concard, they can select the *Project Exhibit* module they created and reuse it.
 
-![Module Example](images/sarah%20example.png)
+![Module Example](../img/sarah%20example.png)
 
 ### Theme
 - Spoke about it being **green and grey — Zen**.  
 - **Green (Hex Code):** `#______`  
 - **Grey (Hex Code):** `#______`  
 
-![Logo Concept Screenshot](images/logo%20concept.png)
+![Logo Concept Screenshot](../img/logo%20concept.png)
 
 ### Logo
 - Decided on a **link logo**, and the *C* and *D* design for main text on the landing page.
