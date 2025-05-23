@@ -2,6 +2,10 @@
 
 Date: MM/DD/YYYY
 
+Time: hh:mmPM - hh:mmPM
+
+Location:
+
 ## Attendees
 
 - Person 1

@@ -1,5 +1,5 @@
 # Boom Boom Powell Standup
-mm/dd/yy hh:mm
+mm/dd/yy hh:mmPM
 
 ## Participants
 ### DevOps
@@ -21,9 +21,30 @@ mm/dd/yy hh:mm
 - check in and discuss if there's any questions
 
 ## Goals and Progress
-| Name | Priorities | Progress | Problems |
-| ---- | ---------- | -------- | -------- |
-| John A      | Most important tasks | Updates on previous tasks | Issues / blockers |
+
+### DevOps
+
+- Priorities
+- Progress
+- Problems
+
+### Editor Page
+
+- Priorities
+- Progress
+- Problems
+
+### Home Page
+
+- Priorities
+- Progress
+- Problems
+
+### UI/UX
+
+- Priorities
+- Progress
+- Problems
 
 ## Assignments
 - Add any new assignments or shifting tasks from person to person
