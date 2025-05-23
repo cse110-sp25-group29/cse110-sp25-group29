@@ -87,7 +87,7 @@ class TextboxElement extends HTMLElement {
 
         let fontSize = this.shadowRoot.querySelector("#attr-font-size");
         fontSize.addEventListener('input', () => {
-            this.obj.fontSize = parseInt(fontSize.value);
+            this.obj.fontSize = parseInt(fontSize.value, 10);
             this.obj.parent.renderCanvas();
         })
 
@@ -111,31 +111,31 @@ class TextboxElement extends HTMLElement {
 
         let r = this.shadowRoot.querySelector("#attr-red");
         r.addEventListener('input', () => {
-            this.obj.r = parseInt(r.value);
+            this.obj.r = parseInt(r.value, 10);
             this.obj.parent.renderCanvas();
         })
         
         let g = this.shadowRoot.querySelector("#attr-green");
         g.addEventListener('input', () => {
-            this.obj.g = parseInt(g.value);
+            this.obj.g = parseInt(g.value, 10);
             this.obj.parent.renderCanvas();
         })
         
         let b = this.shadowRoot.querySelector("#attr-blue");
         b.addEventListener('input', () => {
-            this.obj.b = parseInt(b.value);
+            this.obj.b = parseInt(b.value, 10);
             this.obj.parent.renderCanvas();
         })
 
         let x = this.shadowRoot.querySelector("#attr-x");
         x.addEventListener('input', () => {
-            this.obj.x = parseInt(x.value);
+            this.obj.x = parseInt(x.value, 10);
             this.obj.parent.renderCanvas();
         })
         
         let y = this.shadowRoot.querySelector("#attr-y");
         y.addEventListener('input', () => {
-            this.obj.y = parseInt(y.value);
+            this.obj.y = parseInt(y.value, 10);
             this.obj.parent.renderCanvas();
         })
 
@@ -246,46 +246,46 @@ class BoxElement extends HTMLElement {
         let x = this.shadowRoot.querySelector("#attr-x");
         let width = this.shadowRoot.querySelector("#attr-width");
         x.addEventListener('input', () => {
-            this.obj.x1 = parseInt(x.value);
-            this.obj.x2 = parseInt(x.value) + parseInt(width.value);
+            this.obj.x1 = parseInt(x.value, 10);
+            this.obj.x2 = parseInt(x.value, 10) + parseInt(width.value, 10);
             this.obj.parent.renderCanvas();
         })
 
         width.addEventListener('input', () => {
-            this.obj.x1 = parseInt(x.value);
-            this.obj.x2 = parseInt(x.value) + parseInt(width.value);
+            this.obj.x1 = parseInt(x.value, 10);
+            this.obj.x2 = parseInt(x.value, 10) + parseInt(width.value, 10);
             this.obj.parent.renderCanvas();
         })
         
         let y = this.shadowRoot.querySelector("#attr-y");
         let height = this.shadowRoot.querySelector("#attr-height");
         y.addEventListener('input', () => {
-            this.obj.y1 = parseInt(y.value);
-            this.obj.y2 = parseInt(y.value) + parseInt(height.value);
+            this.obj.y1 = parseInt(y.value, 10);
+            this.obj.y2 = parseInt(y.value, 10) + parseInt(height.value, 10);
             this.obj.parent.renderCanvas();
         })
         
         height.addEventListener('input', () => {
-            this.obj.y1 = parseInt(y.value);
-            this.obj.y2 = parseInt(y.value) + parseInt(height.value);
+            this.obj.y1 = parseInt(y.value, 10);
+            this.obj.y2 = parseInt(y.value, 10) + parseInt(height.value, 10);
             this.obj.parent.renderCanvas();
         })
 
         let r = this.shadowRoot.querySelector("#attr-red");
         r.addEventListener('input', () => {
-            this.obj.r = parseInt(r.value);
+            this.obj.r = parseInt(r.value, 10);
             this.obj.parent.renderCanvas();
         })
         
         let g = this.shadowRoot.querySelector("#attr-green");
         g.addEventListener('input', () => {
-            this.obj.g = parseInt(g.value);
+            this.obj.g = parseInt(g.value, 10);
             this.obj.parent.renderCanvas();
         })
         
         let b = this.shadowRoot.querySelector("#attr-blue");
         b.addEventListener('input', () => {
-            this.obj.b = parseInt(b.value);
+            this.obj.b = parseInt(b.value, 10);
             this.obj.parent.renderCanvas();
         })
 
@@ -388,28 +388,28 @@ class ImageElement extends HTMLElement {
         let x = this.shadowRoot.querySelector("#attr-x");
         let width = this.shadowRoot.querySelector("#attr-width");
         x.addEventListener('input', () => {
-            this.obj.x1 = parseInt(x.value);
-            this.obj.x2 = parseInt(x.value) + parseInt(width.value);
+            this.obj.x1 = parseInt(x.value, 10);
+            this.obj.x2 = parseInt(x.value, 10) + parseInt(width.value, 10);
             this.obj.parent.renderCanvas();
         })
 
         width.addEventListener('input', () => {
-            this.obj.x1 = parseInt(x.value);
-            this.obj.x2 = parseInt(x.value) + parseInt(width.value);
+            this.obj.x1 = parseInt(x.value, 10);
+            this.obj.x2 = parseInt(x.value, 10) + parseInt(width.value, 10);
             this.obj.parent.renderCanvas();
         })
         
         let y = this.shadowRoot.querySelector("#attr-y");
         let height = this.shadowRoot.querySelector("#attr-height");
         y.addEventListener('input', () => {
-            this.obj.y1 = parseInt(y.value);
-            this.obj.y2 = parseInt(y.value) + parseInt(height.value);
+            this.obj.y1 = parseInt(y.value, 10);
+            this.obj.y2 = parseInt(y.value, 10) + parseInt(height.value, 10);
             this.obj.parent.renderCanvas();
         })
         
         height.addEventListener('input', () => {
-            this.obj.y1 = parseInt(y.value);
-            this.obj.y2 = parseInt(y.value) + parseInt(height.value);
+            this.obj.y1 = parseInt(y.value, 10);
+            this.obj.y2 = parseInt(y.value, 10) + parseInt(height.value, 10);
             this.obj.parent.renderCanvas();
         })
 

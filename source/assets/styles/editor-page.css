@@ -1,68 +1,131 @@
+:root {
+    --header-bg: cyan;
+    --toolbox-bg: #5f9ea0;
+    --selected-tool-bg: #000;
+    --center-bg: #000;
+    --card-bg: #f0f8ff;
+    --attribute-bg: #b8860b;
+    --save-bg: #bdb76b;
+    --label-width: 100px;
+    --transition-speed: 0.6s;
+    --card-radius: min(15px, 1.5vw);
+    --card-width: min(540px, 54vw);
+    --card-height: min(300px, 30vw);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
 .header {
-    background-color: aqua;
+    background-color: var(--header-bg);
     height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-weight: bold;
 }
 
 .main {
-    background-color: black;
+    background-color: var(--center-bg);
     display: grid;
-    grid-template-columns: min(200px, 20vw) auto min(200px, 20vw);
+    grid-template-columns: min(200px, 20vw) 1fr min(200px, 20vw);
+    gap: 10px;
+    padding: 10px;
 }
 
 #toolbox {
-    background-color: cadetblue;
+    background-color: var(--toolbox-bg);
+    padding: 10px;
+}
+
+#toolbox div:has(input:checked) img{
+    border: 2px solid cyan;
+    border-radius: 6px;
+    box-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
 }
 
 #toolbox div:has(input:checked) {
-    background-color: black;
+    display: inline-block;
+    border-bottom: 2px solid black;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 div:has(input[id="heading"]) {
-    font-size: x-large;
+    font-size: 1.5rem;
 }
 
 div:has(input[id="subheading"]) {
-    font-size: large;
+    font-size: 1.2rem;
 }
 
 div:has(input[id="body"]) {
-    font-size: medium;
+    font-size: 1rem;
 }
 
 label {
-    width: 100px;
+    width: var(--label-width);
+    display: inline-block;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
 }
 
-img[class="input"] {
+label:hover{
+    transform: scale(1.10);
+}
+
+img.input {
     width: 40px;
     height: 40px;
-    margin: 2px 2px 2px 2px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius: 0px;
+    transition: transform 0.2s ease-in-out;
+}
+
+img.input:hover {
+    transform: scale(1.10);
 }
 
 #center {
     display: grid;
     grid-template-rows: min(600px, 60vw) 50px;
+    place-items: center;
+    padding: 20px;
 }
 
 .business-card {
     position: relative;
-    margin: min(100px, 10vw) auto auto auto;
     text-align: center;
-
     display: grid;
-    grid-template-rows: 0px auto auto;
+    grid-template-rows: 0 auto auto;
+    margin: min(100px, 10vw) auto 0 auto;
 }
 
-#front-card, #back-card {
-    width: min(540px, 54vw);
-    height: min(300px, 30vw);
-    background-color: aliceblue;
-    border-radius: min(15px, 1.5vw);
+#front-card,
+#back-card {
+    width: var(--card-width);
+    height: var(--card-height);
+    background-color: var(--card-bg);
+    border-radius: var(--card-radius);
     margin: auto;
-    
     backface-visibility: hidden;
     transform-style: preserve-3d;
-    transition: transform 0.6s;
+    transition: transform var(--transition-speed);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #front-card {
@@ -75,26 +138,55 @@ img[class="input"] {
 
 #flip_button {
     display: block;
-    margin: min(10px, 1vw) auto auto auto
+    margin: min(10px, 1vw) auto;
+    background-color: #ddd;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#flip_button:hover {
+    background-color: rgb(160, 159, 159);
 }
 
 #flip_button_img {
     display: block;
-    margin: min(10px, 1vw) auto auto auto;
-    width: 20px;
+    margin: min(5px, 1vw) auto;
+    width: 22px;
     height: 20px;
-    margin: 2px 2px 2px 2px;
 }
 
 #attribute-sel {
-    background-color: darkgoldenrod;
+    background-color: var(--attribute-bg);
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
 }
 
 #save {
-    background-color: darkkhaki;
+    background-color: var(--save-bg);
+    padding: 2px 15px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#save {
+    font-weight: bold;
+    color: black;
+}
+
+#save:hover {
+    background-color: #f0f069;
 }
 
 fieldset {
-    /* margin: 5px 5px 5px 5px; */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
     color: white;
+    border-radius: 6px;
 }

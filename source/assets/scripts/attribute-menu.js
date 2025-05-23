@@ -35,31 +35,10 @@ export class AttributeMenu {
         }
     }
 
-    updateObject(obj) {
+    updateObject() {
         if (!this.form)
             return;
 
         this.form.update();
-    }
-
-    createTextMenu() {
-        let container = document.createElement("form");
-        this.attributeSel.appendChild(container);
-
-        let labelText = document.createElement("label");
-        labelText.setAttribute("for", "attr-text");
-        labelText.innerHTML = "Text:";
-        container.appendChild(labelText);
-
-        let inputText = document.createElement("input");
-        inputText.setAttribute("type", "text");
-        inputText.setAttribute("id", "attr-text");
-        inputText.setAttribute("name", "attr-text");
-        inputText.setAttribute("autocomplete", "off");
-        container.appendChild(inputText);
-    }
-
-    updateTextMenu() {
-
     }
 }
