@@ -6,7 +6,7 @@
 ## Quick Links
 *See the Table of Contents at the top right corner for easier navigation.*
 
-- Style Guide
+- [Style Guide](https://github.com/cse110-sp25-group29/cse110-sp25-group29/blob/main/specs/style-guide.md)
 - [Team Charter](https://github.com/cse110-sp25-group29/cse110-sp25-group29/blob/main/admin/misc/rules.md)
 - [Project Board](https://github.com/orgs/cse110-sp25-group29/projects/2/)
 
@@ -131,11 +131,21 @@ When creating a new issue, make sure to adhere to the following:
 
 #### Priority
 
-*To be established.*
+- **P3**: High priority - Most urgent issues or must-haves by the end of the quarter.
+- **P2**: Moderate - Features coming up next in development, or documentation like ADRs, standup notes, meeting notes, etc.
+- **P1**: Low - Npt urgent, or nice-to-haves by the end of the quarter.
 
 #### Size
 
-*To be established.*
+Each sub-team has sizing criteria specific to their focus area.
+
+| Size | DevOps | Editor Page | Home Page | UI/UX |
+| --- | --- | --- | --- | --- |
+| `XS` | TBD | TBD | <1 hr | TBD |
+| `S` | TBD | TBD | 1-2 hrs | TBD |
+| `M` | TBD | TBD | 2-4 hrs | TBD |
+| `L` | TBD | TBD | 4-6 hrs | TBD |
+| `XL` | TBD | TBD | >6 hrs | TBD |
 
 ### Pull Requests & Merging
 
@@ -150,10 +160,9 @@ When you're done with your addition, commit to your branch, then create a pull r
 
 As established in the team charter, each team is responsible for their exact schedules, but the rough schedule is as follows:
 ```
-Monday:     Sub-Team Sprint Planning
-Wednesday:  Sub-Team Stand-Up Meeting
-Friday:     Sub-Team Sprint Review
-Saturday:   Full-Team Review & Sprint Plan
+Tuesday:    Sub-Team Sprint Planning & Stand-Up Meeting
+Thursday:   Sub-Team Stand-Up Meeting
+Saturday:   Full-Team Sprint Review & Sprint Plan
 ```
 
 When sending your stand-up check ins, please include:
