@@ -44,7 +44,6 @@ mm/dd/yy hh:mmPM
 - Progress
 - Problems
 
-
 ### Editor Page
 
 - Priorities
