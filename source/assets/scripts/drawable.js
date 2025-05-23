@@ -14,6 +14,10 @@ export class Drawable {
     moveY(dy) {}
 }
 
+/* 
+ * Has been deprecated
+ * Keeping around in case we want to add a line tool
+**/
 export class Line extends Drawable {
     constructor(parent) {
         super();
@@ -21,10 +25,9 @@ export class Line extends Drawable {
         this.parent = parent;
         this.canvas = this.parent.canvas;
 
-        // for testing purposes
-        this.r = Math.floor(Math.random() * 256);
-        this.g = Math.floor(Math.random() * 256);
-        this.b = Math.floor(Math.random() * 256);
+        this.r = 255;
+        this.g = 0;
+        this.b = 0;
     }
 
     init(e) {
@@ -77,10 +80,9 @@ export class Box extends Drawable {
         this.parent = parent;
         this.canvas = this.parent.canvas;
 
-        // for testing purposes
-        this.r = Math.floor(Math.random() * 256);
-        this.g = Math.floor(Math.random() * 256);
-        this.b = Math.floor(Math.random() * 256);
+        this.r = 255;
+        this.g = 0;
+        this.b = 0;
     }
 
     init(e) {
@@ -311,10 +313,9 @@ export class Textbox extends Drawable {
         this.parent = parent;
         this.canvas = this.parent.canvas;
 
-        // for testing purposes
-        this.r = Math.floor(Math.random() * 256);
-        this.g = Math.floor(Math.random() * 256);
-        this.b = Math.floor(Math.random() * 256);
+        this.r = 0;
+        this.g = 0;
+        this.b = 0;
 
         const startupInfo = this.parent.toolbar.getToolInfo();
         this.text = startupInfo["text"];
@@ -408,10 +409,9 @@ export class Ellipse extends Box {
         this.parent = parent;
         this.canvas = this.parent.canvas;
 
-        // for testing purposes
-        this.r = Math.floor(Math.random() * 256);
-        this.g = Math.floor(Math.random() * 256);
-        this.b = Math.floor(Math.random() * 256);
+        this.r = 255;
+        this.g = 0;
+        this.b = 0;
     }
 
     drawSelf(ctx) {

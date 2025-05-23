@@ -24,6 +24,14 @@ export class AttributeMenu {
             this.form = document.createElement("textbox-attributes");
             this.form.load(this.obj);
             this.attributeSel.appendChild(this.form);
+        } else if (obj instanceof Drawable.Image) {
+            this.form = document.createElement("icon-attributes");
+            this.form.load(this.obj);
+            this.attributeSel.appendChild(this.form);
+        } else if (obj instanceof Drawable.Box) {
+            this.form = document.createElement("box-attributes");
+            this.form.load(this.obj);
+            this.attributeSel.appendChild(this.form);
         }
     }
 
