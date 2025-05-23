@@ -3,6 +3,12 @@
 
   [*About the Team*](https://cse110-sp25-group29.github.io/cse110-sp25-group29/admin/team.html)
 
+
+## Home Page
+[Quick View of Home Page](https://cse110-sp25-group29.github.io/project-homepage/homepage.html)
+![light](source\light.png)
+![dark](source\dark.png)
+
 ## Quick Links
 *See the Table of Contents at the top right corner for easier navigation.*
 
@@ -169,4 +175,5 @@ When sending your stand-up check ins, please include:
 - Priorities: What are the curent goals you are working on
 - Progress: What you have done since the last stand-up
 - Problems: What is blocking your progress
+
 
