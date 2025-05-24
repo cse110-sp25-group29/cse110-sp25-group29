@@ -14,14 +14,14 @@ Location:
 
 ## Topics
 
-* New feature
-* Painful bug
-* Any other business
+- New feature
+- Painful bug
+- Any other business
 
 ## What Happened
 
-* This happened in the meeting 
+- This happened in the meeting 
 
 ## Things to Do
 
-* X team work on Y feature
+- X team work on Y feature
