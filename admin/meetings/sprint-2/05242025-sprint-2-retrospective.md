@@ -20,7 +20,8 @@ Date: 05/24/2025
 
 ## What Happened
 
-Sprint Retrospective: 
+Sprint Retrospective:
+
 - General
   - Stand ups were good 
   - Keep communication up so we can manage the workload 
@@ -37,7 +38,7 @@ Sprint Retrospective:
   - Setting up meeting is a bit harder because 4 people 
   - Good workflow 
 
-Home:
-- Doing quite good 
-- Good with meetings on specified days 
-  - Else, online 
+- Home:
+  - Doing quite good 
+  - Good with meetings on specified days 
+    - Else, online meetings are planned

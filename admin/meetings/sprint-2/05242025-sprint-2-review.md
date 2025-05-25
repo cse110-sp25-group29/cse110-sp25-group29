@@ -20,7 +20,8 @@ Date: 05/24/2025
 
 ## What Happened
 
-Sprint Review: 
+Sprint Review:
+ 
 - Editor
   - Sidebar
   - Can add text 

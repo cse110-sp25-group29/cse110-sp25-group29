@@ -3,6 +3,7 @@
 
 ## Participants
 ### DevOps
+
 - Brandon
 - Vincent
 
@@ -35,7 +36,7 @@
   - Changed the linter to an online one from TA feedback
 - Problems
   - Figuring how the pipeline works across branches
-  - 
+
 ### Editor Page
 
 - Priorities

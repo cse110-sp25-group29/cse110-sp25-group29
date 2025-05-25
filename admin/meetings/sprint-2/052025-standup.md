@@ -3,6 +3,7 @@
 
 ## Participants
 ### DevOps
+
 - Vincent
 - Brandon
 
