@@ -3,7 +3,8 @@
 
 ## Participants
 ### DevOps
-- list of participants / _No participants_
+- Vincent
+- Brandon
 
 ### Editor Page
 - list of participants / _No participants_
@@ -26,8 +27,18 @@
 ### DevOps
 
 - Priorities
+  - Making sure documentation of everything is on track
+  - Code quality checks for both human and bot
+  - More tests for front end
 - Progress
+  - In progress of more unit tests
+  - Beginning E2E testing
+    - Keep in contact with each team
+  - Making the linter work in the editor
 - Problems
+  - Communication with other team members 
+  - Figuring out new technology due to inexperience
+  - Coming with the correct tests 
 
 ### Editor Page
 

@@ -18,7 +18,7 @@ Date: 05/17/2025
 
 ## What Happened
 
-*  Sprint Review
+Sprint Review
    * What Has Been Done (Editor)
      * Objects and and resizable shapes
      * Decided on inheritance 
