@@ -184,7 +184,7 @@ export class Box extends Drawable {
   }
 
   onMouseUp(e) {
-    return this.selected;
+    return true;
   }
 
   drawSelf(ctx) {

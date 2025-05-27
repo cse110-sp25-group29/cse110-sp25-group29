@@ -100,67 +100,62 @@ export class Canvas {
 
   onClickElsewhere(e) {
     if (!this.active) { return; }
+    console.log(e);
 
-    const bound = this.canvas.getBoundingClientRect();
-    this.enableKeyboardShortcuts = (
-      bound.x <= e.clientX && e.clientX <= bound.x + bound.width &&
-            bound.y <= e.clientY && e.clientY <= bound.y + bound.height
-    );
+    if (e.target === this.canvas) {
+      this.enableKeyboardShortcuts = true;
+      return;
+    }
+
+    const bbox = document.querySelector('#attribute-sel').getBoundingClientRect();
+    const over = (bbox.x <= e.clientX && e.clientX <= bbox.x + bbox.width &&
+                  bbox.y <= e.clientY && e.clientY <= bbox.y + bbox.height);
+    
+    if (over) {
+      this.enableKeyboardShortcuts = false;
+    } else {
+      this.enableKeyboardShortcuts = false;
+      this.focus = null;
+
+      this.attr.setObject(this.focus);
+      this.renderCanvas();
+    }
   }
 
   onMouseDown(e) {
     const tool = this.toolbar.getCurTool();
 
-    let element;
-    switch (tool) {
-      case 0: // selector tool
-        this.selector(e);
-        break;
-      case 1: // line tool, doesn't exist anymore
-        element = new Drawable.Line(this);
-        this.draw_stack.push(element);
-        if (element.init(e)) {
-          this.focus = element;
-          document.addEventListener('mousemove', this.onDrag);
-          document.addEventListener('mouseup', this.onMouseUp);
-        }
-        break;
-      case 2: // box tool
-        element = new Drawable.Box(this);
-        this.draw_stack.push(element);
-        if (element.init(e)) {
-          this.focus = element;
-          document.addEventListener('mousemove', this.onDrag);
-          document.addEventListener('mouseup', this.onMouseUp);
-        }
-        break;
-      case 3: // ellipse tool
-        element = new Drawable.Ellipse(this);
-        this.draw_stack.push(element);
-        if (element.init(e)) {
-          this.focus = element;
-          document.addEventListener('mousemove', this.onDrag);
-          document.addEventListener('mouseup', this.onMouseUp);
-        }
-        break;
-      case 4: // image tool
-        element = new Drawable.Image(this);
-        this.draw_stack.push(element);
-        this.focus = null;
-        if (element.init(e)) {
-          document.addEventListener('mousemove', this.onDrag);
-          document.addEventListener('mouseup', this.onMouseUp);
-        }
-        break;
-      case 5: // textbox tool
-        element = new Drawable.Textbox(this);
-        this.draw_stack.push(element);
-        this.focus = null;
-        if (element.init(e)) {
-          document.addEventListener('mousemove', this.onDrag);
-          document.addEventListener('mouseup', this.onMouseUp);
-        }
-        break;
+    if (tool === 0) {
+      this.selector(e);
+    } else {
+      let element;
+      switch (tool) {
+        case 1: // line tool, doesn't exist anymore
+          element = new Drawable.Line(this);
+          break;
+        case 2: // box tool
+          element = new Drawable.Box(this);
+          break;
+        case 3: // ellipse tool
+          element = new Drawable.Ellipse(this);
+          break;
+        case 4: // image tool
+          element = new Drawable.Image(this);
+          break;
+        case 5: // textbox tool
+          element = new Drawable.Textbox(this);
+          break;
+      }
+
+      this.draw_stack.push(element);
+      this.focus = element;
+      if (element.init(e)) {
+        document.addEventListener('mousemove', this.onDrag);
+        document.addEventListener('mouseup', this.onMouseUp);
+      } else {
+        this.focus.selected = true;
+        this.toolbar.setTool(0);
+      }
     }
 
     this.attr.setObject(this.focus);
@@ -177,10 +172,14 @@ export class Canvas {
   onMouseUp(e) {
     if (this.focus !== null && !this.focus.onMouseUp(e)) {
       this.focus = null;
+    } else {
+      this.focus.selected = true;
     }
 
     document.removeEventListener('mousemove', this.onDrag);
     document.removeEventListener('mouseup', this.onMouseUp);
+
+    this.toolbar.setTool(0);
 
     this.attr.updateObject();
     this.renderCanvas();
