@@ -1,4 +1,15 @@
+/**
+ * Wrapper class around the left column on the editor page.
+ * Used to get and set what the currently selected tool is, as well
+ * as give Drawable info some pointers on how to initialize themselves.
+ */
 export class Toolbar {
+  /**
+   * Gives an enumeration for Canvas object to choose what to do
+   * on a click event.
+   * 
+   * @returns {Number} An enumeration for the currently selected tool.
+   */
   getCurTool() {
     const toolbar = new FormData(document.querySelector('#toolbox'));
     this.val = Number(toolbar.get('tool'));
@@ -16,6 +27,12 @@ export class Toolbar {
     }
   }
 
+  /**
+   * Gives a dictionary of values for Drawable objects 
+   * to initialize themselves with
+   * 
+   * @returns {Map<string, Object>} Mapping of values to follow
+   */
   getToolInfo() {
     switch (this.val) {
       case 0: return {};
@@ -35,6 +52,11 @@ export class Toolbar {
     }
   }
 
+  /**
+   * Sets the currently selected tool
+   * 
+   * @param {Number} tool The tool to select
+   */
   setTool(tool) {
     switch (tool) {
       case 0: document.getElementById('select').checked = true; break;

@@ -1,3 +1,8 @@
+/**
+ * Contains all of the Shadow DOMs we want to make
+ * the right column work without bloating to code too much
+ */
+
 class TextboxElement extends HTMLElement {
   constructor() {
     super();

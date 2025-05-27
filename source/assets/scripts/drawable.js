@@ -1,23 +1,104 @@
+/**
+ * Interface for Drawable objects to adhere to.
+ * All Drawable objects must implement the following classes
+ * so that the Canvas object can call on them.
+ */
 export class Drawable {
+  /**
+   * Constructor to initialize initial values.
+   * 
+   * @constructor
+   */
   constructor() { this.selected = false; }
 
-  init() {}
-  onMouseDown() { return false; }
-  onDrag() {}
-  onMouseUp() {}
+  /**
+   * Initializes initial values that depend on positionality.
+   * Distinct from constructor in that it relies on a mousedown
+   * event to tell it where this object is located.
+   * 
+   * @param {MouseEvent} e The mousedown event
+   * @returns {boolean} Whether to continue dragging this object
+   *    after the initial click
+   */
+  init(e) { return false; }
+
+  /**
+   * Handles what happens when an object is clicked at first.
+   * 
+   * @param {MouseEvent} e The mousedown event
+   * @returns {boolean} Whether to continue dragging this object
+   *    after the initial click
+   */
+  onMouseDown(e) { return false; }
+
+  /**
+   * Handles what happens to the object when the users drags
+   * 
+   * @param {MouseEvent} e The drag event
+   */
+  onDrag(e) {}
+
+  /**
+   * Handles what happens when the user lets go of their mouse.
+   * 
+   * @param {MouseEvent} e The mouseup event
+   * @return {boolean} Whether to have this object be selected
+   *    after letting go
+   */
+  onMouseUp(e) { return false; }
+
+  /**
+   * Draws self on the canvas screen.
+   * 
+   * @param {*} ctx The canvas context to draw with
+   */
   drawSelf(ctx) {}
-  drawFocus() {}
+
+  /**
+   * Draws this objects selection box. To be used when
+   * an object is selected.
+   * 
+   * @param {*} ctx The canvas context to draw with
+   */
+  drawFocus(ctx) {}
+
+  /**
+   * Returns whether a click is over this object
+   * 
+   * @param {Number} x The x position to compare against
+   * @param {Number} y The y position to compare against
+   * @returns {boolean} Whether the click is over this object
+   */
   overSelf(x, y) { return false; }
+
+  /**
+   * Same as overSelf, except for if its over the selected bounding
+   * box in particular. Used for objects that have a slightly larger
+   * selection box and to prioritize the selected object, even if it's
+   * below other objects on screen.
+   * 
+   * @param {Number} x The x position to compare against
+   * @param {Number} y The y position to compare against
+   * @returns {boolean} Whether the click is over this bounding box
+   */
   overSelection(x, y) { return false; }
 
+  /**
+   * Moves an object by dx pixels horizontally on the screen
+   * @param {Number} dx The amount to move
+   */
   moveX(dx) {}
+
+  /**
+   * Moves an objects by dy pixels vertically on the screen
+   * @param {Number} dy The amount to move
+   */
   moveY(dy) {}
 }
 
-/*
- * Has been deprecated
- * Keeping around in case we want to add a line tool
-**/
+/**
+ * Deprecated. Used to create a line on the screen.
+ */
 export class Line extends Drawable {
   constructor(parent) {
     super();
@@ -73,6 +154,9 @@ export class Line extends Drawable {
   }
 }
 
+/**
+ * Creates a box on the screen. Can be locked into shape by holding shift.
+ */
 export class Box extends Drawable {
   constructor(parent) {
     super();
@@ -269,6 +353,11 @@ export class Box extends Drawable {
   }
 }
 
+/**
+ * Draws an image on the screen. Extends Box since it's
+ * effectively the same thing except it uses an image
+ * instead of color to draw.
+ */
 export class Image extends Box {
   constructor(parent, src) {
     super(parent);
@@ -300,6 +389,10 @@ export class Image extends Box {
   }
 }
 
+/**
+ * Draws a textbox on the screen. Has the ability to change font style,
+ * color, and size, as well as be italicized and bolded.
+ */
 export class Textbox extends Drawable {
   constructor(parent) {
     super(parent);
@@ -396,6 +489,11 @@ export class Textbox extends Drawable {
   }
 }
 
+/**
+ * Draws an ellipse on the screen. Extends Box since it's
+ * effectively the same thing except the shape is slightly different.
+ * Also has a slightly different selection render.
+ */
 export class Ellipse extends Box {
   constructor(parent) {
     super(parent);

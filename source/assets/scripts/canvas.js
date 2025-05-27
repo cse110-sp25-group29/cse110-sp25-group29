@@ -1,6 +1,26 @@
 import * as Drawable from './drawable.js';
 
+/**
+ * Represents a <canvas> HTML object with methods to
+ * manipulate what's drawn on screen
+ * 
+ * Instance variables:
+ *  - canvas: The \<canvas\> object to draw to
+ *  - draw_stack: The order in which to draw objects
+ *  - focus: The currently selected object
+ *  - active: Whether the Canvas is currently active
+ *  - toolbar: The toolbar to pull from
+ *  - attr: The attribute menu to pull from and write to
+ */
 export class Canvas {
+  /**
+   * Initializes the Canvas object.
+   * 
+   * @constructor
+   * @param {string} id The HTML identifier for what \<canvas\> element this
+   *    Canvas object is attached to
+   * @param {boolean} active Whether this \<canvas\> is active at startup
+   */
   constructor(id, active) {
     this.canvas = document.querySelector(id);
     this.canvas.width = 1080;
@@ -22,6 +42,12 @@ export class Canvas {
     this.setActive(active);
   }
 
+  /**
+   * Makes this Canvas object either active or inactive, resetting
+   * all relevant listeners
+   * 
+   * @param {boolean} active Whether to be active or not
+   */
   setActive(active) {
     this.active = active;
 
@@ -34,6 +60,7 @@ export class Canvas {
     } else {
       this.shiftHeld = false;
       this.focus = null;
+      
       this.canvas.removeEventListener('mousedown', this.onMouseDown);
       document.removeEventListener('keydown', this.onKeyDown);
       document.removeEventListener('keyup', this.onKeyUp);
@@ -41,25 +68,53 @@ export class Canvas {
       document.removeEventListener('click', this.onClickElsewhere);
     }
 
+    if (this.attr)
+      this.attr.setObject(this.focus);
     this.renderCanvas();
   }
 
+  /**
+   * Attaches the selected toolbar to this Canvas object
+   * 
+   * @param {Toolbar} toolbar Toolbar to attach
+   */
   attachToolbar(toolbar) {
     this.toolbar = toolbar;
   }
 
+  /**
+   * Attaches the selected attribute menu to this Canvas object
+   * 
+   * @param {AttributeMenu} attr Attribute menu to attach
+   */
   attachAttributeMenu(attr) {
     this.attr = attr;
   }
 
-  export() {
+  /**
+   * Exports this Canvas object into JSON format, giving a
+   * description thorough enough to reconstruct it at a later time
+   * 
+   * @returns {Map<string,Object>} JSON formatted dictionary
+   */
+  exportJSON() {
     // TODO
   }
 
-  import(description) {
+  /**
+   * Reconstructs this Canvas object from a previous JSON export
+   * 
+   * @param {Map<string,Object>} description JSON formatted dictionary
+   */
+  importJSON(description) {
     // TODO
   }
 
+  /**
+   * Handles a mousedown event when the currently selected tool is 'select'
+   * 
+   * @param {MouseEvent} e The mousedown event
+   */
   selector(e) {
     const scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width;
     const scaleY = this.canvas.height / this.canvas.getBoundingClientRect().height;
@@ -98,6 +153,20 @@ export class Canvas {
     }
   }
 
+  /**
+   * Handles clicks that aren't on the \<canvas\> element.
+   * 
+   * If this Canvas isn't active or we clicked on the \<canvas\>, return
+   * and let onMouseDown handle the evetn.
+   * 
+   * If the click was on over the attribute selector menu, only disable
+   * keyboard shortcuts (we don't want to click off the currently selected
+   * element but want the user to interact with the menu smoothly)
+   * 
+   * Otherwise, deselect the currently selected element
+   * 
+   * @param {MouseEvent} e The click event
+   */
   onClickElsewhere(e) {
     if (!this.active) { return; }
     console.log(e);
@@ -122,6 +191,17 @@ export class Canvas {
     }
   }
 
+  /**
+   * Handles clicks on the \<canvas\> element.
+   * 
+   * If the current tool is 'selector', call selector() and let it
+   * handle it.
+   * 
+   * Otherwise, create a new element and be ready to modify it (in the case
+   * of squares or circles) or to simply select it and go to the selector tool
+   * 
+   * @param {MouseEvent} e The mousedown event
+   */
   onMouseDown(e) {
     const tool = this.toolbar.getCurTool();
 
@@ -162,6 +242,12 @@ export class Canvas {
     this.renderCanvas();
   }
 
+  /**
+   * Handle moving the cursor after a mousedown event, either
+   * to drag elements around or to resize them
+   * 
+   * @param {MouseEvent} e The drag event
+   */
   onDrag(e) {
     if (this.focus !== null) { this.focus.onDrag(e); }
 
@@ -169,6 +255,11 @@ export class Canvas {
     this.renderCanvas();
   }
 
+  /**
+   * Handle letting go of a mouse press
+   * 
+   * @param {MouseEvent} e  The mouseup event
+   */
   onMouseUp(e) {
     if (this.focus !== null && !this.focus.onMouseUp(e)) {
       this.focus = null;
@@ -185,6 +276,15 @@ export class Canvas {
     this.renderCanvas();
   }
 
+  /**
+   * Handles a left key trigger by the user.
+   * 
+   * Currently, only moves objects left when keyboard shortcuts
+   * are enabled.
+   * 
+   * @param {boolean} meta Whether the meta button is held
+   * @param {boolean} shift Whether the shift button is held
+   */
   triggerLeftKey(meta, shift) {
     if (this.focus === null) { return; }
 
@@ -192,6 +292,15 @@ export class Canvas {
     this.renderCanvas();
   }
 
+  /**
+   * Handles a right key trigger by the user.
+   *    
+   * Currently, only moves objects right when keyboard shortcuts
+   * are enabled.
+   * 
+   * @param {boolean} meta Whether the meta button is held
+   * @param {boolean} shift Whether the shift button is held
+   */
   triggerRightKey(meta, shift) {
     if (this.focus === null) { return; }
 
@@ -199,6 +308,18 @@ export class Canvas {
     this.renderCanvas();
   }
 
+  /**
+   * Handles a down key trigger by the user.
+   * 
+   * Moves objects down when the meta button is not held.
+   * 
+   * Moves objects down in the render stack when the meta button
+   * is held, either by one or to the bottom depending on whether
+   * the shift button is held.
+   * 
+   * @param {boolean} meta Whether the meta button is held
+   * @param {boolean} shift Whether the shift button is held
+   */
   triggerDownKey(meta, shift) {
     if (this.focus === null) { return; }
 
@@ -227,6 +348,18 @@ export class Canvas {
     this.renderCanvas();
   }
 
+  /**
+   * Handles a up key trigger by the user.
+   * 
+   * Moves objects up when the meta button is not held.
+   * 
+   * Moves objects up in the render stack when the meta button
+   * is held, either by one or to the top depending on whether
+   * the shift button is held.
+   * 
+   * @param {boolean} meta Whether the meta button is held
+   * @param {boolean} shift Whether the shift button is held
+   */
   triggerUpKey(meta, shift) {
     if (this.focus === null) { return; }
 
@@ -255,6 +388,11 @@ export class Canvas {
     this.renderCanvas();
   }
 
+  /**
+   * Handle a delete key trigger by the user.
+   * 
+   * Deletes the currently selected object.
+   */
   triggerDeleteKey() {
     if (this.focus === null) { return; }
 
@@ -273,6 +411,12 @@ export class Canvas {
     this.renderCanvas();
   }
 
+  /**
+   * Handles keyboard presses by the user, delegating the task
+   * handling to their respective functions.
+   * 
+   * @param {KeyboardEvent} e The keypress event
+   */
   onKeyDown(e) {
     const key = e.key;
     if (key === 'Shift') {
@@ -294,6 +438,13 @@ export class Canvas {
     }
   }
 
+  /**
+   * Handles a user letting go of a key.
+   * 
+   * Only used for tracking whether shift is held for now.
+   * 
+   * @param {KeyboardEvent} e The keypress event
+   */
   onKeyUp(e) {
     const key = e.key;
     if (key === 'Shift') {
@@ -301,6 +452,12 @@ export class Canvas {
     }
   }
 
+  /**
+   * Renders the canvas, going from the bottom to the top
+   * of the draw stack. Each object has its own drawing
+   * functionality, so hand it off to them. Finally draw the
+   * focus box of the currently selected item.
+   */
   renderCanvas() {
     const ctx = this.canvas.getContext('2d');
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
