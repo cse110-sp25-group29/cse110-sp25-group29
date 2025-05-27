@@ -16,6 +16,9 @@ export class Canvas {
         this.shiftHeld = false;
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onKeyUp = this.onKeyUp.bind(this);
+
+        this.onClickElsewhere = this.onClickElsewhere.bind(this);
+      
         this.setActive(active);
     }
 
@@ -26,12 +29,18 @@ export class Canvas {
             this.canvas.addEventListener('mousedown', this.onMouseDown);
             document.addEventListener('keydown', this.onKeyDown);
             document.addEventListener('keyup', this.onKeyUp);
+
+            document.addEventListener('click', this.onClickElsewhere);
+
         } else {
             this.shiftHeld = false;
             this.focus = null;
             this.canvas.removeEventListener('mousedown', this.onMouseDown);
             document.removeEventListener('keydown', this.onKeyDown);
             document.removeEventListener('keyup', this.onKeyUp);
+
+            document.removeEventListener('click', this.onClickElsewhere);
+
         }
 
         this.renderCanvas();
@@ -91,6 +100,19 @@ export class Canvas {
         }
     }
 
+    
+    onClickElsewhere(e) {
+        if (!this.active)
+            return;
+
+        let bound = this.canvas.getBoundingClientRect();
+        this.enableKeyboardShortcuts = (
+            bound.x <= e.clientX && e.clientX <= bound.x + bound.width &&
+            bound.y <= e.clientY && e.clientY <= bound.y + bound.height
+        );
+    }
+
+
     onMouseDown(e) {
         const tool = this.toolbar.getCurTool();
 
@@ -146,6 +168,8 @@ export class Canvas {
                 break;
         }
 
+
+        this.attr.setObject(this.focus);
         this.renderCanvas();
     }
 
@@ -153,6 +177,7 @@ export class Canvas {
         if (this.focus != null)
             this.focus.onDrag(e);
 
+        this.attr.updateObject();
         this.renderCanvas();
     }
 
@@ -164,6 +189,8 @@ export class Canvas {
         document.removeEventListener('mousemove', this.onDrag);
         document.removeEventListener('mouseup', this.onMouseUp);
 
+
+        this.attr.updateObject();
         this.renderCanvas();
     }
 
@@ -255,6 +282,8 @@ export class Canvas {
 
         this.draw_stack.splice(item_id, 1);
         this.focus = null;
+
+        this.attr.setObject(this.focus);
         this.renderCanvas();
     }
 
@@ -263,7 +292,12 @@ export class Canvas {
         if (key === 'Shift') {
             this.shiftHeld = true;
         }
-        else if (key == 'ArrowDown') {
+
+        
+        if (!this.enableKeyboardShortcuts)
+            return; // shortcuts aren't enabled right now
+
+        if (key == 'ArrowDown') {
             this.triggerDownKey(e.metaKey, e.shiftKey)
         }
         else if (key == 'ArrowUp') {
