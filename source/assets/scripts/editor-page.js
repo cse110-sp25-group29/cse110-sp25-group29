@@ -5,8 +5,8 @@ import * as Canvas from './canvas.js';
 window.addEventListener('DOMContentLoaded', init);
 
 function init() {
-    const front_canvas = new Canvas.Canvas("#front-card", true);
-    const back_canvas = new Canvas.Canvas("#back-card", false);
+    const frontCanvas = new Canvas.Canvas("#front-card", true);
+    const backCanvas = new Canvas.Canvas("#back-card", false);
 
     const toolbar = new Toolbar.Toolbar();
     const attributeMenu = new AttributeMenu.AttributeMenu("#attribute-sel");

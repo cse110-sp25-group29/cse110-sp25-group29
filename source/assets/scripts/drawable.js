@@ -369,10 +369,8 @@ export class Textbox extends Drawable {
     if (!this.selected) { return; }
 
 
-        ctx.font = `${this.bold ? " bold" : ""} ${this.italics ? " italic" : ""} ${this.fontSize}px ${this.fontStyle}`;
-        ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
-            
-        const text = ctx.measureText(this.text);
+    ctx.font = `${this.bold ? " bold" : ""} ${this.italics ? " italic" : ""} ${this.fontSize}px ${this.fontStyle}`;
+    ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
 
     const text = ctx.measureText(this.text);
 
