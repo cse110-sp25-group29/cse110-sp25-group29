@@ -10,7 +10,7 @@ import './shadow-dom.js';
 export class AttributeMenu {
   /**
    * Initializes this AttributeMenu
-   * 
+   *
    * @constructor
    * @param {string} attributeSel The selector pointing to where this
    *    attribute selector is located
@@ -25,7 +25,7 @@ export class AttributeMenu {
   /**
    * Resets the right column by updating it with a new
    * object (or clearing it if no new object is selected)
-   * 
+   *
    * @param {*} obj The object to set to
    */
   setObject(obj) {

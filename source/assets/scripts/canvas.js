@@ -3,7 +3,7 @@ import * as Drawable from './drawable.js';
 /**
  * Represents a <canvas> HTML object with methods to
  * manipulate what's drawn on screen
- * 
+ *
  * Instance variables:
  *  - canvas: The \<canvas\> object to draw to
  *  - draw_stack: The order in which to draw objects
@@ -15,7 +15,7 @@ import * as Drawable from './drawable.js';
 export class Canvas {
   /**
    * Initializes the Canvas object.
-   * 
+   *
    * @constructor
    * @param {string} id The HTML identifier for what \<canvas\> element this
    *    Canvas object is attached to
@@ -45,7 +45,7 @@ export class Canvas {
   /**
    * Makes this Canvas object either active or inactive, resetting
    * all relevant listeners
-   * 
+   *
    * @param {boolean} active Whether to be active or not
    */
   setActive(active) {
@@ -60,7 +60,7 @@ export class Canvas {
     } else {
       this.shiftHeld = false;
       this.focus = null;
-      
+
       this.canvas.removeEventListener('mousedown', this.onMouseDown);
       document.removeEventListener('keydown', this.onKeyDown);
       document.removeEventListener('keyup', this.onKeyUp);
@@ -68,14 +68,13 @@ export class Canvas {
       document.removeEventListener('click', this.onClickElsewhere);
     }
 
-    if (this.attr)
-      this.attr.setObject(this.focus);
+    if (this.attr) { this.attr.setObject(this.focus); }
     this.renderCanvas();
   }
 
   /**
    * Attaches the selected toolbar to this Canvas object
-   * 
+   *
    * @param {Toolbar} toolbar Toolbar to attach
    */
   attachToolbar(toolbar) {
@@ -84,7 +83,7 @@ export class Canvas {
 
   /**
    * Attaches the selected attribute menu to this Canvas object
-   * 
+   *
    * @param {AttributeMenu} attr Attribute menu to attach
    */
   attachAttributeMenu(attr) {
@@ -94,7 +93,7 @@ export class Canvas {
   /**
    * Exports this Canvas object into JSON format, giving a
    * description thorough enough to reconstruct it at a later time
-   * 
+   *
    * @returns {Map<string,Object>} JSON formatted dictionary
    */
   exportJSON() {
@@ -103,7 +102,7 @@ export class Canvas {
 
   /**
    * Reconstructs this Canvas object from a previous JSON export
-   * 
+   *
    * @param {Map<string,Object>} description JSON formatted dictionary
    */
   importJSON(description) {
@@ -112,7 +111,7 @@ export class Canvas {
 
   /**
    * Handles a mousedown event when the currently selected tool is 'select'
-   * 
+   *
    * @param {MouseEvent} e The mousedown event
    */
   selector(e) {
@@ -155,16 +154,16 @@ export class Canvas {
 
   /**
    * Handles clicks that aren't on the \<canvas\> element.
-   * 
+   *
    * If this Canvas isn't active or we clicked on the \<canvas\>, return
    * and let onMouseDown handle the evetn.
-   * 
+   *
    * If the click was on over the attribute selector menu, only disable
    * keyboard shortcuts (we don't want to click off the currently selected
    * element but want the user to interact with the menu smoothly)
-   * 
+   *
    * Otherwise, deselect the currently selected element
-   * 
+   *
    * @param {MouseEvent} e The click event
    */
   onClickElsewhere(e) {
@@ -193,13 +192,13 @@ export class Canvas {
 
   /**
    * Handles clicks on the \<canvas\> element.
-   * 
+   *
    * If the current tool is 'selector', call selector() and let it
    * handle it.
-   * 
+   *
    * Otherwise, create a new element and be ready to modify it (in the case
    * of squares or circles) or to simply select it and go to the selector tool
-   * 
+   *
    * @param {MouseEvent} e The mousedown event
    */
   onMouseDown(e) {
@@ -245,7 +244,7 @@ export class Canvas {
   /**
    * Handle moving the cursor after a mousedown event, either
    * to drag elements around or to resize them
-   * 
+   *
    * @param {MouseEvent} e The drag event
    */
   onDrag(e) {
@@ -257,7 +256,7 @@ export class Canvas {
 
   /**
    * Handle letting go of a mouse press
-   * 
+   *
    * @param {MouseEvent} e  The mouseup event
    */
   onMouseUp(e) {
@@ -278,10 +277,10 @@ export class Canvas {
 
   /**
    * Handles a left key trigger by the user.
-   * 
+   *
    * Currently, only moves objects left when keyboard shortcuts
    * are enabled.
-   * 
+   *
    * @param {boolean} meta Whether the meta button is held
    * @param {boolean} shift Whether the shift button is held
    */
@@ -294,10 +293,10 @@ export class Canvas {
 
   /**
    * Handles a right key trigger by the user.
-   *    
+   *
    * Currently, only moves objects right when keyboard shortcuts
    * are enabled.
-   * 
+   *
    * @param {boolean} meta Whether the meta button is held
    * @param {boolean} shift Whether the shift button is held
    */
@@ -310,13 +309,13 @@ export class Canvas {
 
   /**
    * Handles a down key trigger by the user.
-   * 
+   *
    * Moves objects down when the meta button is not held.
-   * 
+   *
    * Moves objects down in the render stack when the meta button
    * is held, either by one or to the bottom depending on whether
    * the shift button is held.
-   * 
+   *
    * @param {boolean} meta Whether the meta button is held
    * @param {boolean} shift Whether the shift button is held
    */
@@ -350,13 +349,13 @@ export class Canvas {
 
   /**
    * Handles a up key trigger by the user.
-   * 
+   *
    * Moves objects up when the meta button is not held.
-   * 
+   *
    * Moves objects up in the render stack when the meta button
    * is held, either by one or to the top depending on whether
    * the shift button is held.
-   * 
+   *
    * @param {boolean} meta Whether the meta button is held
    * @param {boolean} shift Whether the shift button is held
    */
@@ -390,7 +389,7 @@ export class Canvas {
 
   /**
    * Handle a delete key trigger by the user.
-   * 
+   *
    * Deletes the currently selected object.
    */
   triggerDeleteKey() {
@@ -414,7 +413,7 @@ export class Canvas {
   /**
    * Handles keyboard presses by the user, delegating the task
    * handling to their respective functions.
-   * 
+   *
    * @param {KeyboardEvent} e The keypress event
    */
   onKeyDown(e) {
@@ -440,9 +439,9 @@ export class Canvas {
 
   /**
    * Handles a user letting go of a key.
-   * 
+   *
    * Only used for tracking whether shift is held for now.
-   * 
+   *
    * @param {KeyboardEvent} e The keypress event
    */
   onKeyUp(e) {

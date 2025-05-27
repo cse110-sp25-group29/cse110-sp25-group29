@@ -7,7 +7,7 @@ export class Toolbar {
   /**
    * Gives an enumeration for Canvas object to choose what to do
    * on a click event.
-   * 
+   *
    * @returns {Number} An enumeration for the currently selected tool.
    */
   getCurTool() {
@@ -28,9 +28,9 @@ export class Toolbar {
   }
 
   /**
-   * Gives a dictionary of values for Drawable objects 
+   * Gives a dictionary of values for Drawable objects
    * to initialize themselves with
-   * 
+   *
    * @returns {Map<string, Object>} Mapping of values to follow
    */
   getToolInfo() {
@@ -54,7 +54,7 @@ export class Toolbar {
 
   /**
    * Sets the currently selected tool
-   * 
+   *
    * @param {Number} tool The tool to select
    */
   setTool(tool) {
