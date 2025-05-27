@@ -5,11 +5,11 @@ import * as Canvas from './canvas.js';
 window.addEventListener('DOMContentLoaded', init);
 
 function init() {
-    const frontCanvas = new Canvas.Canvas("#front-card", true);
-    const backCanvas = new Canvas.Canvas("#back-card", false);
+  const frontCanvas = new Canvas.Canvas('#front-card', true);
+  const backCanvas = new Canvas.Canvas('#back-card', false);
 
-    const toolbar = new Toolbar.Toolbar();
-    const attributeMenu = new AttributeMenu.AttributeMenu("#attribute-sel");
+  const toolbar = new Toolbar.Toolbar();
+  const attributeMenu = new AttributeMenu.AttributeMenu('#attribute-sel');
 
   frontCanvas.attachToolbar(toolbar);
   frontCanvas.attachAttributeMenu(attributeMenu);
@@ -17,12 +17,12 @@ function init() {
   backCanvas.attachToolbar(toolbar);
   backCanvas.attachAttributeMenu(attributeMenu);
 
-    const flipButton = document.querySelector("#flip_button");
+  const flipButton = document.querySelector('#flip_button');
 
-    flipButton.addEventListener('click', () => {
-        let active = front_canvas.active;
-        front_canvas.setActive(!active);
-        back_canvas.setActive(active);
+  flipButton.addEventListener('click', () => {
+    const active = frontCanvas.active;
+    frontCanvas.setActive(!active);
+    backCanvas.setActive(active);
 
     if (active) {
       frontCanvas.canvas.style.transform = 'rotateY(180deg)';

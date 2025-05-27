@@ -14,7 +14,7 @@ export class Drawable {
   moveY(dy) {}
 }
 
-/* 
+/*
  * Has been deprecated
  * Keeping around in case we want to add a line tool
 **/
@@ -25,10 +25,10 @@ export class Line extends Drawable {
     this.parent = parent;
     this.canvas = this.parent.canvas;
 
-        this.r = 255;
-        this.g = 0;
-        this.b = 0;
-    }
+    this.r = 255;
+    this.g = 0;
+    this.b = 0;
+  }
 
   init(e) {
     const scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width;
@@ -80,10 +80,10 @@ export class Box extends Drawable {
     this.parent = parent;
     this.canvas = this.parent.canvas;
 
-        this.r = 255;
-        this.g = 0;
-        this.b = 0;
-    }
+    this.r = 255;
+    this.g = 0;
+    this.b = 0;
+  }
 
   init(e) {
     const scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width;
@@ -307,18 +307,18 @@ export class Textbox extends Drawable {
     this.parent = parent;
     this.canvas = this.parent.canvas;
 
-        this.r = 0;
-        this.g = 0;
-        this.b = 0;
+    this.r = 0;
+    this.g = 0;
+    this.b = 0;
 
-        const startupInfo = this.parent.toolbar.getToolInfo();
-        this.text = startupInfo["text"];
-        this.fontSize = startupInfo["fontSize"];
-        this.fontStyle = startupInfo["fontStyle"];
+    const startupInfo = this.parent.toolbar.getToolInfo();
+    this.text = startupInfo.text;
+    this.fontSize = startupInfo.fontSize;
+    this.fontStyle = startupInfo.fontStyle;
 
-        this.bold = false;
-        this.italics = false;
-    }
+    this.bold = false;
+    this.italics = false;
+  }
 
   init(e) {
     const scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width;
@@ -358,19 +358,17 @@ export class Textbox extends Drawable {
     return this.x <= x && x <= this.x + this.canvas.getContext('2d').measureText(this.text).width && this.y <= y + this.fontSize && y <= this.y;
   }
 
+  drawSelf(ctx) {
+    ctx.font = `${this.bold ? ' bold' : ''} ${this.italics ? ' italic' : ''} ${this.fontSize}px ${this.fontStyle}`;
+    ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
 
-    drawSelf(ctx) {
-        ctx.font = `${this.bold ? " bold" : ""} ${this.italics ? " italic" : ""} ${this.fontSize}px ${this.fontStyle}`;
-        ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
-
-        ctx.fillText(this.text, this.x, this.y);
-    }
+    ctx.fillText(this.text, this.x, this.y);
+  }
 
   drawFocus(ctx) {
     if (!this.selected) { return; }
 
-
-    ctx.font = `${this.bold ? " bold" : ""} ${this.italics ? " italic" : ""} ${this.fontSize}px ${this.fontStyle}`;
+    ctx.font = `${this.bold ? ' bold' : ''} ${this.italics ? ' italic' : ''} ${this.fontSize}px ${this.fontStyle}`;
     ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
 
     const text = ctx.measureText(this.text);
@@ -399,80 +397,78 @@ export class Textbox extends Drawable {
 }
 
 export class Ellipse extends Box {
-    constructor(parent) {
-        super(parent);
+  constructor(parent) {
+    super(parent);
 
-        this.parent = parent;
-        this.canvas = this.parent.canvas;
+    this.parent = parent;
+    this.canvas = this.parent.canvas;
 
-        this.r = 255;
-        this.g = 0;
-        this.b = 0;
+    this.r = 255;
+    this.g = 0;
+    this.b = 0;
+  }
+
+  drawSelf(ctx) {
+    ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
+
+    ctx.beginPath();
+    ctx.ellipse((this.x1 + this.x2) / 2, (this.y1 + this.y2) / 2,
+      Math.abs(this.x2 - this.x1) / 2, Math.abs(this.y2 - this.y1) / 2, 0, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+
+  drawFocus(ctx) { // almost the same as for box but different border
+    if (!this.selected) { return; }
+
+    const minX = Math.min(this.x1, this.x2);
+    const minY = Math.min(this.y1, this.y2);
+    const width = Math.abs(this.x2 - this.x1);
+    const height = Math.abs(this.y2 - this.y1);
+
+    ctx.strokeStyle = 'rgb(200, 200, 255)';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.ellipse((this.x1 + this.x2) / 2, (this.y1 + this.y2) / 2,
+      (Math.abs(this.x2 - this.x1) + 2) / 2, (Math.abs(this.y2 - this.y1) + 2) / 2,
+      0, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    ctx.strokeStyle = 'rgb(50, 50, 255)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(minX, minY, width, height);
+
+    ctx.beginPath();
+    ctx.moveTo((this.x1 + this.x2) / 2, minY);
+    ctx.lineTo((this.x1 + this.x2) / 2, minY - 40);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc((this.x1 + this.x2) / 2, minY - 40, 7, 0, 2 * Math.PI);
+    ctx.fillStyle = 'rgb(50, 50, 255)';
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgb(255, 255, 255)';
+    ctx.stroke();
+
+    const pts = [[this.x1, this.y1], [this.x1, this.y2], [this.x2, this.y2], [this.x2, this.y1],
+      [(this.x1 + this.x2) / 2, this.y1], [(this.x1 + this.x2) / 2, this.y2],
+      [this.x1, (this.y1 + this.y2) / 2], [this.x2, (this.y1 + this.y2) / 2]];
+
+    for (let pt = 0; pt < pts.length; pt++) {
+      ctx.fillStyle = 'rgb(255, 255, 255)';
+      ctx.fillRect(pts[pt][0] - 7, pts[pt][1] - 7, 15, 15);
+
+      ctx.fillStyle = 'rgb(50, 50, 255)';
+      ctx.fillRect(pts[pt][0] - 5, pts[pt][1] - 5, 11, 11);
     }
+  }
 
-    drawSelf(ctx) {
-        ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
+  overSelf(x, y) {
+    const centerX = (this.x1 + this.x2) / 2;
+    const centerY = (this.y1 + this.y2) / 2;
+    const rx = Math.abs(this.x2 - this.x1) / 2;
+    const ry = Math.abs(this.y2 - this.y1) / 2;
 
-        ctx.beginPath();
-        ctx.ellipse((this.x1 + this.x2) / 2, (this.y1 + this.y2) / 2, 
-            Math.abs(this.x2 - this.x1) / 2, Math.abs(this.y2 - this.y1) / 2, 0, 0, 2 * Math.PI);
-        ctx.fill();
-    }
-
-    drawFocus(ctx) { // almost the same as for box but different border
-        if (!this.selected)
-            return;
-
-        let minX = Math.min(this.x1, this.x2);
-        let minY = Math.min(this.y1, this.y2);
-        let width = Math.abs(this.x2 - this.x1);
-        let height = Math.abs(this.y2 - this.y1);
-
-        ctx.strokeStyle = "rgb(200, 200, 255)";
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.ellipse((this.x1 + this.x2) / 2, (this.y1 + this.y2) / 2, 
-            (Math.abs(this.x2 - this.x1) + 2) / 2, (Math.abs(this.y2 - this.y1) + 2) / 2, 
-            0, 0, 2 * Math.PI);
-        ctx.stroke();
-
-        ctx.strokeStyle = "rgb(50, 50, 255)";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(minX, minY, width, height);
-
-        ctx.beginPath();
-        ctx.moveTo((this.x1 + this.x2) / 2, minY);
-        ctx.lineTo((this.x1 + this.x2) / 2, minY - 40);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc((this.x1 + this.x2) / 2, minY - 40, 7, 0, 2 * Math.PI);
-        ctx.fillStyle = "rgb(50, 50, 255)";
-        ctx.fill();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "rgb(255, 255, 255)";
-        ctx.stroke();
-
-        const pts = [[this.x1, this.y1], [this.x1, this.y2], [this.x2, this.y2], [this.x2, this.y1],
-                    [(this.x1 + this.x2) / 2, this.y1], [(this.x1 + this.x2) / 2, this.y2], 
-                    [this.x1, (this.y1 + this.y2) / 2], [this.x2, (this.y1 + this.y2) / 2]];
-
-        for (let pt = 0; pt < pts.length; pt++) {
-            ctx.fillStyle = "rgb(255, 255, 255)";
-            ctx.fillRect(pts[pt][0] - 7, pts[pt][1] - 7, 15, 15);
-
-            ctx.fillStyle = "rgb(50, 50, 255)";
-            ctx.fillRect(pts[pt][0] - 5, pts[pt][1] - 5, 11, 11);
-        }
-    }
-
-    overSelf(x, y) {
-        let centerX = (this.x1 + this.x2) / 2;
-        let centerY = (this.y1 + this.y2) / 2;
-        let rx = Math.abs(this.x2 - this.x1) / 2;
-        let ry = Math.abs(this.y2 - this.y1) / 2;
-
-        return ((centerX - x) / rx) ** 2 + ((centerY - y) / ry) ** 2 <= 1;
-    }
+    return ((centerX - x) / rx) ** 2 + ((centerY - y) / ry) ** 2 <= 1;
+  }
 }
-
