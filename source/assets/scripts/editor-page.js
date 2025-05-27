@@ -4,6 +4,9 @@ import * as Canvas from './canvas.js';
 
 window.addEventListener('DOMContentLoaded', init);
 
+/**
+ * Initializes the objects on the editor page.
+ */
 function init() {
   const frontCanvas = new Canvas.Canvas('#front-card', true);
   const backCanvas = new Canvas.Canvas('#back-card', false);
