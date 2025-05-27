@@ -32,9 +32,9 @@ Sprint Review:
 
 - UI/UX
   - Title card design is finalized 
-  - Insert image to show 
-  - All cards page has a sketch 
-  - Insert image 
+  ![Final title designs](../img/title-1.png)
+  - All cards page wireframe in progress
+  ![All cards page wireframe](../img/all-cards-1.png)
   - Updating the editor page
   - Updated home page, but didn’t get a chance to communicate with home page team 
   - Progress of making user diagram 
