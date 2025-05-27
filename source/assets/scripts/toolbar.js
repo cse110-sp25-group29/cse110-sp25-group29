@@ -34,4 +34,20 @@ export class Toolbar {
       }
     }
   }
+
+  setTool(tool) {
+    switch (tool) {
+      case 0: document.getElementById('select').checked = true; break;
+      case 1: document.getElementById('facebook').checked = true; break;
+      case 2: document.getElementById('instagram').checked = true; break;
+      case 3: document.getElementById('linkedin').checked = true; break;
+      case 4: document.getElementById('github').checked = true; break;
+      case 5: document.getElementById('heading').checked = true; break;
+      case 6: document.getElementById('subheading').checked = true; break;
+      case 7: document.getElementById('body').checked = true; break;
+      case 8: document.getElementById('square').checked = true; break;
+      case 9: document.getElementById('circle').checked = true; break;
+      default: break;
+    }
+  }
 }
