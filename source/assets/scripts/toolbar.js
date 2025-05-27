@@ -36,7 +36,6 @@ export class Toolbar {
   }
 
   setTool(tool) {
-    const toolbar = document.querySelector('#toolbox');
     switch (tool) {
       case 0: document.getElementById('select').checked = true; break;
       case 1: document.getElementById('facebook').checked = true; break;

@@ -110,7 +110,7 @@ export class Canvas {
     const bbox = document.querySelector('#attribute-sel').getBoundingClientRect();
     const over = (bbox.x <= e.clientX && e.clientX <= bbox.x + bbox.width &&
                   bbox.y <= e.clientY && e.clientY <= bbox.y + bbox.height);
-    
+
     if (over) {
       this.enableKeyboardShortcuts = false;
     } else {
