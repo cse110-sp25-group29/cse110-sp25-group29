@@ -315,6 +315,7 @@ export class Textbox extends Drawable {
         this.text = startupInfo["text"];
         this.fontSize = startupInfo["fontSize"];
         this.fontStyle = startupInfo["fontStyle"];
+
         this.bold = false;
         this.italics = false;
     }
@@ -474,3 +475,4 @@ export class Ellipse extends Box {
         return ((centerX - x) / rx) ** 2 + ((centerY - y) / ry) ** 2 <= 1;
     }
 }
+

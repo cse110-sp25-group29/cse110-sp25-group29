@@ -18,6 +18,7 @@ function init() {
   backCanvas.attachAttributeMenu(attributeMenu);
 
     const flipButton = document.querySelector("#flip_button");
+
     flipButton.addEventListener('click', () => {
         let active = front_canvas.active;
         front_canvas.setActive(!active);
