@@ -1,0 +1,37 @@
+# Meeting Notes
+
+Date: 5/23/2025
+
+Time: 2:00PM-2:30PM
+
+## Attendees
+
+- Hugo 
+- Vincent
+
+## Topics
+
+- Editor/DevOps Meeting for Testing
+
+## What Happened
+
+- Heading:
+  - Make sure the text is correct
+  - Test it is styled correct (bolding, italics, font size, font style)
+  - Check if position is correct on drag
+- Icons:
+  - Make sure it pops up
+- Squares and Circles:
+  - Make sure the layers work
+  - Make sure colors are changed correctly 
+- Flip Button:
+  - Make sure flip button works
+  - Work should be saved on both sides
+  - Should deselect the select button when clicked  
+- Select:
+  - Make sure the select opens the attribute menu
+
+## Things to Do
+
+- Merge the editor-dev branch with the main by tonight
+
