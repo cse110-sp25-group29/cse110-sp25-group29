@@ -7,13 +7,52 @@
   </head>
   <body class="body">
     <header class="header">
-        <button id="home-button" title="Home">🏠 Home</button>
-        <button id="import-button" title="Import">📥 Import</button>
-        <button id="export-button" title="Export">📤 Export</button>
-        <button id="save-button" title="Save">💾 Save</button>
-        <button id="saveas-button" title="Save As">📝 Save As</button>
-        <button id="delete-button" title="Delete">🗑️ Delete</button>
-      <!-- save, delete, etc. -->
+      <section id="home-button-section">
+        <button class="header-button" id="home-button" title="Home" onclick="">
+          <img src="./icons/arrow_back.png">
+        </button>
+      </section>
+
+      <!-- Empty div for positioning -->
+      <div></div>
+      <div id="card-title">Untitled*</div>
+        
+      <section id="other-buttons">
+        <div class="dropdown">
+          <button class="header-button" id="import-button" title="Import">
+            <img src="./icons/download.png">
+          </button>
+          <div class="dropdown-content">
+            <button title="Import from other business card" id="export-duplicate">Open Previous</button>
+            <button title="Import from JSON file" id="export-json">From JSON</button>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button class="header-button" id="export-button" title="Export">
+            <img src="./icons/upload.png">
+          </button>
+          <div class="dropdown-content">
+            <button title="Duplicate to new business card" id="export-duplicate">Duplicate</button>
+            <button title="Export to JSON file" id="export-json">To JSON</button>
+            <button title="Export to PNG file" id="export-png">To PNG</button>
+            <button title="Export to JPG file" id="export-jpg">To JPG</button>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button class="header-button" id="save-button" title="Save">
+            <img src="./icons/save.png">
+          </button>
+          <div class="dropdown-content">
+            <button title="Save as..." id="export-duplicate">Save As...</button>
+          </div>
+        </div>
+        
+        <button class="header-button" id="delete-button" title="Delete">
+          <img src="./icons/delete.png">
+        </button>
+      </section>
     </header>
     <main class="main">
       <form id="toolbox">
