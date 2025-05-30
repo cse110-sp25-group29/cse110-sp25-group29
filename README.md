@@ -13,6 +13,8 @@
 *See the Table of Contents at the top right corner for easier navigation.*
 
 - [Style Guide](https://github.com/cse110-sp25-group29/cse110-sp25-group29/blob/main/specs/style-guide.md)
+- JSDocs
+- Codacy Coverage Reports
 - [Team Charter](https://github.com/cse110-sp25-group29/cse110-sp25-group29/blob/main/admin/misc/rules.md)
 - [Project Board](https://github.com/orgs/cse110-sp25-group29/projects/2/)
 
@@ -118,6 +120,10 @@ specs/
 - [ ] Checked off by DevOps
 - [ ] Specified behaviors are met (*expand on this list per issue*)
 
+## Setup Guide
+
+*To be added.*
+
 ## GitHub Usage
 
 ### Issues
@@ -147,11 +153,15 @@ Each sub-team has sizing criteria specific to their focus area.
 
 | Size | DevOps | Editor Page | Home Page | UI/UX |
 | --- | --- | --- | --- | --- |
-| `XS` | TBD | TBD | <1 hr | TBD |
-| `S` | TBD | TBD | 1-2 hrs | TBD |
-| `M` | TBD | TBD | 2-4 hrs | TBD |
-| `L` | TBD | TBD | 4-6 hrs | TBD |
-| `XL` | TBD | TBD | >6 hrs | TBD |
+| `XS` | TBD | <1 hr | <1 hr | minor design changes* |
+| `S` | TBD | 1-2 hrs | 1-2 hrs | new branding material & iterations |
+| `M` | TBD | 2-4 hrs | 2-4 hrs | ADRs, team notes, flowcharts |
+| `L` | TBD | 4-6 hrs | 4-6 hrs | major design changes** |
+| `XL` | TBD | >6 hrs | >6 hrs | new high fidelity designs |
+
+*\* Examples of minor design changes: tweaking icons, rearranging elements, changing colors*
+
+*\*\* Examples of major design changes: new variants & iterations over existing high fidelity designs*
 
 ### Pull Requests & Merging
 
