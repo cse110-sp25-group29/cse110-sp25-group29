@@ -8,7 +8,7 @@
   <body class="body">
     <header class="header">
       <section id="home-button-section">
-        <button class="header-button" id="home-button" title="Home" onclick="">
+        <button class="header-button" id="home-button" title="Home">
           <img src="./icons/arrow_back.png">
         </button>
       </section>
@@ -45,7 +45,7 @@
             <img src="./icons/save.png">
           </button>
           <div class="dropdown-content">
-            <button title="Save as..." id="export-duplicate">Save As...</button>
+            <button title="Save as..." id="save-as">Save As...</button>
           </div>
         </div>
         
@@ -58,44 +58,12 @@
       <form id="toolbox">
         <fieldset>
           <legend>Tool</legend>
+          <br>
           
           <div>
             <label for="select">
             <div>
               Select<input type="radio" id="select" name="tool" value="0" checked hidden/> 
-            </div>
-            </label>
-          </div>
-
-          <hr>
-
-          <div id="socials">
-            <label for="facebook">
-            <div>
-              <input type="radio" id="facebook" name="tool" value="1" hidden/>
-              <img src="./icons/facebook.png" class="input"/>
-            </div>
-            </label>
-
-            <label for="instagram">
-            <div>
-              <input type="radio" id="instagram" name="tool" value="2" hidden/>
-              <img src="./icons/instagram.webp" class="input"/>
-            </div>
-            </label>
-
-            <label for="linkedin">
-            <div>
-              <input type="radio" id="linkedin" name="tool" value="3" hidden/>
-              <img src="./icons/linkedin.png" class="input"/>
-            </div>
-            </label>
-
-
-            <label for="github">
-            <div>
-              <input type="radio" id="github" name="tool" value="4" hidden/>
-              <img src="./icons/github.png" class="input"/>
             </div>
             </label>
           </div>
@@ -139,10 +107,46 @@
             </div>
             </label>
           </div>
+
+          <hr>
+
+          <div id="socials">
+            <label for="facebook">
+            <div>
+              <input type="radio" id="facebook" name="tool" value="1" hidden/>
+              <img src="./icons/facebook.png" class="input"/>
+            </div>
+            </label>
+
+            <label for="instagram">
+            <div>
+              <input type="radio" id="instagram" name="tool" value="2" hidden/>
+              <img src="./icons/instagram.webp" class="input"/>
+            </div>
+            </label>
+
+            <label for="linkedin">
+            <div>
+              <input type="radio" id="linkedin" name="tool" value="3" hidden/>
+              <img src="./icons/linkedin.png" class="input"/>
+            </div>
+            </label>
+
+
+            <label for="github">
+            <div>
+              <input type="radio" id="github" name="tool" value="4" hidden/>
+              <img src="./icons/github.png" class="input"/>
+            </div>
+            </label>
+          </div>
         </fieldset>
       </form>
 
       <section id="center">
+        <div id="popup-menu">
+        </div>
+
         <div>
           <div class="business-card">
             <canvas id="front-card"></canvas>

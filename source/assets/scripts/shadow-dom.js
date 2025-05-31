@@ -3,6 +3,44 @@
  * the right column work without bloating to code too much
  */
 
+const consistentStyle = `form {
+  height: 100%;
+  position: relative;
+}
+
+.thin-number {
+  width: 40px;
+}
+
+#attr-delete {
+  display: block;
+  position: absolute;
+  bottom: 10px;
+  left: min(50px, (20vw - 100px) / 2);
+  right: auto;
+
+  color: red;
+  background-color: lightcoral;
+  width: 100px;
+  height: 25px;
+  border-color: red;
+  border-radius: 3px;
+}
+
+.attr-button {
+  width: 10px;
+  height: 10px;
+}
+
+#attr-color-picker {
+border-radius: 50%;
+inline-size: 30px;
+block-size: 30px;
+border-width: 1px;
+border-style: solid;
+border-color: rgb(153, 153, 153);
+}`;
+
 class TextboxElement extends HTMLElement {
   constructor() {
     super();
@@ -43,39 +81,13 @@ class TextboxElement extends HTMLElement {
         <input type="number" id="attr-x" name="attr-x" class="thin-number" />
         <label for="attr-y">y: </label>
         <input type="number" id="attr-y" name="attr-y" class="thin-number" />
+
+        <input type="color" id="attr-color-picker" name="attr-color-picker">
         
         <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
 
     const style = document.createElement('style');
-    style.innerHTML =
-        `form {
-            height: 100%;
-            position: relative;
-        }
-        
-        .thin-number {
-            width: 40px;
-        }
-        
-        #attr-delete {
-            display: block;
-            position: absolute;
-            bottom: 10px;
-            left: min(50px, (20vw - 100px) / 2);
-            right: auto;
-        
-            color: red;
-            background-color: lightcoral;
-            width: 100px;
-            height: 25px;
-            border-color: red;
-            border-radius: 3px;
-        }
-        
-        .attr-button {
-            width: 10px;
-            height: 10px;
-        }`;
+    style.innerHTML = consistentStyle;
 
     shadowDOM.append(elementRoot);
     shadowDOM.append(style);
@@ -87,12 +99,14 @@ class TextboxElement extends HTMLElement {
     const text = this.shadowRoot.querySelector('#attr-text');
     text.addEventListener('input', () => {
       this.obj.text = text.value;
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
     const fontSize = this.shadowRoot.querySelector('#attr-font-size');
     fontSize.addEventListener('input', () => {
       this.obj.fontSize = parseInt(fontSize.value, 10);
+      this.obj.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
@@ -144,6 +158,15 @@ class TextboxElement extends HTMLElement {
       this.obj.parent.renderCanvas();
     });
 
+    const color = this.shadowRoot.querySelector("#attr-color-picker")
+    color.addEventListener('input', (e) => {
+      const rgb = hexToRgb(e.target.value);
+      this.obj.r = rgb[0];
+      this.obj.g = rgb[1];
+      this.obj.b = rgb[2];
+      this.obj.parent.renderCanvas();
+    })
+
     const del = this.shadowRoot.querySelector('#attr-delete');
     del.addEventListener('click', () => {
       this.obj.parent.triggerDeleteKey();
@@ -181,6 +204,11 @@ class TextboxElement extends HTMLElement {
     const y = this.shadowRoot.querySelector('#attr-y');
     x.value = Math.round(this.obj.x);
     y.value = Math.round(this.obj.y);
+
+    const color = this.shadowRoot.querySelector("#attr-color-picker")
+    color.value = rgbToHex(clampToInt(r.value, 0, 255), 
+                           clampToInt(g.value, 0, 255), 
+                           clampToInt(b.value, 0, 255));
   }
 }
 
@@ -211,35 +239,7 @@ class BoxElement extends HTMLElement {
         <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
 
     const style = document.createElement('style');
-    style.innerHTML =
-        `form {
-            height: 100%;
-            position: relative;
-        }
-        
-        .thin-number {
-            width: 40px;
-        }
-        
-        #attr-delete {
-            display: block;
-            position: absolute;
-            bottom: 10px;
-            left: min(50px, (20vw - 100px) / 2);
-            right: auto;
-        
-            color: red;
-            background-color: lightcoral;
-            width: 100px;
-            height: 25px;
-            border-color: red;
-            border-radius: 3px;
-        }
-        
-        .attr-button {
-            width: 10px;
-            height: 10px;
-        }`;
+    style.innerHTML = consistentStyle;
 
     shadowDOM.append(elementRoot);
     shadowDOM.append(style);
@@ -353,35 +353,7 @@ class ImageElement extends HTMLElement {
         <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
 
     const style = document.createElement('style');
-    style.innerHTML =
-        `form {
-            height: 100%;
-            position: relative;
-        }
-        
-        .thin-number {
-            width: 40px;
-        }
-        
-        #attr-delete {
-            display: block;
-            position: absolute;
-            bottom: 10px;
-            left: min(50px, (20vw - 100px) / 2);
-            right: auto;
-        
-            color: red;
-            background-color: lightcoral;
-            width: 100px;
-            height: 25px;
-            border-color: red;
-            border-radius: 3px;
-        }
-        
-        .attr-button {
-            width: 10px;
-            height: 10px;
-        }`;
+    style.innerHTML = consistentStyle;
 
     shadowDOM.append(elementRoot);
     shadowDOM.append(style);
@@ -450,6 +422,27 @@ class ImageElement extends HTMLElement {
     const icon = this.shadowRoot.querySelector('#attr-icon-image');
     icon.value = this.obj.src;
   }
+}
+
+function clampToInt(value, lo, hi) {
+  value = parseInt(value, 10);
+  value = Math.min(Math.max(value, lo), hi);
+  return value;
+}
+
+function rgbToHex(r, g, b) {
+  const rgb = (r << 16) | (g << 8) | b;
+  let str = rgb.toString(16);
+  let fill = '0'
+  return `#${fill.repeat(6-str.length)}${str}`;
+}
+
+function hexToRgb(hex) {
+  const rgb = parseInt(hex.substring(1), 16);
+  const r = rgb >> 16;
+  const g = (rgb >> 8) % 256;
+  const b = rgb % 256;
+  return [r, g, b];
 }
 
 customElements.define('textbox-attributes', TextboxElement);

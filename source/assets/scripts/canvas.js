@@ -1,4 +1,6 @@
 import * as Drawable from './drawable.js';
+import * as Topbar from './topbar.js';
+import * as Editor from './editor-page.js'
 
 /**
  * Represents a <canvas> HTML object with methods to
@@ -168,7 +170,19 @@ export class Canvas {
    */
   onClickElsewhere(e) {
     if (!this.active) { return; }
-    console.log(e);
+    
+    const popupMenu = document.querySelector("#popup-menu");
+    if (popupMenu && popupMenu.style['display'] !== 'none') {
+      const header = document.querySelector("header");
+      const bbox1 = popupMenu.getBoundingClientRect();
+      const bbox2 = header.getBoundingClientRect();
+      const over = (bbox1.x <= e.clientX && e.clientX <= bbox1.x + bbox1.width &&
+        bbox1.y <= e.clientY && e.clientY <= bbox1.y + bbox1.height) ||
+        e.clientY <= 55;
+
+      if (!over)
+        Topbar.removePopupMenu();
+    }
 
     if (e.target === this.canvas) {
       this.enableKeyboardShortcuts = true;
@@ -232,6 +246,7 @@ export class Canvas {
         document.addEventListener('mousemove', this.onDrag);
         document.addEventListener('mouseup', this.onMouseUp);
       } else {
+        this.onAnyChange();
         this.focus.selected = true;
         this.toolbar.setTool(0);
       }
@@ -271,6 +286,7 @@ export class Canvas {
 
     this.toolbar.setTool(0);
 
+    this.onAnyChange();
     this.attr.updateObject();
     this.renderCanvas();
   }
@@ -435,6 +451,8 @@ export class Canvas {
     } else if (key === 'Delete' || key === 'Backspace') {
       this.triggerDeleteKey();
     }
+
+    this.onAnyChange();
   }
 
   /**
@@ -466,5 +484,12 @@ export class Canvas {
     }
 
     if (this.focus !== null) { this.focus.drawFocus(ctx); }
+  }
+
+  onAnyChange() {
+    if (Editor.saved) {
+      Editor.setSaved(false);
+      Topbar.setName(Editor.cardName);
+    }
   }
 }
