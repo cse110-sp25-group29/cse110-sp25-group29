@@ -43,7 +43,7 @@ export function deleteCard() {
   } else {
     let num = 1;
     while (`Untitled${num}` in cardsList) num += 1;
-    cardName = `Untitled${num}`
+    cardName = `Untitled${num}`;
   }
 
   exportCurrentCardName();
@@ -80,7 +80,7 @@ function reset() {
 
   document.querySelector('#front-card').style.transform = 'rotateY(0deg)';
   document.querySelector('#back-card').style.transform = 'rotateY(180deg)';
-  document.querySelector('#flip-button').innerHTML = 'Flip to Back!'
+  document.querySelector('#flip-button').innerHTML = 'Flip to Back!';
 
   cardName = importCurrentCardName();
   cardsList = importCardsList();

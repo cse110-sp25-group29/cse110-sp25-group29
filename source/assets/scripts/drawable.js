@@ -584,10 +584,6 @@ export class Textbox extends Drawable {
  * Also has a slightly different selection render.
  */
 export class Ellipse extends Box {
-  constructor(parent) {
-    super(parent);
-  }
-
   drawSelf(ctx) {
     ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
 

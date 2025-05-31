@@ -3,7 +3,7 @@
  * the right column work without bloating to code too much
  */
 
-const consistentStyle = 
+const consistentStyle =
 `form {
   height: 100%;
   position: relative;
@@ -367,8 +367,6 @@ class ImageElement extends HTMLElement {
           <option value="./icons/github.png">GitHub</option>
         </select>
 
-        <input type="color" id="attr-color-picker" name="attr-color-picker">
-
         <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
 
     const style = document.createElement('style');
@@ -416,15 +414,6 @@ class ImageElement extends HTMLElement {
       this.obj.parent.renderCanvas();
     });
 
-    const color = this.shadowRoot.querySelector('#attr-color-picker');
-    color.addEventListener('input', (e) => {
-      const rgb = hexToRgb(e.target.value);
-      this.obj.r = rgb[0];
-      this.obj.g = rgb[1];
-      this.obj.b = rgb[2];
-      this.obj.parent.renderCanvas();
-    });
-
     const del = this.shadowRoot.querySelector('#attr-delete');
     del.addEventListener('click', () => {
       this.obj.parent.triggerDeleteKey();
@@ -449,11 +438,6 @@ class ImageElement extends HTMLElement {
 
     const icon = this.shadowRoot.querySelector('#attr-icon-image');
     icon.value = this.obj.src;
-
-    const color = this.shadowRoot.querySelector('#attr-color-picker');
-    color.value = rgbToHex(clampToInt(r.value, 0, 255),
-      clampToInt(g.value, 0, 255),
-      clampToInt(b.value, 0, 255));
   }
 }
 
