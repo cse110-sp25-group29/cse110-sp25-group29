@@ -3,7 +3,8 @@
  * the right column work without bloating to code too much
  */
 
-const consistentStyle = `form {
+const consistentStyle =
+`form {
   height: 100%;
   position: relative;
 }
@@ -33,12 +34,12 @@ const consistentStyle = `form {
 }
 
 #attr-color-picker {
-border-radius: 50%;
-inline-size: 30px;
-block-size: 30px;
-border-width: 1px;
-border-style: solid;
-border-color: rgb(153, 153, 153);
+  border-radius: 50%;
+  inline-size: 30px;
+  block-size: 30px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(153, 153, 153);
 }`;
 
 class TextboxElement extends HTMLElement {
@@ -106,7 +107,7 @@ class TextboxElement extends HTMLElement {
     const fontSize = this.shadowRoot.querySelector('#attr-font-size');
     fontSize.addEventListener('input', () => {
       this.obj.fontSize = parseInt(fontSize.value, 10);
-      this.obj.onAnyChange();
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
@@ -235,6 +236,8 @@ class BoxElement extends HTMLElement {
         <input type="number" id="attr-green" name="attr-green" class="thin-number" />
         <label for="attr-blue">b: </label>
         <input type="number" id="attr-blue" name="attr-blue" class="thin-number" />
+
+        <input type="color" id="attr-color-picker" name="attr-color-picker">
         
         <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
 
@@ -294,6 +297,15 @@ class BoxElement extends HTMLElement {
       this.obj.parent.renderCanvas();
     });
 
+    const color = this.shadowRoot.querySelector('#attr-color-picker');
+    color.addEventListener('input', (e) => {
+      const rgb = hexToRgb(e.target.value);
+      this.obj.r = rgb[0];
+      this.obj.g = rgb[1];
+      this.obj.b = rgb[2];
+      this.obj.parent.renderCanvas();
+    });
+
     const del = this.shadowRoot.querySelector('#attr-delete');
     del.addEventListener('click', () => {
       this.obj.parent.triggerDeleteKey();
@@ -322,6 +334,11 @@ class BoxElement extends HTMLElement {
     r.value = this.obj.r;
     g.value = this.obj.g;
     b.value = this.obj.b;
+
+    const color = this.shadowRoot.querySelector('#attr-color-picker');
+    color.value = rgbToHex(clampToInt(r.value, 0, 255),
+      clampToInt(g.value, 0, 255),
+      clampToInt(b.value, 0, 255));
   }
 }
 

@@ -118,9 +118,9 @@ export class Line extends Drawable {
     this.parent = parent;
     this.canvas = this.parent.canvas;
 
-    this.r = 255;
-    this.g = 0;
-    this.b = 0;
+    this.r = 41;
+    this.g = 165;
+    this.b = 62;
   }
 
   init(e) {
@@ -176,9 +176,9 @@ export class Box extends Drawable {
     this.parent = parent;
     this.canvas = this.parent.canvas;
 
-    this.r = 255;
-    this.g = 0;
-    this.b = 0;
+    this.r = 41;
+    this.g = 165;
+    this.b = 62;
   }
 
   init(e) {
@@ -413,9 +413,11 @@ export class Image extends Box {
     this.x1 = (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX;
     this.y1 = (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY;
 
-    const startupInfo = this.parent.toolbar.getToolInfo();
-    this.x2 = this.x1 + startupInfo.width;
-    this.y2 = this.y1 + startupInfo.height;
+    if (this.parent.toolbar) {
+      const startupInfo = this.parent.toolbar.getToolInfo();
+      this.x2 = this.x1 + startupInfo.width;
+      this.y2 = this.y1 + startupInfo.height;
+    }
 
     return false;
   }
@@ -582,17 +584,6 @@ export class Textbox extends Drawable {
  * Also has a slightly different selection render.
  */
 export class Ellipse extends Box {
-  constructor(parent) {
-    super(parent);
-
-    this.parent = parent;
-    this.canvas = this.parent.canvas;
-
-    this.r = 255;
-    this.g = 0;
-    this.b = 0;
-  }
-
   drawSelf(ctx) {
     ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
 
