@@ -99,7 +99,29 @@ export class Canvas {
    * @returns {Map<string,Object>} JSON formatted dictionary
    */
   exportJSON() {
-    // TODO
+    const exp = {
+      width: this.canvas.width,
+      height: this.canvas.height
+    };
+
+    const stack = [];
+    for (let i = 0; i < this.draw_stack.length; i++) {
+      const obj = this.draw_stack[i];
+      let type;
+      if (obj instanceof Drawable.Textbox) type = 'textbox';
+      else if (obj instanceof Drawable.Image) type = 'image';
+      else if (obj instanceof Drawable.Ellipse) type = 'ellipse';
+      else if (obj instanceof Drawable.Box) type = 'box';
+      else continue;
+
+      stack.push({
+        type,
+        data: obj.export()
+      });
+    }
+
+    exp.objects = stack;
+    return exp;
   }
 
   /**
@@ -108,7 +130,32 @@ export class Canvas {
    * @param {Map<string,Object>} description JSON formatted dictionary
    */
   importJSON(description) {
-    // TODO
+    if (!description) return;
+    if ('width' in description && typeof description.width === 'number') { this.canvas.width = description.width; }
+    if ('height' in description && typeof description.height === 'number') { this.canvas.height = description.height; }
+
+    this.draw_stack = [];
+    if (!('objects' in description)) { return; }
+
+    const stack = description.objects;
+    for (let i = 0; i < stack.length; i++) {
+      const data = stack[i];
+      const type = data.type;
+      let obj;
+
+      switch (type) {
+        case 'textbox': obj = new Drawable.Textbox(this); break;
+        case 'image': obj = new Drawable.Image(this); break;
+        case 'ellipse': obj = new Drawable.Ellipse(this); break;
+        case 'box': obj = new Drawable.Box(this); break;
+        default: continue;
+      }
+
+      obj.import(data.data);
+      this.draw_stack.push(obj);
+    }
+
+    this.renderCanvas();
   }
 
   /**

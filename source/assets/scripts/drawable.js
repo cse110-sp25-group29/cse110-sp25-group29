@@ -94,6 +94,18 @@ export class Drawable {
    * @param {Number} dy The amount to move
    */
   moveY(dy) {}
+
+  /**
+   * Exports this Drawable as a dictionary of values
+   */
+  export() {}
+
+  /**
+   * Imports values from a dictionary into this drawable
+   *
+   * @param {*} data What to import
+   */
+  import(data) {}
 }
 
 /**
@@ -351,6 +363,29 @@ export class Box extends Drawable {
     this.y1 += dy;
     this.y2 += dy;
   }
+
+  export() {
+    return {
+      x1: this.x1,
+      y1: this.y1,
+      x2: this.x2,
+      y2: this.y2,
+      r: this.r,
+      g: this.g,
+      b: this.b
+    };
+  }
+
+  import(data) {
+    if (!data) return;
+    if ('x1' in data && typeof data.x1 === 'number') this.x1 = data.x1;
+    if ('y1' in data && typeof data.y1 === 'number') this.y1 = data.y1;
+    if ('x2' in data && typeof data.x2 === 'number') this.x2 = data.x2;
+    if ('y2' in data && typeof data.y2 === 'number') this.y2 = data.y2;
+    if ('r' in data && typeof data.r === 'number') this.r = data.r;
+    if ('g' in data && typeof data.g === 'number') this.g = data.g;
+    if ('b' in data && typeof data.b === 'number') this.b = data.b;
+  }
 }
 
 /**
@@ -362,8 +397,9 @@ export class Image extends Box {
   constructor(parent, src) {
     super(parent);
 
-    if (src) { this.src = src; } else {
-      this.src = this.parent.toolbar.getToolInfo().src;
+    if (src) { this.src = src; } else if (this.parent.toolbar) {
+      const info = this.parent.toolbar.getToolInfo();
+      if ('src' in info) { this.src = info.src; }
     }
 
     this.img = document.createElement('img');
@@ -386,6 +422,28 @@ export class Image extends Box {
 
   drawSelf(ctx) {
     ctx.drawImage(this.img, this.x1, this.y1, this.x2 - this.x1, this.y2 - this.y1);
+  }
+
+  export() {
+    return {
+      x1: this.x1,
+      y1: this.y1,
+      x2: this.x2,
+      y2: this.y2,
+      src: this.src
+    };
+  }
+
+  import(data) {
+    if (!data) return;
+    if ('x1' in data && typeof data.x1 === 'number') this.x1 = data.x1;
+    if ('y1' in data && typeof data.y1 === 'number') this.y1 = data.y1;
+    if ('x2' in data && typeof data.x2 === 'number') this.x2 = data.x2;
+    if ('y2' in data && typeof data.y2 === 'number') this.y2 = data.y2;
+    if ('src' in data && typeof data.src === 'string') {
+      this.src = data.src;
+      this.img.src = this.src;
+    }
   }
 }
 
@@ -486,6 +544,35 @@ export class Textbox extends Drawable {
 
   moveY(dy) {
     this.y += dy;
+  }
+
+  export() {
+    return {
+      x: this.x,
+      y: this.y,
+      text: this.text,
+      style: this.fontStyle,
+      size: this.fontSize,
+      bold: this.bold,
+      italics: this.italics,
+      r: this.r,
+      g: this.g,
+      b: this.b
+    };
+  }
+
+  import(data) {
+    if (!data) return;
+    if ('x' in data && typeof data.x === 'number') this.x = data.x;
+    if ('y' in data && typeof data.y === 'number') this.y = data.y;
+    if ('text' in data && typeof data.text === 'string') this.text = data.text;
+    if ('style' in data && typeof data.style === 'string') this.fontStyle = data.style;
+    if ('size' in data && typeof data.size === 'number') this.fontSize = data.size;
+    if ('bold' in data && typeof data.bold === 'boolean') this.bold = data.bold;
+    if ('italics' in data && typeof data.italics === 'boolean') this.italics = data.italics;
+    if ('r' in data && typeof data.r === 'number') this.r = data.r;
+    if ('g' in data && typeof data.g === 'number') this.g = data.g;
+    if ('b' in data && typeof data.b === 'number') this.b = data.b;
   }
 }
 
