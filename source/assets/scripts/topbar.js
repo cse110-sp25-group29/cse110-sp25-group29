@@ -66,6 +66,13 @@ function triggerDeleteMenu(e) {
     `;
 
   menu.appendChild(style);
+
+  const innerDelete = document.querySelector('#popup-delete-button');
+  innerDelete.addEventListener('click', (e) => {
+    console.log("delete");
+    Editor.deleteCard();
+    removePopupMenu();
+  });
 }
 
 function triggerSaveAsMenu(e) {
