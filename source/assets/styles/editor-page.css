@@ -22,7 +22,7 @@
 }
 
 html, body {
-    height: 100%;
+    height: 99%;
 }
 
 body {
@@ -175,7 +175,7 @@ label > div {
     transition: background-color 0.2s;
 }
 
-label:hover{
+#toolbox label:hover{
     transform: scale(1.10);
 }
 
@@ -242,9 +242,13 @@ img[class="input"] {
 
 #center {
     display: grid;
-    grid-template-rows: min(600px, 60vw) 50px;
+    grid-template-rows: min(600px, 60vw) 100px;
     place-items: center;
     padding: 20px;
+}
+
+#popup-menu {
+    display: none;
 }
 
 .business-card {
