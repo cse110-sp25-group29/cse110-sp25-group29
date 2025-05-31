@@ -65,7 +65,6 @@ body {
     background-color: var(--header-bg);
     color: white;
     padding: 0px 12px;
-    /* font-size: 16px; */
     border: none;
 }
 
@@ -284,22 +283,23 @@ img[class="input"] {
     transform: rotateY(180deg);
 }
 
-#flip_button {
+#flip-button {
     display: block;
     margin: min(10px, 1vw) auto;
-    background-color: #ddd;
+    background-color: var(--save-bg);
     padding: 6px 12px;
     border-radius: 6px;
     border: none;
+    color: black;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-#flip_button:hover {
-    background-color: rgb(160, 159, 159);
+#flip-button:hover {
+    background-color: var(--save-hover-bg);
 }
 
-#flip_button_img {
+#flip-button-img {
     display: block;
     margin: min(5px, 1vw) auto;
     width: 22px;
@@ -310,20 +310,6 @@ img[class="input"] {
     background-color: var(--attribute-bg);
     padding: 10px;
     color: white;
-}
-
-#save {
-    background-color: var(--save-bg);
-    padding: 2px 15px;
-    border-radius: 6px;
-    font-weight: bold;
-    color: black;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#save:hover {
-    background-color: var(--save-hover-bg);
 }
 
 fieldset {

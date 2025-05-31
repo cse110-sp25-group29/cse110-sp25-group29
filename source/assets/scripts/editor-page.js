@@ -37,7 +37,15 @@ export function saveAs(name) {
 
 export function deleteCard() {
   delete cardsList[cardName];
-  cardName = 'Untitled';
+
+  if (!('Untitled' in cardsList)) {
+    cardName = 'Untitled';
+  } else {
+    let num = 1;
+    while (`Untitled${num}` in cardsList) num += 1;
+    cardName = `Untitled${num}`
+  }
+
   exportCurrentCardName();
   exportCardsList();
 
@@ -67,6 +75,33 @@ function exportCurrentCardName() {
 
 function reset() {
   console.log('reset');
+  frontCanvas.setActive(true);
+  backCanvas.setActive(false);
+
+  document.querySelector('#front-card').style.transform = 'rotateY(0deg)';
+  document.querySelector('#back-card').style.transform = 'rotateY(180deg)';
+  document.querySelector('#flip-button').innerHTML = 'Flip to Back!'
+
+  cardName = importCurrentCardName();
+  cardsList = importCardsList();
+  if (cardName in cardsList) {
+    console.log('importing from previous');
+    frontCanvas.importJSON(cardsList[cardName].front);
+    backCanvas.importJSON(cardsList[cardName].back);
+  } else {
+    frontCanvas.importJSON({});
+    backCanvas.importJSON({});
+  }
+
+  setSaved(true);
+  Topbar.setName(cardName);
+}
+
+/**
+ * Initializes the objects on the editor page.
+ */
+let frontCanvas, backCanvas;
+function init() {
   frontCanvas = new Canvas.Canvas('#front-card', true);
   backCanvas = new Canvas.Canvas('#back-card', false);
   document.querySelector('#front-card').style.transform = 'rotateY(0deg)';
@@ -91,16 +126,8 @@ function reset() {
 
   setSaved(true);
   Topbar.setName(cardName);
-}
 
-/**
- * Initializes the objects on the editor page.
- */
-let frontCanvas, backCanvas;
-function init() {
-  reset();
-
-  const flipButton = document.querySelector('#flip_button');
+  const flipButton = document.querySelector('#flip-button');
 
   flipButton.addEventListener('click', () => {
     const active = frontCanvas.active;
@@ -110,9 +137,11 @@ function init() {
     if (active) {
       frontCanvas.canvas.style.transform = 'rotateY(180deg)';
       backCanvas.canvas.style.transform = 'rotateY(0deg)';
+      flipButton.innerHTML = 'Flip to Front!';
     } else {
       frontCanvas.canvas.style.transform = 'rotateY(0deg)';
       backCanvas.canvas.style.transform = 'rotateY(180deg)';
+      flipButton.innerHTML = 'Flip to Back!';
     }
   });
 

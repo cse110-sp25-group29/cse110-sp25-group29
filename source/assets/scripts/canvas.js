@@ -58,7 +58,7 @@ export class Canvas {
       document.addEventListener('keydown', this.onKeyDown);
       document.addEventListener('keyup', this.onKeyUp);
 
-      document.addEventListener('click', this.onClickElsewhere);
+      document.addEventListener('mousedown', this.onClickElsewhere);
     } else {
       this.shiftHeld = false;
       this.focus = null;
@@ -67,7 +67,7 @@ export class Canvas {
       document.removeEventListener('keydown', this.onKeyDown);
       document.removeEventListener('keyup', this.onKeyUp);
 
-      document.removeEventListener('click', this.onClickElsewhere);
+      document.removeEventListener('mousedown', this.onClickElsewhere);
     }
 
     if (this.attr) { this.attr.setObject(this.focus); }
