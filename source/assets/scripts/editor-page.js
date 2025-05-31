@@ -10,13 +10,12 @@ export function setSaved(value) {
   saved = value;
 }
 
-export let cardName = "placeholder";
+export let cardName = 'placeholder';
 export function saveAs(name) {
-  if (name)
-    cardName = name;
+  if (name) { cardName = name; }
 
   saved = true;
-  console.log("saving card as " + cardName);
+  console.log('saving card as ' + cardName);
   Topbar.setName(cardName);
 }
 
@@ -55,8 +54,7 @@ function init() {
   document.addEventListener('keypress', (e) => {
     const key = e.code;
     console.log(e);
-    if (key === 'KeyS' && (e.ctrlKey || e.altKey))
-      saveAs();
+    if (key === 'KeyS' && (e.ctrlKey || e.altKey)) { saveAs(); }
   });
 
   Topbar.initListeners();

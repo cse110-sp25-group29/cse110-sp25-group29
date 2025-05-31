@@ -1,6 +1,6 @@
 import * as Drawable from './drawable.js';
 import * as Topbar from './topbar.js';
-import * as Editor from './editor-page.js'
+import * as Editor from './editor-page.js';
 
 /**
  * Represents a <canvas> HTML object with methods to
@@ -170,18 +170,15 @@ export class Canvas {
    */
   onClickElsewhere(e) {
     if (!this.active) { return; }
-    
-    const popupMenu = document.querySelector("#popup-menu");
-    if (popupMenu && popupMenu.style['display'] !== 'none') {
-      const header = document.querySelector("header");
+
+    const popupMenu = document.querySelector('#popup-menu');
+    if (popupMenu && popupMenu.style.display !== 'none') {
       const bbox1 = popupMenu.getBoundingClientRect();
-      const bbox2 = header.getBoundingClientRect();
       const over = (bbox1.x <= e.clientX && e.clientX <= bbox1.x + bbox1.width &&
         bbox1.y <= e.clientY && e.clientY <= bbox1.y + bbox1.height) ||
         e.clientY <= 55;
 
-      if (!over)
-        Topbar.removePopupMenu();
+      if (!over) { Topbar.removePopupMenu(); }
     }
 
     if (e.target === this.canvas) {

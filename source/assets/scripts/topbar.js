@@ -1,46 +1,44 @@
 import * as Editor from './editor-page.js';
 
 export function initListeners() {
-    const home = document.querySelector('#home-button');
-    home.addEventListener('click', (e) => {
-        window.location.href = '../homepage.html';
-    });
+  const home = document.querySelector('#home-button');
+  home.addEventListener('click', (e) => {
+    window.location.href = '../homepage.html';
+  });
 
-    const del = document.querySelector('#delete-button');
-    del.addEventListener('click', triggerDeleteMenu);
+  const del = document.querySelector('#delete-button');
+  del.addEventListener('click', triggerDeleteMenu);
 
-    const saveNormal = document.querySelector('#save-button');
-    saveNormal.addEventListener('click', (e) => {
-        Editor.saveAs();
-    });
+  const saveNormal = document.querySelector('#save-button');
+  saveNormal.addEventListener('click', (e) => {
+    Editor.saveAs();
+  });
 
-    const saveAs = document.querySelector('#save-as');
-    saveAs.addEventListener('click', triggerSaveAsMenu);
+  const saveAs = document.querySelector('#save-as');
+  saveAs.addEventListener('click', triggerSaveAsMenu);
 }
 
 export function removePopupMenu() {
-    const menu = document.querySelector("#popup-menu");
-    if (!menu)
-        return;
+  const menu = document.querySelector('#popup-menu');
+  if (!menu) { return; }
 
-    menu.innerHTML = '';
-    menu.style.display = 'none';
+  menu.innerHTML = '';
+  menu.style.display = 'none';
 }
 
 function triggerDeleteMenu(e) {
-    const menu = document.querySelector("#popup-menu");
-    if (!menu)
-        return;
+  const menu = document.querySelector('#popup-menu');
+  if (!menu) { return; }
 
-    menu.innerHTML = 
+  menu.innerHTML =
     `
     <p>Are you sure you want to delete this card? It will be lost forever...</p>
     <button id='popup-delete-button'>Delete Card</button>
     `;
-    menu.style.display = 'block';
-    
-    const style = document.createElement('style');
-    style.innerHTML = 
+  menu.style.display = 'block';
+
+  const style = document.createElement('style');
+  style.innerHTML =
     `
     #popup-menu {
         display: block;
@@ -67,24 +65,23 @@ function triggerDeleteMenu(e) {
     }
     `;
 
-    menu.appendChild(style);
+  menu.appendChild(style);
 }
 
 function triggerSaveAsMenu(e) {
-    const menu = document.querySelector("#popup-menu");
-    if (!menu)
-        return;
+  const menu = document.querySelector('#popup-menu');
+  if (!menu) { return; }
 
-    menu.innerHTML = 
+  menu.innerHTML =
     `
     <label for="popup-save-as">Title: </label>
     <input type="text" title="popup-save-as" id="popup-save-as"></input>
     <button id="popup-save-button">Save</button>
     `;
-    menu.style.display = 'block';
-    
-    const style = document.createElement('style');
-    style.innerHTML = 
+  menu.style.display = 'block';
+
+  const style = document.createElement('style');
+  style.innerHTML =
     `
     #popup-menu {
         display: block;
@@ -115,28 +112,27 @@ function triggerSaveAsMenu(e) {
     }
     `;
 
-    menu.appendChild(style);
+  menu.appendChild(style);
 
-    const saveButton = document.querySelector('#popup-save-button');
-    saveButton.addEventListener('click', (e) => {
-        const name = document.querySelector('#popup-save-as').value;
-        Editor.saveAs(name)
-        removePopupMenu();
-    });
+  const saveButton = document.querySelector('#popup-save-button');
+  saveButton.addEventListener('click', (e) => {
+    const name = document.querySelector('#popup-save-as').value;
+    Editor.saveAs(name);
+    removePopupMenu();
+  });
 }
 
 export function setName(name) {
-    if (!name)
-        name = 'Untitled';
+  if (!name) { name = 'Untitled'; }
 
-    let bold = false;
-    if (!Editor.saved) {
-        bold = true;
-        name += '*';
-    }
+  let bold = false;
+  if (!Editor.saved) {
+    bold = true;
+    name += '*';
+  }
 
-    const cardTitle = document.querySelector('#card-title');
-    cardTitle.innerHTML = name;
-    if (bold) cardTitle.style.fontWeight = 'bold';
-    else cardTitle.style.fontWeight = 'regular'
+  const cardTitle = document.querySelector('#card-title');
+  cardTitle.innerHTML = name;
+  if (bold) cardTitle.style.fontWeight = 'bold';
+  else cardTitle.style.fontWeight = 'regular';
 }

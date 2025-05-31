@@ -158,14 +158,14 @@ class TextboxElement extends HTMLElement {
       this.obj.parent.renderCanvas();
     });
 
-    const color = this.shadowRoot.querySelector("#attr-color-picker")
+    const color = this.shadowRoot.querySelector('#attr-color-picker');
     color.addEventListener('input', (e) => {
       const rgb = hexToRgb(e.target.value);
       this.obj.r = rgb[0];
       this.obj.g = rgb[1];
       this.obj.b = rgb[2];
       this.obj.parent.renderCanvas();
-    })
+    });
 
     const del = this.shadowRoot.querySelector('#attr-delete');
     del.addEventListener('click', () => {
@@ -205,10 +205,10 @@ class TextboxElement extends HTMLElement {
     x.value = Math.round(this.obj.x);
     y.value = Math.round(this.obj.y);
 
-    const color = this.shadowRoot.querySelector("#attr-color-picker")
-    color.value = rgbToHex(clampToInt(r.value, 0, 255), 
-                           clampToInt(g.value, 0, 255), 
-                           clampToInt(b.value, 0, 255));
+    const color = this.shadowRoot.querySelector('#attr-color-picker');
+    color.value = rgbToHex(clampToInt(r.value, 0, 255),
+      clampToInt(g.value, 0, 255),
+      clampToInt(b.value, 0, 255));
   }
 }
 
@@ -432,9 +432,9 @@ function clampToInt(value, lo, hi) {
 
 function rgbToHex(r, g, b) {
   const rgb = (r << 16) | (g << 8) | b;
-  let str = rgb.toString(16);
-  let fill = '0'
-  return `#${fill.repeat(6-str.length)}${str}`;
+  const str = rgb.toString(16);
+  const fill = '0';
+  return `#${fill.repeat(6 - str.length)}${str}`;
 }
 
 function hexToRgb(hex) {
