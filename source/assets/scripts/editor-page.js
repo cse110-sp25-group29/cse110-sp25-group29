@@ -16,15 +16,15 @@ export function saveAs(name) {
     delete cardsList[cardName];
     cardName = name;
     cardsList[cardName] = {
-      'front': frontCanvas.exportJSON(),
-      'back': backCanvas.exportJSON()
+      front: frontCanvas.exportJSON(),
+      back: backCanvas.exportJSON()
     };
     console.log(cardsList);
     exportCardsList();
   } else if (!saved) {
     cardsList[cardName] = {
-      'front': frontCanvas.exportJSON(),
-      'back': backCanvas.exportJSON()
+      front: frontCanvas.exportJSON(),
+      back: backCanvas.exportJSON()
     };
     exportCardsList();
   }
@@ -52,8 +52,7 @@ function importCardsList() {
 }
 
 function exportCardsList() {
-  if (cardsList)
-    localStorage.setItem('cards', JSON.stringify(cardsList));
+  if (cardsList) { localStorage.setItem('cards', JSON.stringify(cardsList)); }
 }
 
 function importCurrentCardName() {
@@ -67,11 +66,11 @@ function exportCurrentCardName() {
 }
 
 function reset() {
-  console.log("reset");
+  console.log('reset');
   frontCanvas = new Canvas.Canvas('#front-card', true);
   backCanvas = new Canvas.Canvas('#back-card', false);
-  document.querySelector('#front-card').style.transform = 'rotateY(0deg)'
-  document.querySelector('#back-card').style.transform = 'rotateY(180deg)'
+  document.querySelector('#front-card').style.transform = 'rotateY(0deg)';
+  document.querySelector('#back-card').style.transform = 'rotateY(180deg)';
 
   const toolbar = new Toolbar.Toolbar();
   const attributeMenu = new AttributeMenu.AttributeMenu('#attribute-sel');
@@ -85,9 +84,9 @@ function reset() {
   cardName = importCurrentCardName();
   cardsList = importCardsList();
   if (cardName in cardsList) {
-    console.log("importing from previous");
-    frontCanvas.importJSON(cardsList[cardName]['front']);
-    backCanvas.importJSON(cardsList[cardName]['back']);
+    console.log('importing from previous');
+    frontCanvas.importJSON(cardsList[cardName].front);
+    backCanvas.importJSON(cardsList[cardName].back);
   }
 
   setSaved(true);

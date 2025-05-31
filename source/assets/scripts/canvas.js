@@ -100,8 +100,8 @@ export class Canvas {
    */
   exportJSON() {
     const exp = {
-      'width': this.canvas.width,
-      'height': this.canvas.height
+      width: this.canvas.width,
+      height: this.canvas.height
     };
 
     const stack = [];
@@ -115,12 +115,12 @@ export class Canvas {
       else continue;
 
       stack.push({
-        'type': type,
-        'data': obj.export()
+        type,
+        data: obj.export()
       });
     }
 
-    exp['objects'] = stack;
+    exp.objects = stack;
     return exp;
   }
 
@@ -131,19 +131,16 @@ export class Canvas {
    */
   importJSON(description) {
     if (!description) return;
-    if ('width' in description && typeof description['width'] === 'number') 
-      this.canvas.width = description['width'];
-    if ('height' in description && typeof description['height'] === 'number') 
-      this.canvas.height = description['height'];
+    if ('width' in description && typeof description.width === 'number') { this.canvas.width = description.width; }
+    if ('height' in description && typeof description.height === 'number') { this.canvas.height = description.height; }
 
     this.draw_stack = [];
-    if (!'objects' in description)
-      return;
+    if (!('objects' in description)) { return; }
 
-    const stack = description['objects'];
+    const stack = description.objects;
     for (let i = 0; i < stack.length; i++) {
       const data = stack[i];
-      const type = data['type'];
+      const type = data.type;
       let obj;
 
       switch (type) {
@@ -154,7 +151,7 @@ export class Canvas {
         default: continue;
       }
 
-      obj.import(data['data']);
+      obj.import(data.data);
       this.draw_stack.push(obj);
     }
 
