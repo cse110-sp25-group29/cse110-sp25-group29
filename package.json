@@ -13,8 +13,10 @@
     "scripts": {
         "lint": "eslint . --no-eslintrc --config .CONFIG/.eslintrc.cjs",
         "lint:fix": "eslint . --no-eslintrc --config .CONFIG/.eslintrc.cjs --fix",
+
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
         "docs": "jsdoc -c .CONFIG/jsdoc.json"
+
     },
     "type": "module",
     "jest": {

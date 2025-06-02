@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Testing</title>
+    <link rel="stylesheet" href="./styles/editor-page.css">
+  </head>
+  <body class="body">
+    <header class="header">
+      <section id="home-button-section">
+        <button class="header-button" id="home-button" title="Home">
+          <img src="./icons/arrow_back.png">
+        </button>
+      </section>
+
+      <!-- Empty div for positioning -->
+      <div></div>
+      <div id="card-title"></div>
+        
+      <section id="other-buttons">
+        <div class="dropdown">
+          <button class="header-button" id="import-button" title="Import">
+            <img src="./icons/download.png">
+          </button>
+          <div class="dropdown-content">
+            <button title="Import from other business card" id="export-duplicate">Open Previous</button>
+            <button title="Import from JSON file" id="export-json">From JSON</button>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button class="header-button" id="export-button" title="Export">
+            <img src="./icons/upload.png">
+          </button>
+          <div class="dropdown-content">
+            <button title="Duplicate to new business card" id="export-duplicate">Duplicate</button>
+            <button title="Export to JSON file" id="export-json">To JSON</button>
+            <button title="Export to PNG file" id="export-png">To PNG</button>
+            <button title="Export to JPG file" id="export-jpg">To JPG</button>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button class="header-button" id="save-button" title="Save">
+            <img src="./icons/save.png">
+          </button>
+          <div class="dropdown-content">
+            <button title="Save as..." id="save-as">Save As...</button>
+          </div>
+        </div>
+        
+        <button type="button" class="header-button" id="delete-button" title="Delete">
+          <img src="./icons/delete.png">
+        </button>
+      </section>
+    </header>
+    <main class="main">
+      <form id="toolbox">
+        <fieldset>
+          <legend>Tool</legend>
+          <br>
+          
+          <div>
+            <label for="select">
+            <div>
+              Select<input type="radio" id="select" name="tool" value="0" checked hidden/> 
+            </div>
+            </label>
+          </div>
+
+          <hr>
+
+          <div id="text">
+            <label for="heading">
+            <div>
+              Heading<input type="radio" id="heading" name="tool" value="5" hidden/> 
+            </div>
+            </label>
+
+            <label for="subheading">
+            <div>
+              Subheading<input type="radio" id="subheading" name="tool" value="6" hidden/> 
+            </div>
+            </label>
+
+            <label for="body">
+            <div>
+              Body<input type="radio" id="body" name="tool" value="7" hidden/> 
+            </div>
+            </label>
+          </div>
+
+          <hr>
+
+          <div id="shapes">
+            <label for="square">
+            <div>
+              <input type="radio" id="square" name="tool" value="8" hidden/>
+              <img src="./icons/square.png" class="input"/>
+            </div>
+            </label>
+
+            <label for="circle">
+            <div>
+              <input type="radio" id="circle" name="tool" value="9" hidden/>
+              <img src="./icons/circle.png" class="input"/>
+            </div>
+            </label>
+          </div>
+
+          <hr>
+
+          <div id="socials">
+            <label for="facebook">
+            <div>
+              <input type="radio" id="facebook" name="tool" value="1" hidden/>
+              <img src="./icons/facebook.png" class="input"/>
+            </div>
+            </label>
+
+            <label for="instagram">
+            <div>
+              <input type="radio" id="instagram" name="tool" value="2" hidden/>
+              <img src="./icons/instagram.webp" class="input"/>
+            </div>
+            </label>
+
+            <label for="linkedin">
+            <div>
+              <input type="radio" id="linkedin" name="tool" value="3" hidden/>
+              <img src="./icons/linkedin.png" class="input"/>
+            </div>
+            </label>
+
+
+            <label for="github">
+            <div>
+              <input type="radio" id="github" name="tool" value="4" hidden/>
+              <img src="./icons/github.png" class="input"/>
+            </div>
+            </label>
+          </div>
+        </fieldset>
+      </form>
+
+      <section id="center">
+        <div id="popup-menu">
+        </div>
+
+        <div>
+          <div class="business-card">
+            <canvas id="front-card"></canvas>
+            <canvas id="back-card"></canvas>
+          </div>
+
+          <button id="flip-button">Flip to Back!</button>
+        </div>
+
+        <!-- probably should be something else -->
+        <!-- <div id="save"><p>Save</p></div> -->
+      </section>
+
+      <section id="attribute-sel">
+      </section>
+    </main>
+
+    <script type="module" src="./scripts/editor-page.js"></script>
+  </body>
+</html>
