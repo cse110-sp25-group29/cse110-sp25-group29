@@ -1,0 +1,37 @@
+# Meeting Notes
+
+Date: 06/02/2025
+Meeting Start: 2:05
+Meeting End: 
+
+## Attendees
+
+- Hugo
+- Joey
+- Jeffrey
+- Kian
+
+## Topics
+
+- What needs to be done
+- Who should do what
+
+## What Happened
+
+- Discussed what things needed to be done
+  - Attribute menu needs CSS
+  - Top bar functionality that need to be implemented
+  - Help home page import cards
+  - Make ADR for using shadow DOMs for attribute selector
+  - Create night mode
+- Final code submission deadline: SUNDAY
+  - We should put a final cutoff on pushing code internally: Friday night
+
+## Things to Do
+
+- Assignments
+  - Jeffrey: CSS for attribute menu
+  - Kian: Top bar function
+  - Joey: Make ADR
+  - Hugo: Walk through home page how to use our stuff
+- Give status update on Wednesday
