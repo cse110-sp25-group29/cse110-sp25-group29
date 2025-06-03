@@ -471,6 +471,7 @@ export class Textbox extends Drawable {
 
     this.bold = false;
     this.italics = false;
+    this.underline = false;
   }
 
   init(e) {
@@ -507,7 +508,8 @@ export class Textbox extends Drawable {
     return this.selected;
   }
 
-  overSelf(x, y) { // probably needs improvement
+  overSelf(x, y) {
+    this.canvas.getContext('2d').font = `${this.bold ? ' bold' : ''} ${this.italics ? ' italic' : ''} ${this.fontSize}px ${this.fontStyle}`;
     return this.x <= x && x <= this.x + this.canvas.getContext('2d').measureText(this.text).width && this.y <= y + this.fontSize && y <= this.y;
   }
 
@@ -516,6 +518,15 @@ export class Textbox extends Drawable {
     ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
 
     ctx.fillText(this.text, this.x, this.y);
+    if (this.underline) {
+      ctx.strokeStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
+      ctx.lineWidth = this.fontSize / 10;
+      
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y + this.fontSize / 8);
+      ctx.lineTo(this.x + ctx.measureText(this.text).width, this.y + this.fontSize / 8);
+      ctx.stroke();
+    }
   }
 
   drawFocus(ctx) {
@@ -572,6 +583,7 @@ export class Textbox extends Drawable {
     if ('size' in data && typeof data.size === 'number') this.fontSize = data.size;
     if ('bold' in data && typeof data.bold === 'boolean') this.bold = data.bold;
     if ('italics' in data && typeof data.italics === 'boolean') this.italics = data.italics;
+    if ('underline' in data && typeof data.underline === 'boolean') this.underline = data.underline;
     if ('r' in data && typeof data.r === 'number') this.r = data.r;
     if ('g' in data && typeof data.g === 'number') this.g = data.g;
     if ('b' in data && typeof data.b === 'number') this.b = data.b;
