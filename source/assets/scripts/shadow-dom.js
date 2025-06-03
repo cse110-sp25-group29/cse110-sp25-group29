@@ -539,12 +539,6 @@ class ImageElement extends HTMLElement {
   }
 }
 
-function clampToInt(value, lo, hi) {
-  value = parseInt(value, 10);
-  value = Math.min(Math.max(value, lo), hi);
-  return value;
-}
-
 function rgbToHex(r, g, b) {
   const rgb = (r << 16) | (g << 8) | b;
   const str = rgb.toString(16);

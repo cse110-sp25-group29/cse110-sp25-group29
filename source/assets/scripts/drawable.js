@@ -521,7 +521,7 @@ export class Textbox extends Drawable {
     if (this.underline) {
       ctx.strokeStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
       ctx.lineWidth = this.fontSize / 10;
-      
+
       ctx.beginPath();
       ctx.moveTo(this.x, this.y + this.fontSize / 8);
       ctx.lineTo(this.x + ctx.measureText(this.text).width, this.y + this.fontSize / 8);
