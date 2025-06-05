@@ -6,8 +6,8 @@
 
 ## Home Page
 [Quick View of Home Page](https://cse110-sp25-group29.github.io/project-homepage/homepage.html)
-![light](source\light.png)
-![dark](source\dark.png)
+![light](source/assets/images/dark.png)
+![dark](source/assets/images/light.png)
 
 ## Quick Links
 *See the Table of Contents at the top right corner for easier navigation.*
