@@ -28,6 +28,8 @@ export class Canvas {
     this.canvas.width = 1080;
     this.canvas.height = 600;
 
+    this.backgroundColor = '#f7fdfc';
+
     this.draw_stack = [];
     this.focus = null;
 
@@ -522,6 +524,9 @@ export class Canvas {
   renderCanvas() {
     const ctx = this.canvas.getContext('2d');
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    ctx.fillStyle = this.backgroundColor;
+    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     for (let i = 0; i < this.draw_stack.length; i++) {
       this.draw_stack[i].drawSelf(ctx);

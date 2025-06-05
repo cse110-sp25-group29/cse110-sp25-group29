@@ -8,8 +8,12 @@
   <body class="body">
     <header class="header">
       <section id="home-button-section">
-        <button class="header-button" id="home-button" title="Home">
+        <button class="header-button" id="back-button" title="Back">
           <img src="./icons/arrow_back.png">
+        </button>
+
+        <button class="header-button" id="home-button" title="Home">
+          <img src="./icons/home.png">
         </button>
       </section>
 
@@ -19,24 +23,13 @@
         
       <section id="other-buttons">
         <div class="dropdown">
-          <button class="header-button" id="import-button" title="Import">
+          <button class="header-button" id="export-button" title="Export">
             <img src="./icons/download.png">
           </button>
           <div class="dropdown-content">
-            <button title="Import from other business card" id="import-previous">Open Previous</button>
-            <button title="Import from JSON file" id="import-json">From JSON</button>
-          </div>
-        </div>
-
-        <div class="dropdown">
-          <button class="header-button" id="export-button" title="Export">
-            <img src="./icons/upload.png">
-          </button>
-          <div class="dropdown-content">
-            <button title="Duplicate to new business card" id="export-duplicate">Duplicate</button>
-            <button title="Export to JSON file" id="export-json">To JSON</button>
-            <button title="Export to PNG file" id="export-png">To PNG</button>
-            <button title="Export to JPG file" id="export-jpg">To JPG</button>
+            <button title="Export to JSON file" id="export-json">To JSON...</button>
+            <button title="Export to PNG file" id="export-png">To PNG...</button>
+            <button title="Export to JPG file" id="export-jpg">To JPG...</button>
           </div>
         </div>
 
@@ -48,6 +41,21 @@
             <button title="Save as..." id="save-as">Save As...</button>
           </div>
         </div>
+
+        <div class="dropdown">
+          <button class="header-button" id="import-button" title="Import">
+            <img src="./icons/upload.png">
+          </button>
+          <div class="dropdown-content">
+            <button title="Import from other business card" id="file-open">Open</button>
+            <button title="Import from JSON file" id="file-new">New</button>
+            <button title="Duplicate to new business card" id="file-duplicate">Duplicate</button>
+          </div>
+        </div>
+        
+        <button type="button" class="header-button" id="reset-button" title="Reset">
+          <img src="./icons/reset.png">
+        </button>
         
         <button type="button" class="header-button" id="delete-button" title="Delete">
           <img src="./icons/delete.png">

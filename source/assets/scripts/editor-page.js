@@ -24,6 +24,7 @@ export function setCardName(name) {
   cardName = name;
   Topbar.setName(name);
 }
+
 export function saveAs(name) {
   if (name && cardName !== name) {
     delete cardsList[cardName];
@@ -50,7 +51,10 @@ export function saveAs(name) {
 
 export function deleteCard() {
   delete cardsList[cardName];
+  openNew();
+}
 
+export function openNew() {
   if (!('Untitled' in cardsList)) {
     cardName = 'Untitled';
   } else {
@@ -62,7 +66,7 @@ export function deleteCard() {
   exportCurrentCardName();
   exportCardsList();
 
-  reset();
+  reset(false);
 }
 
 let cardsList;
@@ -86,7 +90,7 @@ export function exportCurrentCardName() {
   localStorage.setItem('current_card', cardName);
 }
 
-function reset() {
+export function reset(saved = true) {
   console.log('reset');
   frontCanvas.setActive(true);
   backCanvas.setActive(false);
@@ -106,7 +110,7 @@ function reset() {
     backCanvas.importJSON({ objects: [] });
   }
 
-  setSaved(true);
+  setSaved(saved);
   Topbar.setName(cardName);
 }
 

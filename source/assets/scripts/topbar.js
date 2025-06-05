@@ -1,10 +1,18 @@
 import * as Editor from './editor-page.js';
 
 export function initListeners() {
+  const back = document.querySelector('#back-button');
+  back.addEventListener('click', () => {
+    window.history.back();
+  });
+
   const home = document.querySelector('#home-button');
   home.addEventListener('click', (e) => {
     window.location.href = '../homepage.html';
   });
+
+  const reset = document.querySelector('#reset-button');
+  reset.addEventListener('click', Editor.reset);
 
   const del = document.querySelector('#delete-button');
   del.addEventListener('click', triggerDeleteMenu);
@@ -20,8 +28,8 @@ export function initListeners() {
   const jpgexport = document.getElementById('export-jpg');
   const pngexport = document.getElementById('export-png');
   const jsonexport = document.getElementById('export-json');
-  const duplicate = document.getElementById('export-duplicate');
-  const openprev = document.getElementById('import-previous');
+  const duplicate = document.getElementById('file-duplicate');
+  const openprev = document.getElementById('file-open');
 
   openprev.addEventListener('click', () => {
     const cards = Editor.importCardsList();
@@ -105,6 +113,11 @@ export function initListeners() {
     const url = URL.createObjectURL(blob);
     Editor.downloadURL(url, 'front-and-back.json');
     URL.revokeObjectURL(url);
+  });
+
+  const fileNew = document.querySelector('#file-new');
+  fileNew.addEventListener('click', () => {
+    Editor.openNew();
   });
 }
 
@@ -231,5 +244,5 @@ export function setName(name) {
   const cardTitle = document.querySelector('#card-title');
   cardTitle.innerHTML = name;
   if (bold) cardTitle.style.fontWeight = 'bold';
-  else cardTitle.style.fontWeight = 'regular';
+  else cardTitle.style.fontWeight = 'normal';
 }
