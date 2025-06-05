@@ -1,9 +1,9 @@
-# date: 25-06-04  
-# decision-makers: Joey, Hugo, Jeffrey, Kian
----
+## date: 06-04-25
 
-# Title  
-Use Shadow DOM for Schema Viewer Components
+## decision-makers: Joey, Hugo, Jeffrey, Kian
+
+---
+# Use Shadow DOM for Schema Viewer Components
 
 ## Context and Problem Statement  
 
