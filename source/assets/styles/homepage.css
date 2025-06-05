@@ -188,3 +188,84 @@ body.dark-theme .search-icon {
     flex-shrink: 0;
     stroke: #A7ABB1;
 }
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#popup {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 300px;
+  max-width: 90%;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+#right-col {
+
+}
+
+#left-col {
+    display: grid;
+    flex-flow: column;
+}
+
+#closeBtn {
+    top: 10px;
+    right: 0px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#shareBtn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#downloadBtn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#eidtBtn {
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#dialogBox {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 999;
+    width: 300px;
+}
+
+#dropZone {
+    padding: 40px;
+    margin: 20px 0;
+    border-radius: 10px;
+    background-color: #29A55B;
+}
