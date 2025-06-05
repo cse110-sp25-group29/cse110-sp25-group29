@@ -5,12 +5,25 @@ import * as Topbar from './topbar.js';
 
 window.addEventListener('DOMContentLoaded', init);
 
+export function downloadURL(url, name) {
+  const link = document.createElement('a');
+  link.download = name;
+  link.href = url;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
 export let saved = false;
 export function setSaved(value) {
   saved = value;
 }
 
 export let cardName = 'Untitled';
+export function setCardName(name) {
+  cardName = name;
+  Topbar.setName(name);
+}
 export function saveAs(name) {
   if (name && cardName !== name) {
     delete cardsList[cardName];
@@ -53,23 +66,23 @@ export function deleteCard() {
 }
 
 let cardsList;
-function importCardsList() {
+export function importCardsList() {
   const cardsList = localStorage.getItem('cards');
   if (!cardsList) return {};
   else return JSON.parse(cardsList);
 }
 
-function exportCardsList() {
+export function exportCardsList() {
   if (cardsList) { localStorage.setItem('cards', JSON.stringify(cardsList)); }
 }
 
-function importCurrentCardName() {
+export function importCurrentCardName() {
   const cardName = localStorage.getItem('current_card');
   if (!cardName) return 'Untitled';
   else return cardName;
 }
 
-function exportCurrentCardName() {
+export function exportCurrentCardName() {
   localStorage.setItem('current_card', cardName);
 }
 
@@ -89,8 +102,8 @@ function reset() {
     frontCanvas.importJSON(cardsList[cardName].front);
     backCanvas.importJSON(cardsList[cardName].back);
   } else {
-    frontCanvas.importJSON({});
-    backCanvas.importJSON({});
+    frontCanvas.importJSON({ objects: [] });
+    backCanvas.importJSON({ objects: [] });
   }
 
   setSaved(true);
@@ -100,7 +113,7 @@ function reset() {
 /**
  * Initializes the objects on the editor page.
  */
-let frontCanvas, backCanvas;
+export let frontCanvas, backCanvas;
 function init() {
   frontCanvas = new Canvas.Canvas('#front-card', true);
   backCanvas = new Canvas.Canvas('#back-card', false);

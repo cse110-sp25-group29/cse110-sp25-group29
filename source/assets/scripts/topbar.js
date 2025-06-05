@@ -16,6 +16,96 @@ export function initListeners() {
 
   const saveAs = document.querySelector('#save-as');
   saveAs.addEventListener('click', triggerSaveAsMenu);
+
+  const jpgexport = document.getElementById('export-jpg');
+  const pngexport = document.getElementById('export-png');
+  const jsonexport = document.getElementById('export-json');
+  const duplicate = document.getElementById('export-duplicate');
+  const openprev = document.getElementById('import-previous');
+
+  openprev.addEventListener('click', () => {
+    const cards = Editor.importCardsList();
+    const cardNames = Object.keys(cards);
+    const current = Editor.importCurrentCardName();
+    if (cardNames.length === 0) {
+      alert('No saves in local storage!');
+      return;
+    }
+    let prevname = null;
+    for (let i = 0; i < cardNames.length; ++i) {
+      if (cardNames[i] === current) {
+        if (i !== 0) {
+          prevname = cardNames[i - 1];
+        } else {
+          prevname = cardNames[cardNames.length - 1];
+        }
+        break;
+      }
+    }
+
+    if (!prevname) prevname = cardNames[cardNames.length - 1];
+    if (prevname === current) {
+      alert(`${prevname} is the only save in storage.`);
+      return;
+    }
+
+    Editor.frontCanvas.importJSON(cards[prevname].front);
+    Editor.backCanvas.importJSON(cards[prevname].back);
+
+    Editor.setSaved(true);
+    Editor.setCardName(prevname);
+    Editor.exportCurrentCardName();
+  });
+
+  duplicate.addEventListener('click', () => {
+    Editor.setSaved(false);
+    Editor.setCardName(`Copy of ${Editor.cardName}`);
+  });
+
+  jpgexport.addEventListener('click', () => {
+    const active = Editor.frontCanvas.active;
+    let activeCanvas;
+    let name;
+    if (active) {
+      activeCanvas = Editor.frontCanvas;
+      name = 'front-card.jpg';
+    } else {
+      activeCanvas = Editor.backCanvas;
+      name = 'back-card.jpg';
+    }
+
+    const url = activeCanvas.canvas.toDataURL('image/jpeg', 0.95);
+    Editor.downloadURL(url, name);
+  });
+
+  pngexport.addEventListener('click', () => {
+    const active = Editor.frontCanvas.active;
+    let activeCanvas;
+    let name;
+
+    if (active) {
+      activeCanvas = Editor.frontCanvas;
+      name = 'front-card.png';
+    } else {
+      activeCanvas = Editor.backCanvas;
+      name = 'back-card.png';
+    }
+
+    const url = activeCanvas.canvas.toDataURL('image/png');
+    Editor.downloadURL(url, name);
+  });
+
+  jsonexport.addEventListener('click', () => {
+    const exportData = {
+      front: Editor.frontCanvas.exportJSON(),
+      back: Editor.backCanvas.exportJSON()
+    };
+    const str = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([str], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    Editor.downloadURL(url, 'front-and-back.json');
+    URL.revokeObjectURL(url);
+  });
 }
 
 export function removePopupMenu() {

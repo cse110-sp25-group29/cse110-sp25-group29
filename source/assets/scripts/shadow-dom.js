@@ -9,6 +9,13 @@ const consistentStyle =
   position: relative;
 }
 
+fieldset {
+  width: 85%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%)
+}
+
 .thin-number {
   width: 40px;
 }
@@ -33,6 +40,10 @@ const consistentStyle =
   height: 10px;
 }
 
+#attr-font-style {
+  width: 80px;
+}
+
 #attr-color-picker {
   border-radius: 50%;
   inline-size: 30px;
@@ -40,6 +51,14 @@ const consistentStyle =
   border-width: 1px;
   border-style: solid;
   border-color: rgb(153, 153, 153);
+}
+
+#attr-hex-color {
+  width: 100px;
+}
+
+#attr-color-div {
+  vertical-align: middle;
 }`;
 
 class TextboxElement extends HTMLElement {
@@ -49,17 +68,15 @@ class TextboxElement extends HTMLElement {
     const shadowDOM = this.attachShadow({ mode: 'open' });
     const elementRoot = document.createElement('form');
     elementRoot.innerHTML =
-        `<label for="attr-text">Text: </label>
+        `<h2>Attribute Editor</h2>
+        
+        <fieldset>
+        <h3>Content</h3>
         <input type="text" id="attr-text" name="attr-text" autocomplete="off" />
-        <label for="attr-font-size">Font Size: </label>
-        <input type="number" id="attr-font-size" name="attr-font-size" class="thin-number" />
         
-        <label for="attr-bold"><img src="./icons/bold.png" class="attr-button"/></label>
-        <input type="checkbox" id="attr-bold" name="attr-bold" />
-        
-        <label for="attr-italics"><img src="./icons/italics.png" class="attr-button"/></label>
-        <input type="checkbox" id="attr-italics" name="attr-italics" />
-        
+        <hr>
+
+        <h3>Typeface</h3>
         <select id="attr-font-style" name="attr-font-style">
           <option value="Arial">Arial</option>
           <option value="Times New Roman">Times New Roman</option>
@@ -70,22 +87,45 @@ class TextboxElement extends HTMLElement {
           <option value="Trebuchet">Trebuchet</option>
           <option value="Georgia">Georgia</option>
         </select>
+        <input type="number" id="attr-font-size" name="attr-font-size" class="thin-number" />
         
-        <label for="attr-red">r: </label>
-        <input type="number" id="attr-red" name="attr-red" class="thin-number" />
-        <label for="attr-green">g: </label>
-        <input type="number" id="attr-green" name="attr-green" class="thin-number" />
-        <label for="attr-blue">b: </label>
-        <input type="number" id="attr-blue" name="attr-blue" class="thin-number" />
+        <label for="attr-bold"><img src="./icons/bold.png" class="attr-button"/></label>
+        <input type="checkbox" id="attr-bold" name="attr-bold" />
+        
+        <label for="attr-italics"><img src="./icons/italics.png" class="attr-button"/></label>
+        <input type="checkbox" id="attr-italics" name="attr-italics" />
+
+        <label for="attr-underline"><img src="./icons/underline.png" class="attr-button"/></label>
+        <input type="checkbox" id="attr-underline" name="attr-underline" />
+        
+        <hr>
+        
+        <h3>Color</h3>
+        <div id="attr-color-div">
+        <input type="color" id="attr-color-picker" name="attr-color-picker">
+        <input type="text" id="attr-hex-color" name="attr-hex-color" />
+        </div>
+
+        <hr>
+
+        <h3>Layer & Position</h3>
+
+        <div id="attr-layer">
+          Layer
+          <button type="button" id="attr-up-one">Up</button>
+          <button type="button" id="attr-down-one">Dwn</button>
+          <button type="button" id="attr-up-all">AUp</button>
+          <button type="button" id="attr-down-all">ADwn</button>
+        </div>
 
         <label for="attr-x">x: </label>
         <input type="number" id="attr-x" name="attr-x" class="thin-number" />
         <label for="attr-y">y: </label>
         <input type="number" id="attr-y" name="attr-y" class="thin-number" />
 
-        <input type="color" id="attr-color-picker" name="attr-color-picker">
-        
-        <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
+        </fieldset>
+
+        <button type="button" id="attr-delete" name="attr-delete">Delete</button>`;
 
     const style = document.createElement('style');
     style.innerHTML = consistentStyle;
@@ -114,59 +154,78 @@ class TextboxElement extends HTMLElement {
     const bold = this.shadowRoot.querySelector('#attr-bold');
     bold.addEventListener('change', () => {
       this.obj.bold = bold.checked;
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
     const italics = this.shadowRoot.querySelector('#attr-italics');
     italics.addEventListener('change', () => {
       this.obj.italics = italics.checked;
+      this.obj.parent.onAnyChange();
+      this.obj.parent.renderCanvas();
+    });
+
+    const underline = this.shadowRoot.querySelector('#attr-underline');
+    underline.addEventListener('change', () => {
+      this.obj.underline = underline.checked;
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
     const fontStyle = this.shadowRoot.querySelector('#attr-font-style');
     fontStyle.addEventListener('input', () => {
       this.obj.fontStyle = fontStyle.value;
-      this.obj.parent.renderCanvas();
-    });
-
-    const r = this.shadowRoot.querySelector('#attr-red');
-    r.addEventListener('input', () => {
-      this.obj.r = parseInt(r.value, 10);
-      this.obj.parent.renderCanvas();
-    });
-
-    const g = this.shadowRoot.querySelector('#attr-green');
-    g.addEventListener('input', () => {
-      this.obj.g = parseInt(g.value, 10);
-      this.obj.parent.renderCanvas();
-    });
-
-    const b = this.shadowRoot.querySelector('#attr-blue');
-    b.addEventListener('input', () => {
-      this.obj.b = parseInt(b.value, 10);
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
     const x = this.shadowRoot.querySelector('#attr-x');
     x.addEventListener('input', () => {
       this.obj.x = parseInt(x.value, 10);
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
     const y = this.shadowRoot.querySelector('#attr-y');
     y.addEventListener('input', () => {
       this.obj.y = parseInt(y.value, 10);
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
     const color = this.shadowRoot.querySelector('#attr-color-picker');
+    const rgb = this.shadowRoot.querySelector('#attr-hex-color');
     color.addEventListener('input', (e) => {
-      const rgb = hexToRgb(e.target.value);
-      this.obj.r = rgb[0];
-      this.obj.g = rgb[1];
-      this.obj.b = rgb[2];
+      rgb.value = color.value;
+      const rgbVal = hexToRgb(e.target.value);
+      this.obj.r = rgbVal[0];
+      this.obj.g = rgbVal[1];
+      this.obj.b = rgbVal[2];
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
+
+    rgb.addEventListener('input', () => {
+      color.value = rgb.value;
+      const rgbVal = hexToRgb(rgb.value);
+      this.obj.r = rgbVal[0];
+      this.obj.g = rgbVal[1];
+      this.obj.b = rgbVal[2];
+      this.obj.parent.onAnyChange();
+      this.obj.parent.renderCanvas();
+    });
+
+    const up = this.shadowRoot.querySelector('#attr-up-one');
+    up.addEventListener('click', () => { this.obj.parent.triggerUpKey(true, false); });
+
+    const down = this.shadowRoot.querySelector('#attr-down-one');
+    down.addEventListener('click', () => { this.obj.parent.triggerDownKey(true, false); });
+
+    const upAll = this.shadowRoot.querySelector('#attr-up-all');
+    upAll.addEventListener('click', () => { this.obj.parent.triggerUpKey(true, true); });
+
+    const downAll = this.shadowRoot.querySelector('#attr-down-all');
+    downAll.addEventListener('click', () => { this.obj.parent.triggerDownKey(true, true); });
 
     const del = this.shadowRoot.querySelector('#attr-delete');
     del.addEventListener('click', () => {
@@ -188,28 +247,24 @@ class TextboxElement extends HTMLElement {
 
     const bold = this.shadowRoot.querySelector('#attr-bold');
     const italics = this.shadowRoot.querySelector('#attr-italics');
-    bold.value = this.obj.bold;
+    const underline = this.shadowRoot.querySelector('#attr-underline');
+    bold.checked = this.obj.bold;
     italics.checked = this.obj.italics;
+    underline.checked = this.obj.underline;
 
     const fontStyle = this.shadowRoot.querySelector('#attr-font-style');
     fontStyle.value = this.obj.fontStyle;
-
-    const r = this.shadowRoot.querySelector('#attr-red');
-    const g = this.shadowRoot.querySelector('#attr-green');
-    const b = this.shadowRoot.querySelector('#attr-blue');
-    r.value = this.obj.r;
-    g.value = this.obj.g;
-    b.value = this.obj.b;
 
     const x = this.shadowRoot.querySelector('#attr-x');
     const y = this.shadowRoot.querySelector('#attr-y');
     x.value = Math.round(this.obj.x);
     y.value = Math.round(this.obj.y);
 
+    const rgb = this.shadowRoot.querySelector('#attr-hex-color');
+    rgb.value = rgbToHex(this.obj.r, this.obj.g, this.obj.b);
+
     const color = this.shadowRoot.querySelector('#attr-color-picker');
-    color.value = rgbToHex(clampToInt(r.value, 0, 255),
-      clampToInt(g.value, 0, 255),
-      clampToInt(b.value, 0, 255));
+    color.value = rgb.value;
   }
 }
 
@@ -220,24 +275,43 @@ class BoxElement extends HTMLElement {
     const shadowDOM = this.attachShadow({ mode: 'open' });
     const elementRoot = document.createElement('form');
     elementRoot.innerHTML =
-        `<label for="attr-x">x: </label>
-        <input type="number" id="attr-x" name="attr-x" class="thin-number" />
-        <label for="attr-y">y: </label>
-        <input type="number" id="attr-y" name="attr-y" class="thin-number" />
+        `<h2>Attribute Editor</h2>
+        
+        <fieldset>
+        
+        <h3>Dimensions</h3>
 
         <label for="attr-width">width: </label>
         <input type="number" id="attr-width" name="attr-width" class="thin-number" />
         <label for="attr-height">height: </label>
         <input type="number" id="attr-height" name="attr-height" class="thin-number" />
-        
-        <label for="attr-red">r: </label>
-        <input type="number" id="attr-red" name="attr-red" class="thin-number" />
-        <label for="attr-green">g: </label>
-        <input type="number" id="attr-green" name="attr-green" class="thin-number" />
-        <label for="attr-blue">b: </label>
-        <input type="number" id="attr-blue" name="attr-blue" class="thin-number" />
 
+        <hr>
+
+        <h3>Color</h3>
+        <div id="attr-color-div">
         <input type="color" id="attr-color-picker" name="attr-color-picker">
+        <input type="text" id="attr-hex-color" name="attr-hex-color" />
+        </div>
+
+        <hr>
+
+        <h3>Layer & Position</h3>
+
+        <div id="attr-layer">
+          Layer
+          <button type="button" id="attr-up-one">Up</button>
+          <button type="button" id="attr-down-one">Dwn</button>
+          <button type="button" id="attr-up-all">AUp</button>
+          <button type="button" id="attr-down-all">ADwn</button>
+        </div>
+
+        <label for="attr-x">x: </label>
+        <input type="number" id="attr-x" name="attr-x" class="thin-number" />
+        <label for="attr-y">y: </label>
+        <input type="number" id="attr-y" name="attr-y" class="thin-number" />
+
+        </fieldset>
         
         <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
 
@@ -256,12 +330,14 @@ class BoxElement extends HTMLElement {
     x.addEventListener('input', () => {
       this.obj.x1 = parseInt(x.value, 10);
       this.obj.x2 = parseInt(x.value, 10) + parseInt(width.value, 10);
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
     width.addEventListener('input', () => {
       this.obj.x1 = parseInt(x.value, 10);
       this.obj.x2 = parseInt(x.value, 10) + parseInt(width.value, 10);
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
@@ -270,41 +346,50 @@ class BoxElement extends HTMLElement {
     y.addEventListener('input', () => {
       this.obj.y1 = parseInt(y.value, 10);
       this.obj.y2 = parseInt(y.value, 10) + parseInt(height.value, 10);
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
     height.addEventListener('input', () => {
       this.obj.y1 = parseInt(y.value, 10);
       this.obj.y2 = parseInt(y.value, 10) + parseInt(height.value, 10);
-      this.obj.parent.renderCanvas();
-    });
-
-    const r = this.shadowRoot.querySelector('#attr-red');
-    r.addEventListener('input', () => {
-      this.obj.r = parseInt(r.value, 10);
-      this.obj.parent.renderCanvas();
-    });
-
-    const g = this.shadowRoot.querySelector('#attr-green');
-    g.addEventListener('input', () => {
-      this.obj.g = parseInt(g.value, 10);
-      this.obj.parent.renderCanvas();
-    });
-
-    const b = this.shadowRoot.querySelector('#attr-blue');
-    b.addEventListener('input', () => {
-      this.obj.b = parseInt(b.value, 10);
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
     const color = this.shadowRoot.querySelector('#attr-color-picker');
+    const rgb = this.shadowRoot.querySelector('#attr-hex-color');
     color.addEventListener('input', (e) => {
-      const rgb = hexToRgb(e.target.value);
-      this.obj.r = rgb[0];
-      this.obj.g = rgb[1];
-      this.obj.b = rgb[2];
+      rgb.value = color.value;
+      const rgbVal = hexToRgb(e.target.value);
+      this.obj.r = rgbVal[0];
+      this.obj.g = rgbVal[1];
+      this.obj.b = rgbVal[2];
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
+
+    rgb.addEventListener('input', () => {
+      color.value = rgb.value;
+      const rgbVal = hexToRgb(rgb.value);
+      this.obj.r = rgbVal[0];
+      this.obj.g = rgbVal[1];
+      this.obj.b = rgbVal[2];
+      this.obj.parent.onAnyChange();
+      this.obj.parent.renderCanvas();
+    });
+
+    const up = this.shadowRoot.querySelector('#attr-up-one');
+    up.addEventListener('click', () => { this.obj.parent.triggerUpKey(true, false); });
+
+    const down = this.shadowRoot.querySelector('#attr-down-one');
+    down.addEventListener('click', () => { this.obj.parent.triggerDownKey(true, false); });
+
+    const upAll = this.shadowRoot.querySelector('#attr-up-all');
+    upAll.addEventListener('click', () => { this.obj.parent.triggerUpKey(true, true); });
+
+    const downAll = this.shadowRoot.querySelector('#attr-down-all');
+    downAll.addEventListener('click', () => { this.obj.parent.triggerDownKey(true, true); });
 
     const del = this.shadowRoot.querySelector('#attr-delete');
     del.addEventListener('click', () => {
@@ -328,17 +413,11 @@ class BoxElement extends HTMLElement {
     width.value = Math.round(Math.abs(this.obj.x2 - this.obj.x1));
     height.value = Math.round(Math.abs(this.obj.y2 - this.obj.y1));
 
-    const r = this.shadowRoot.querySelector('#attr-red');
-    const g = this.shadowRoot.querySelector('#attr-green');
-    const b = this.shadowRoot.querySelector('#attr-blue');
-    r.value = this.obj.r;
-    g.value = this.obj.g;
-    b.value = this.obj.b;
+    const rgb = this.shadowRoot.querySelector('#attr-hex-color');
+    rgb.value = rgbToHex(this.obj.r, this.obj.g, this.obj.b);
 
     const color = this.shadowRoot.querySelector('#attr-color-picker');
-    color.value = rgbToHex(clampToInt(r.value, 0, 255),
-      clampToInt(g.value, 0, 255),
-      clampToInt(b.value, 0, 255));
+    color.value = rgb.value;
   }
 }
 
@@ -350,22 +429,35 @@ class ImageElement extends HTMLElement {
     const elementRoot = document.createElement('form');
 
     elementRoot.innerHTML =
-        `<label for="attr-x">x: </label>
-        <input type="number" id="attr-x" name="attr-x" class="thin-number" />
-        <label for="attr-y">y: </label>
-        <input type="number" id="attr-y" name="attr-y" class="thin-number" />
+        `<h2>Attribute Editor</h2>
+        
+        <fieldset>
+        
+        <h3>Dimensions</h3>
 
         <label for="attr-width">width: </label>
         <input type="number" id="attr-width" name="attr-width" class="thin-number" />
         <label for="attr-height">height: </label>
         <input type="number" id="attr-height" name="attr-height" class="thin-number" />
 
-        <select id="attr-icon-image" name="attr-icon-image">
-          <option value="./icons/facebook.png">Facebook</option>
-          <option value="./icons/instagram.webp">Instagram</option>
-          <option value="./icons/linkedin.png">LinkedIn</option>
-          <option value="./icons/github.png">GitHub</option>
-        </select>
+        <hr>
+
+        <h3>Layer & Position</h3>
+
+        <div id="attr-layer">
+          Layer
+          <button type="button" id="attr-up-one">Up</button>
+          <button type="button" id="attr-down-one">Dwn</button>
+          <button type="button" id="attr-up-all">AUp</button>
+          <button type="button" id="attr-down-all">ADwn</button>
+        </div>
+
+        <label for="attr-x">x: </label>
+        <input type="number" id="attr-x" name="attr-x" class="thin-number" />
+        <label for="attr-y">y: </label>
+        <input type="number" id="attr-y" name="attr-y" class="thin-number" />
+
+        </fieldset>
 
         <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
 
@@ -384,12 +476,14 @@ class ImageElement extends HTMLElement {
     x.addEventListener('input', () => {
       this.obj.x1 = parseInt(x.value, 10);
       this.obj.x2 = parseInt(x.value, 10) + parseInt(width.value, 10);
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
     width.addEventListener('input', () => {
       this.obj.x1 = parseInt(x.value, 10);
       this.obj.x2 = parseInt(x.value, 10) + parseInt(width.value, 10);
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
@@ -398,21 +492,28 @@ class ImageElement extends HTMLElement {
     y.addEventListener('input', () => {
       this.obj.y1 = parseInt(y.value, 10);
       this.obj.y2 = parseInt(y.value, 10) + parseInt(height.value, 10);
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
     height.addEventListener('input', () => {
       this.obj.y1 = parseInt(y.value, 10);
       this.obj.y2 = parseInt(y.value, 10) + parseInt(height.value, 10);
+      this.obj.parent.onAnyChange();
       this.obj.parent.renderCanvas();
     });
 
-    const icon = this.shadowRoot.querySelector('#attr-icon-image');
-    icon.addEventListener('input', () => {
-      this.obj.src = icon.value;
-      this.obj.img.src = icon.value;
-      this.obj.parent.renderCanvas();
-    });
+    const up = this.shadowRoot.querySelector('#attr-up-one');
+    up.addEventListener('click', () => { this.obj.parent.triggerUpKey(true, false); });
+
+    const down = this.shadowRoot.querySelector('#attr-down-one');
+    down.addEventListener('click', () => { this.obj.parent.triggerDownKey(true, false); });
+
+    const upAll = this.shadowRoot.querySelector('#attr-up-all');
+    upAll.addEventListener('click', () => { this.obj.parent.triggerUpKey(true, true); });
+
+    const downAll = this.shadowRoot.querySelector('#attr-down-all');
+    downAll.addEventListener('click', () => { this.obj.parent.triggerDownKey(true, true); });
 
     const del = this.shadowRoot.querySelector('#attr-delete');
     del.addEventListener('click', () => {
@@ -435,16 +536,7 @@ class ImageElement extends HTMLElement {
     const height = this.shadowRoot.querySelector('#attr-height');
     width.value = Math.round(Math.abs(this.obj.x2 - this.obj.x1));
     height.value = Math.round(Math.abs(this.obj.y2 - this.obj.y1));
-
-    const icon = this.shadowRoot.querySelector('#attr-icon-image');
-    icon.value = this.obj.src;
   }
-}
-
-function clampToInt(value, lo, hi) {
-  value = parseInt(value, 10);
-  value = Math.min(Math.max(value, lo), hi);
-  return value;
 }
 
 function rgbToHex(r, g, b) {
@@ -455,11 +547,15 @@ function rgbToHex(r, g, b) {
 }
 
 function hexToRgb(hex) {
-  const rgb = parseInt(hex.substring(1), 16);
-  const r = rgb >> 16;
-  const g = (rgb >> 8) % 256;
-  const b = rgb % 256;
-  return [r, g, b];
+  try {
+    const rgb = parseInt(hex.substring(1), 16);
+    const r = rgb >> 16;
+    const g = (rgb >> 8) % 256;
+    const b = rgb % 256;
+    return [r, g, b];
+  } catch (e) {
+    return [0, 0, 0];
+  }
 }
 
 customElements.define('textbox-attributes', TextboxElement);
