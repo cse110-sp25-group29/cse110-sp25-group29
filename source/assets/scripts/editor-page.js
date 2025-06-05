@@ -175,12 +175,12 @@ function init() {
     const cards = importCardsList();
     const cardNames = Object.keys(cards);
     const current = importCurrentCardName();
-    if(cardNames.length === 0) {
+    if (cardNames.length === 0) {
       alert('No saves in local storage!');
       return;
     }
     let prevname = null;
-    for(let i = 0; i < cardNames.length; ++i) {
+    for (let i = 0; i < cardNames.length; ++i) {
       if (cardNames[i] === current) {
         if (i !== 0) {
           prevname = cardNames[i - 1];
@@ -231,7 +231,7 @@ function init() {
     let activeCanvas;
     let name;
 
-    if(active){
+    if (active) {
       activeCanvas = frontCanvas;
       name = 'front-card.png';
     } else {
