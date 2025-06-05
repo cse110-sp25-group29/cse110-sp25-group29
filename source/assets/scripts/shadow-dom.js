@@ -5,34 +5,44 @@
 
 const consistentStyle =
 `form {
+  --input-bg: #D9D9D9;
   height: 100%;
   position: relative;
+  color: black;
+  font-size: 0.8em;
 }
 
 fieldset {
-  width: 85%;
+  width: 99%;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%)
-}
-
-.thin-number {
-  width: 40px;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  background-color: #BDBCBC;
 }
 
 #attr-delete {
   display: block;
   position: absolute;
-  bottom: 10px;
-  left: min(50px, (20vw - 100px) / 2);
+  bottom: 2.5em;
+  left: 50%;
+  transform: translateX(-50%);
   right: auto;
 
-  color: red;
-  background-color: lightcoral;
-  width: 100px;
-  height: 25px;
-  border-color: red;
+  width: 80%;
+  font-size: 1.5em;
+  background-color: red;
+  border: 0;
+  padding: 0.4rem;
+  color: white;
   border-radius: 3px;
+}
+
+#attr-delete:hover {
+  background-color: rgb(227, 0, 0);
 }
 
 .attr-button {
@@ -40,26 +50,134 @@ fieldset {
   height: 10px;
 }
 
-#attr-font-style {
-  width: 80px;
+#attr-text {
+  width: 90%;
+  height: 7em;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1em;
+  border: none;
+  background-color: var(--input-bg);
+  padding: 0.4em;
+  resize: none;
 }
 
+#attr-font-size, #attr-font-style {
+  background-color: var(--input-bg);
+  border: none;
+  padding-left: 0.3em;
+  border-radius: 6px;
+  margin: 0.2em 0.2em 0.5em 0.2em;
+  height: 1.5em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+#attr-font-style {
+  width: 65%;
+}
+
+#attr-font-size {
+  width: 20%
+}
+
+#attr-bold, #attr-italics, #attr-underline {
+  accent-color: var(--input-bg);
+}
+
+#attr-height {
+  margin-right: 0.5em;
+}
+
+#attr-width {
+  margin-right: 0.5em;
+}
+
+.thin-number {
+  width: 22%;
+  border-radius: 6px;
+  border: none;
+  background-color: var(--input-bg);
+  margin-bottom: 1em;
+  height: 1.5em;
+}
+
+#attr-color-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  margin-bottom: 1em;
+  margin-top: -0.2em
+}
+  
 #attr-color-picker {
   border-radius: 50%;
   inline-size: 30px;
   block-size: 30px;
   border-width: 1px;
   border-style: solid;
-  border-color: rgb(153, 153, 153);
+  border: white;
+  background-color: var(--input-bg);
 }
 
 #attr-hex-color {
-  width: 100px;
+  width: 65%;
+  height: 1.7em;
+  border-radius: 6px;
+  border: none;
+  background-color: var(--input-bg);
 }
 
-#attr-color-div {
+#attr-up-one, #attr-up-all, #attr-down-one, #attr-down-all {
+  border-radius: 6px;
+  background-color: var(--input-bg);
+  border: none;
+  width: 15%;
+  height: 1.5em;
+  margin: 0 0.1em 1em;
+  padding: 0;
+}
+
+#attr-up-one img {
+  transform: rotate(90deg);
+  width: 16px;
+  height: 16px;
   vertical-align: middle;
-}`;
+}
+
+#attr-down-one img {
+  transform: rotate(-90deg);
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+#attr-up-all img {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+#attr-down-all img {
+  transform: rotate(-180deg);
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+#attr-x, #attr-y {
+  margin-bottom: 20px;
+  border-radius: 6px;
+  background-color: var(--input-bg);
+  border: none;
+  height 1.7em;
+  width: 25%;
+  padding-left: 0.5em;
+}
+
+`;
 
 class TextboxElement extends HTMLElement {
   constructor() {
@@ -72,7 +190,7 @@ class TextboxElement extends HTMLElement {
         
         <fieldset>
         <h3>Content</h3>
-        <input type="text" id="attr-text" name="attr-text" autocomplete="off" />
+        <textarea id="attr-text" name="attr-text"></textarea>
         
         <hr>
 
@@ -112,10 +230,18 @@ class TextboxElement extends HTMLElement {
 
         <div id="attr-layer">
           Layer
-          <button type="button" id="attr-up-one">Up</button>
-          <button type="button" id="attr-down-one">Dwn</button>
-          <button type="button" id="attr-up-all">AUp</button>
-          <button type="button" id="attr-down-all">ADwn</button>
+          <button type="button" id="attr-up-one">
+             <img src="./icons/arrow_back.png" />
+          </button>
+          <button type="button" id="attr-down-one">
+            <img src="./icons/arrow_back.png" />
+          </button>
+          <button type="button" id="attr-up-all">
+            <img src="./icons/arrow_double.png" />
+          </button>
+          <button type="button" id="attr-down-all">
+            <img src="./icons/arrow_double.png" />
+          </button>
         </div>
 
         <label for="attr-x">x: </label>
@@ -281,9 +407,9 @@ class BoxElement extends HTMLElement {
         
         <h3>Dimensions</h3>
 
-        <label for="attr-width">width: </label>
+        <label for="attr-width">w: </label>
         <input type="number" id="attr-width" name="attr-width" class="thin-number" />
-        <label for="attr-height">height: </label>
+        <label for="attr-height">h: </label>
         <input type="number" id="attr-height" name="attr-height" class="thin-number" />
 
         <hr>
@@ -300,10 +426,18 @@ class BoxElement extends HTMLElement {
 
         <div id="attr-layer">
           Layer
-          <button type="button" id="attr-up-one">Up</button>
-          <button type="button" id="attr-down-one">Dwn</button>
-          <button type="button" id="attr-up-all">AUp</button>
-          <button type="button" id="attr-down-all">ADwn</button>
+          <button type="button" id="attr-up-one">
+             <img src="./icons/arrow_back.png" />
+          </button>
+          <button type="button" id="attr-down-one">
+            <img src="./icons/arrow_back.png" />
+          </button>
+          <button type="button" id="attr-up-all">
+            <img src="./icons/arrow_double.png" />
+          </button>
+          <button type="button" id="attr-down-all">
+            <img src="./icons/arrow_double.png" />
+          </button>
         </div>
 
         <label for="attr-x">x: </label>
@@ -313,7 +447,7 @@ class BoxElement extends HTMLElement {
 
         </fieldset>
         
-        <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
+        <button type="button" id="attr-delete" name="attr-delete">Delete</button>`;
 
     const style = document.createElement('style');
     style.innerHTML = consistentStyle;
@@ -435,9 +569,9 @@ class ImageElement extends HTMLElement {
         
         <h3>Dimensions</h3>
 
-        <label for="attr-width">width: </label>
+        <label for="attr-width">w: </label>
         <input type="number" id="attr-width" name="attr-width" class="thin-number" />
-        <label for="attr-height">height: </label>
+        <label for="attr-height">h: </label>
         <input type="number" id="attr-height" name="attr-height" class="thin-number" />
 
         <hr>
@@ -446,10 +580,18 @@ class ImageElement extends HTMLElement {
 
         <div id="attr-layer">
           Layer
-          <button type="button" id="attr-up-one">Up</button>
-          <button type="button" id="attr-down-one">Dwn</button>
-          <button type="button" id="attr-up-all">AUp</button>
-          <button type="button" id="attr-down-all">ADwn</button>
+          <button type="button" id="attr-up-one">
+             <img src="./icons/arrow_back.png" />
+          </button>
+          <button type="button" id="attr-down-one">
+            <img src="./icons/arrow_back.png" />
+          </button>
+          <button type="button" id="attr-up-all">
+            <img src="./icons/arrow_double.png" />
+          </button>
+          <button type="button" id="attr-down-all">
+            <img src="./icons/arrow_double.png" />
+          </button>
         </div>
 
         <label for="attr-x">x: </label>
@@ -459,7 +601,7 @@ class ImageElement extends HTMLElement {
 
         </fieldset>
 
-        <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
+        <button type="button" id="attr-delete" name="attr-delete">Delete</button>`;
 
     const style = document.createElement('style');
     style.innerHTML = consistentStyle;
