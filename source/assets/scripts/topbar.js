@@ -11,6 +11,16 @@ export function initListeners() {
     window.location.href = '../homepage.html';
   });
 
+  const cardTitle = document.querySelector('#card-title');
+  cardTitle.addEventListener('focusout', () => {
+    let name = cardTitle.innerHTML;
+    if (name === '') name = Editor.nextUntitled();
+    if (name !== Editor.cardName) {
+      Editor.setSaved(false);
+      Editor.setCardName(name);
+    }
+  });
+
   const reset = document.querySelector('#reset-button');
   reset.addEventListener('click', Editor.reset);
 
@@ -18,9 +28,7 @@ export function initListeners() {
   del.addEventListener('click', triggerDeleteMenu);
 
   const saveNormal = document.querySelector('#save-button');
-  saveNormal.addEventListener('click', (e) => {
-    Editor.saveAs();
-  });
+  saveNormal.addEventListener('click', Editor.saveAs);
 
   const saveAs = document.querySelector('#save-as');
   saveAs.addEventListener('click', triggerSaveAsMenu);
@@ -185,7 +193,7 @@ function triggerSaveAsMenu(e) {
   menu.innerHTML =
     `
     <label for="popup-save-as">Title: </label>
-    <input type="text" title="popup-save-as" id="popup-save-as"></input>
+    <input type="text" title="popup-save-as" id="popup-save-as" autocomplete="off"></input>
     <button id="popup-save-button">Save</button>
     `;
   menu.style.display = 'block';
@@ -236,9 +244,12 @@ export function setName(name) {
   if (!name) { name = 'Untitled'; }
 
   let bold = false;
+  const saveStar = document.querySelector('#save-star');
   if (!Editor.saved) {
     bold = true;
-    name += '*';
+    saveStar.innerHTML = '*';
+  } else {
+    saveStar.innerHTML = '';
   }
 
   const cardTitle = document.querySelector('#card-title');

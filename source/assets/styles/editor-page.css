@@ -57,7 +57,14 @@ body {
 }
 
 #card-title {
-    color: white;
+    color: black;
+    display: inline-block;
+}
+
+#save-star {
+    color: black;
+    font-weight: bold; 
+    display: inline-block;
 }
 
 /* Dropdown Button */
