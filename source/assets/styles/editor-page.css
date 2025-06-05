@@ -1,0 +1,321 @@
+:root {
+    --header-bg: #29A55B;
+    --header-highlight: #0c893e;
+    --toolbox-bg: #dadada;
+    --toolbox-text-color: #09622c;
+    --selected-tool-bg: #9ea69d;
+    --center-bg: #EFFFEC;
+    --card-bg: #f0f8ff;
+    --attribute-bg: #dadada;
+    --save-bg: #29A55B;
+    --save-hover-bg: #0c893e;
+    --label-width: 100px;
+    --transition-speed: 0.6s;
+    --card-radius: min(15px, 1.5vw);
+    --card-width: min(540px, 54vw);
+    --card-height: min(300px, 30vw);
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    height: 99%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #EFFFEC;  
+    color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: var(--header-bg);
+    width: 100%;
+    height: 25.75px;
+    display: grid;
+    align-items: center;
+    font-weight: bold;
+    position: relative;
+
+    grid-template-columns: 40px 160px auto 200px;
+}
+
+.header img {
+    width: 20px;
+    height: 20px;
+    margin-top: 2.25px;
+}
+
+#other-buttons {
+    justify-content: right;
+}
+
+#card-title {
+    color: white;
+}
+
+/* Dropdown Button */
+.header-button {
+    background-color: var(--header-bg);
+    color: white;
+    padding: 0px 12px;
+    border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content > button {
+    display: block;
+    position: relative;
+    background-color: var(--header-bg);
+    border: none;
+    color: white;
+    min-width: 120px;
+    z-index: 1;
+}
+  
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+  
+/* Change color of dropdown links on hover */
+.dropdown-content button:hover {
+    background-color: var(--header-highlight);
+}
+  
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+  
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .header-button, .header-button:hover {
+    background-color: var(--header-highlight);
+}
+
+.main {
+    background-color: var(--center-bg);
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: min(200px, 20vw) 1fr min(200px, 20vw);
+}
+
+#toolbox {
+    background-color: var(--toolbox-bg);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+#toolbox fieldset {
+    border-radius: 10px;
+    min-width: 0;
+    width: 99%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    margin-top: 2rem;
+}
+
+div:has(input[id="heading"]) {
+    font-size: 1.5rem;
+}
+
+div:has(input[id="subheading"]) {
+    font-size: 1.2rem;
+}
+
+div:has(input[id="body"]) {
+    font-size: 1rem;
+}
+
+label {
+    width: var(--label-width);
+    display: inline-block;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+label > div:has(> input:checked) {
+    background-color: var(--selected-tool-bg);
+}
+
+label > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: background-color 0.2s;
+}
+
+#toolbox label:hover{
+    transform: scale(1.10);
+}
+
+img.input {
+    width: 40px;
+    height: 40px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius: 0px;
+    transition: transform 0.2s ease-in-out;
+}
+
+img.input:hover {
+    transform: scale(1.10);
+}
+
+div:has(input[id="heading"]) {
+    font-size: x-large;
+}
+
+div:has(input[id="subheading"]) {
+    font-size: large;
+}
+
+div:has(input[id="body"]) {
+    font-size: medium;
+}
+
+label {
+    width: auto;
+}
+
+#socials {
+    padding: 5px;
+    display: grid;
+    gap: 0.5em;
+    grid-template-columns: 1fr 1fr;
+}
+
+#text {
+    padding: 5px;
+    display: grid;
+    gap: 0.2em;
+    grid-template-columns: 1fr;
+}
+
+#text label {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#shapes {
+    padding: 5px;
+    display: grid;
+    gap: 0.5em;
+    grid-template-columns: 1fr 1fr;
+}
+
+img[class="input"] {
+    width: 40px;
+    height: 40px;
+    margin: 2px 2px 2px 2px;
+}
+
+#center {
+    display: grid;
+    grid-template-rows: min(600px, 60vw) 100px;
+    place-items: center;
+    padding: 20px;
+}
+
+#popup-menu {
+    display: none;
+}
+
+.business-card {
+    position: relative;
+    text-align: center;
+    display: grid;
+    grid-template-rows: 0 auto auto;
+    margin: min(100px, 10vw) auto 0 auto;
+}
+
+#front-card,
+#back-card {
+    width: var(--card-width);
+    height: var(--card-height);
+    background-color: var(--card-bg);
+    border: 1px solid #d0d0d0;
+    border-radius: var(--card-radius);
+    margin: auto;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transition: transform var(--transition-speed);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#front-card {
+    transform: rotateY(0deg);
+}
+
+#back-card {
+    transform: rotateY(180deg);
+}
+
+#flip-button {
+    display: block;
+    margin: min(10px, 1vw) auto;
+    background-color: var(--save-bg);
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#flip-button:hover {
+    background-color: var(--save-hover-bg);
+}
+
+#flip-button-img {
+    display: block;
+    margin: min(5px, 1vw) auto;
+    width: 22px;
+    height: 20px;
+}
+
+#attribute-sel {
+    background-color: var(--attribute-bg);
+    padding: 10px;
+    color: white;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    color: var(--toolbox-text-color);
+    border-radius: 6px;
+}

@@ -3,7 +3,9 @@
 
 ## Participants
 ### DevOps
-- list of participants / _No participants_
+
+- Brandon
+- Vincent
 
 ### Editor Page
 - list of participants / _No participants_
@@ -27,8 +29,13 @@
 ### DevOps
 
 - Priorities
+  - Code quality checker
+  - Meet with other teams to make sure what unit tests 
+  - Consistent announcements about pipeline updates 
 - Progress
+  - Changed the linter to an online one from TA feedback
 - Problems
+  - Figuring how the pipeline works across branches
 
 ### Editor Page
 
