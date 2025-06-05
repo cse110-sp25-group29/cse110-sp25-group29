@@ -46,7 +46,6 @@ export class Toolbar {
       case 8: return {};
       case 9: return {};
       default: {
-        console.log('shouldn\'t reach');
         return {};
       }
     }
