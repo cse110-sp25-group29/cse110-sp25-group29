@@ -27,17 +27,22 @@ fieldset {
 #attr-delete {
   display: block;
   position: absolute;
-  bottom: 10px;
-  left: min(50px, (20vw - 100px) / 2);
+  bottom: 2.5em;
+  left: 50%;
+  transform: translateX(-50%);
   right: auto;
-  margin-bottom: 3em;
 
+  width: 80%;
+  font-size: 1.5em;
+  background-color: red;
+  border: 0;
+  padding: 0.4rem;
   color: white;
-  background-color: lightcoral;
-  width: 100px;
-  height: 25px;
-  border-color: red;
   border-radius: 3px;
+}
+
+#attr-delete:hover {
+  background-color: rgb(227, 0, 0);
 }
 
 .attr-button {
@@ -77,7 +82,7 @@ fieldset {
   width: 20%
 }
 
-#attr-bold {
+#attr-bold, #attr-italics, #attr-underline {
   accent-color: var(--input-bg);
 }
 
@@ -174,7 +179,6 @@ fieldset {
 
 `;
 
-
 class TextboxElement extends HTMLElement {
   constructor() {
     super();
@@ -247,7 +251,7 @@ class TextboxElement extends HTMLElement {
 
         </fieldset>
 
-        <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
+        <button type="button" id="attr-delete" name="attr-delete">Delete</button>`;
 
     const style = document.createElement('style');
     style.innerHTML = consistentStyle;
@@ -443,7 +447,7 @@ class BoxElement extends HTMLElement {
 
         </fieldset>
         
-        <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
+        <button type="button" id="attr-delete" name="attr-delete">Delete</button>`;
 
     const style = document.createElement('style');
     style.innerHTML = consistentStyle;
@@ -597,7 +601,7 @@ class ImageElement extends HTMLElement {
 
         </fieldset>
 
-        <button type="button" id="attr-delete" name="attr-delete">DELETE</button>`;
+        <button type="button" id="attr-delete" name="attr-delete">Delete</button>`;
 
     const style = document.createElement('style');
     style.innerHTML = consistentStyle;
