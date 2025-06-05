@@ -19,7 +19,8 @@
         "lint:fix": "eslint . --no-eslintrc --config .CONFIG/.eslintrc.cjs --fix",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
         "e2ehometest": "jest admin/cipipeline/e2e-homepage.test.js",
-        "e2eeditortest":"jest admin/cipipeline/e2e-editor.test.js"
+        "e2eeditortest":"jest admin/cipipeline/e2e-editor.test.js",
+        "docs": "jsdoc -c .CONFIG/jsdoc.json"
     },
     "type": "module",
     "jest": {
