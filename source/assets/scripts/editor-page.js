@@ -27,7 +27,6 @@ export function setCardName(name) {
 
 export function saveAs(name) {
   if (name && cardName !== name) {
-    delete cardsList[cardName];
     cardName = name;
     cardsList[cardName] = {
       front: frontCanvas.exportJSON(),
@@ -54,14 +53,18 @@ export function deleteCard() {
   openNew();
 }
 
-export function openNew() {
+export function nextUntitled() {
   if (!('Untitled' in cardsList)) {
-    cardName = 'Untitled';
+    return 'Untitled';
   } else {
     let num = 1;
     while (`Untitled${num}` in cardsList) num += 1;
-    cardName = `Untitled${num}`;
+    return `Untitled${num}`;
   }
+}
+
+export function openNew() {
+  cardName = nextUntitled();
 
   exportCurrentCardName();
   exportCardsList();

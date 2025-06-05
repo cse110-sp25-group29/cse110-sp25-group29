@@ -221,7 +221,7 @@ class TextboxElement extends HTMLElement {
         <h3>Color</h3>
         <div id="attr-color-div">
         <input type="color" id="attr-color-picker" name="attr-color-picker">
-        <input type="text" id="attr-hex-color" name="attr-hex-color" />
+        <input type="text" id="attr-hex-color" name="attr-hex-color" autocomplete="off" />
         </div>
 
         <hr>
@@ -417,7 +417,7 @@ class BoxElement extends HTMLElement {
         <h3>Color</h3>
         <div id="attr-color-div">
         <input type="color" id="attr-color-picker" name="attr-color-picker">
-        <input type="text" id="attr-hex-color" name="attr-hex-color" />
+        <input type="text" id="attr-hex-color" name="attr-hex-color autocomplete="off"" />
         </div>
 
         <hr>
