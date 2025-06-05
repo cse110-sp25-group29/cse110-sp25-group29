@@ -5,12 +5,25 @@ import * as Topbar from './topbar.js';
 
 window.addEventListener('DOMContentLoaded', init);
 
+function downloadURL(url, name) {
+  const link = document.createElement("a");
+  link.download = name;
+  link.href = url;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
 export let saved = false;
 export function setSaved(value) {
   saved = value;
 }
 
 export let cardName = 'Untitled';
+export function setCardName(name){
+  cardName = name;
+  Topbar.setName(name);
+}
 export function saveAs(name) {
   if (name && cardName !== name) {
     delete cardsList[cardName];
@@ -152,4 +165,94 @@ function init() {
   });
 
   Topbar.initListeners();
+  const jpgexport = document.getElementById('export-jpg');
+  const pngexport = document.getElementById('export-png');
+  const jsonexport = document.getElementById('export-json');
+  const duplicate = document.getElementById('export-duplicate');
+  const openprev = document.getElementById("import-previous");
+
+  openprev.addEventListener("click", () => {
+    const cards = importCardsList();
+    const cardNames = Object.keys(cards);
+    const current = importCurrentCardName();
+    if(cardNames.length === 0){
+      alert("No saves in local storage!");
+      return;
+    } 
+    let prevname = null;
+    for(let i = 0; i < cardNames.length; ++i){
+      if(cardNames[i] === current){
+        if(i != 0){
+          prevname = cardNames[i-1];
+        }
+        else{
+          prevname = cardNames[cardNames.length - 1];
+        }
+        break;
+      }
+    }
+    if(!prevname) prevname = cardNames[cardNames.length - 1];
+    if(prevname == current){
+      alert(`${prevname} is the only save in storage.`);
+      return;
+    }
+
+    frontCanvas.importJSON(cards[prevname].front);
+    backCanvas.importJSON(cards[prevname].back);
+
+    setSaved(true);
+    setCardName(prevname);
+    exportCurrentCardName();
+  });
+
+  duplicate.addEventListener("click", () => {
+    setSaved(false);
+    setCardName(null);
+  });
+
+  jpgexport.addEventListener("click", () => {
+    let active = frontCanvas.active;
+    let active_canvas;
+    let name;
+    if(active){
+        active_canvas = frontCanvas;
+        name = "front-card.jpg";
+    }
+    else{
+        active_canvas = backCanvas;
+        name = "back-card.jpg";
+    }
+    const url = active_canvas.canvas.toDataURL("image/jpeg", 0.95);
+    downloadURL(url, name);
+  });
+
+
+  pngexport.addEventListener("click", () => {
+    let active = frontCanvas.active;
+    let active_canvas;
+    let name;
+    if(active){
+        active_canvas = frontCanvas;
+        name = "front-card.png";
+    }
+    else{
+        active_canvas = backCanvas;
+        name = "back-card.png";
+    }
+    const url = active_canvas.canvas.toDataURL("image/png");
+    downloadURL(url, name);
+  });
+
+
+  jsonexport.addEventListener("click", () => {
+    const exportData = {
+        front: frontCanvas.exportJSON(),
+        back: backCanvas.exportJSON()
+    };
+    const str = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([str], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    downloadURL(url,"front-and-back.json");
+    URL.revokeObjectURL(url);
+  });
 }
