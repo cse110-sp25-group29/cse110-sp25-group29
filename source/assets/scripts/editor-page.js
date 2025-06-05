@@ -53,7 +53,7 @@ export function deleteCard() {
 }
 
 let cardsList;
-function importCardsList() {
+export function importCardsList() {
   const cardsList = localStorage.getItem('cards');
   if (!cardsList) return {};
   else return JSON.parse(cardsList);
