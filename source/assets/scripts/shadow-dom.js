@@ -5,10 +5,9 @@
 
 const consistentStyle =
 `form {
-  --input-bg: #D9D9D9;
   height: 100%;
   position: relative;
-  color: black;
+  color: var(--text-color);
   font-size: 0.8em;
 }
 
@@ -21,7 +20,8 @@ fieldset {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  background-color: #BDBCBC;
+  background-color: var(--fieldset-bg);
+  border: 1px solid var(--fieldset-border);
 }
 
 #attr-delete {
@@ -82,8 +82,18 @@ fieldset {
   width: 20%
 }
 
+#attr-text-modifiers {
+  position: relative;
+  margin: auto auto;
+  width: 80%;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 3px;
+  background-color: var(--input-bg);
+}
+
 #attr-bold, #attr-italics, #attr-underline {
-  accent-color: var(--input-bg);
+  accent-color: var(--fieldset-bg);
 }
 
 #attr-height {
@@ -207,6 +217,7 @@ class TextboxElement extends HTMLElement {
         </select>
         <input type="number" id="attr-font-size" name="attr-font-size" class="thin-number" />
         
+        <div id="attr-text-modifiers">
         <label for="attr-bold"><img src="./icons/bold.png" class="attr-button"/></label>
         <input type="checkbox" id="attr-bold" name="attr-bold" />
         
@@ -215,7 +226,8 @@ class TextboxElement extends HTMLElement {
 
         <label for="attr-underline"><img src="./icons/underline.png" class="attr-button"/></label>
         <input type="checkbox" id="attr-underline" name="attr-underline" />
-        
+        </div>
+
         <hr>
         
         <h3>Color</h3>
