@@ -257,7 +257,7 @@ function searchLocalStorage(searchInput) {
         resultsContainer.id = 'search-results';
         resultsContainer.style.position = 'absolute';
         resultsContainer.style.backgroundColor = '#fff';
-        resultsContainer.style.border = '1px solid #ccc';
+        // resultsContainer.style.border = '1px solid #ccc';
         resultsContainer.style.maxHeight = '200px';
         resultsContainer.style.overflowY = 'auto';
         resultsContainer.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.1)';

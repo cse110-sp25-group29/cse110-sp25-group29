@@ -30,7 +30,6 @@ h1 {
     cursor: pointer;
 }
 
-
 .card-container {
     display: flex;
     justify-content: center;
@@ -384,4 +383,19 @@ body.dark-theme .search-icon {
 body.dark-theme .front-canvas,
 body.dark-theme .back-canvas {
     border-color: #74c866;
+}
+
+#all-card-button {
+    width: 300px;
+    height: 170px;
+    border: 4px solid #29A55B;
+    background-color: white;
+    border-radius: 6px;
+    font-size: 46px;
+    color: #29A55B;
+    cursor: pointer;
+}
+
+#all-card-button .icon svg{
+    stroke: #29A55B;
 }
