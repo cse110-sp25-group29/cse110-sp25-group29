@@ -1,12 +1,38 @@
 :root {
+    --text-color: #000000;
+    --text-color2: #dadada;
     --header-bg: #29A55B;
     --header-highlight: #0c893e;
-    --toolbox-bg: #dadada;
-    --toolbox-text-color: #09622c;
-    --selected-tool-bg: #9ea69d;
+    --sidebar-bg: #dadada;
+    --input-bg: #D9D9D9;
+    --fieldset-bg: #BDBCBC;
+    --fieldset-border: #cccccc;
+    --toolbox-text-color: #000000;
+    --selected-tool-bg: #089d26;
     --center-bg: #EFFFEC;
     --card-bg: #f0f8ff;
-    --attribute-bg: #dadada;
+    --save-bg: #29A55B;
+    --save-hover-bg: #0c893e;
+    --label-width: 100px;
+    --transition-speed: 0.6s;
+    --card-radius: min(15px, 1.5vw);
+    --card-width: min(540px, 54vw);
+    --card-height: min(300px, 30vw);
+}
+
+:root.dark {
+    --text-color: #60c319;
+    --text-color2: black;
+    --header-bg: #8fd96f;
+    --header-highlight: #60c319;
+    --sidebar-bg: #363636;
+    --input-bg: #D9D9D9;
+    --fieldset-bg: #212121;
+    --fieldset-border: #303030;
+    --toolbox-text-color: #60c319;
+    --selected-tool-bg: #2f6509;
+    --center-bg: #dddddd;
+    --card-bg: #f0f8ff;
     --save-bg: #29A55B;
     --save-hover-bg: #0c893e;
     --label-width: 100px;
@@ -28,8 +54,8 @@ html, body {
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #EFFFEC;  
-    color: #333;
+    background-color: var(--center-bg);  
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
 }
@@ -70,7 +96,7 @@ body {
 /* Dropdown Button */
 .header-button {
     background-color: var(--header-bg);
-    color: white;
+    color: var(--text-color2);
     padding: 0px 12px;
     border: none;
 }
@@ -93,7 +119,7 @@ body {
     position: relative;
     background-color: var(--header-bg);
     border: none;
-    color: white;
+    background-color: var(--header-bg);
     min-width: 120px;
     z-index: 1;
 }
@@ -125,26 +151,29 @@ body {
     background-color: var(--center-bg);
     flex-grow: 1;
     display: grid;
-    grid-template-columns: min(200px, 20vw) 1fr min(200px, 20vw);
+    grid-template-columns: min(180px, 18vw) 1fr min(200px, 20vw);
 }
 
 #toolbox {
-    background-color: var(--toolbox-bg);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
+    background-color: var(--sidebar-bg);
+    display: block;
     align-items: center;
-    padding: 0.5rem;
+    padding: 10px;
 }
 
 #toolbox fieldset {
     border-radius: 10px;
     min-width: 0;
     width: 99%;
+    background-color: var(--fieldset-bg);
     box-sizing: border-box;
     padding: 0;
     margin: 0;
     margin-top: 2rem;
+}
+
+#tool-h2 {
+    font-size: 1.2em;
 }
 
 div:has(input[id="heading"]) {
@@ -217,7 +246,6 @@ label {
 #socials {
     padding: 5px;
     display: grid;
-    gap: 0.5em;
     grid-template-columns: 1fr 1fr;
 }
 
@@ -236,7 +264,6 @@ label {
 #shapes {
     padding: 5px;
     display: grid;
-    gap: 0.5em;
     grid-template-columns: 1fr 1fr;
 }
 
@@ -314,13 +341,13 @@ img[class="input"] {
 }
 
 #attribute-sel {
-    background-color: var(--attribute-bg);
+    background-color: var(--sidebar-bg);
     padding: 10px;
     color: white;
 }
 
 fieldset {
-    border: 1px solid #ccc;
+    border: 1px solid var(--fieldset-border);
     padding: 10px;
     margin-top: 10px;
     color: var(--toolbox-text-color);

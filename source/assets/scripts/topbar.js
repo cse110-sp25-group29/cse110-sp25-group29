@@ -157,7 +157,7 @@ function triggerDeleteMenu(e) {
         z-index: 1;
         width: 250px;
         height: 150px;
-        background-color: var(--toolbox-bg);
+        background-color: var(--sidebar-bg);
         padding: 15px;
         border-radius: 5px;
         top: 38vh;
@@ -208,7 +208,7 @@ function triggerSaveAsMenu(e) {
         z-index: 1;
         width: 250px;
         height: 100px;
-        background-color: var(--toolbox-bg);
+        background-color: var(--sidebar-bg);
         padding: 15px;
         top: 40vh;
     }

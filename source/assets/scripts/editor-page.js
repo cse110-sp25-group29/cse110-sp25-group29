@@ -85,7 +85,7 @@ export function exportCardsList() {
 
 export function importCurrentCardName() {
   const cardName = localStorage.getItem('current_card');
-  if (!cardName) return 'Untitled';
+  if (!cardName) return nextUntitled();
   else return cardName;
 }
 
@@ -102,8 +102,8 @@ export function reset(saved = true) {
   document.querySelector('#back-card').style.transform = 'rotateY(180deg)';
   document.querySelector('#flip-button').innerHTML = 'Flip to Back!';
 
-  cardName = importCurrentCardName();
   cardsList = importCardsList();
+  cardName = importCurrentCardName();
   if (cardName in cardsList) {
     console.log('importing from previous');
     frontCanvas.importJSON(cardsList[cardName].front);
@@ -136,8 +136,8 @@ function init() {
   backCanvas.attachToolbar(toolbar);
   backCanvas.attachAttributeMenu(attributeMenu);
 
-  cardName = importCurrentCardName();
   cardsList = importCardsList();
+  cardName = importCurrentCardName();
   if (cardName in cardsList) {
     console.log('importing from previous');
     frontCanvas.importJSON(cardsList[cardName].front);
@@ -170,6 +170,12 @@ function init() {
     console.log(e);
     if (key === 'KeyS' && (e.ctrlKey || e.altKey)) { saveAs(); }
   });
+
+  const root = document.querySelector("html");
+  const darkMode = localStorage.getItem("darkmode");
+  if (darkMode === 'True') {
+    root.setAttribute('class', 'dark');
+  }
 
   Topbar.initListeners();
 }
