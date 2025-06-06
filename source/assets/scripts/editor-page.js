@@ -171,8 +171,8 @@ function init() {
     if (key === 'KeyS' && (e.ctrlKey || e.altKey)) { saveAs(); }
   });
 
-  const root = document.querySelector("html");
-  const darkMode = localStorage.getItem("darkmode");
+  const root = document.querySelector('html');
+  const darkMode = localStorage.getItem('darkmode');
   if (darkMode === 'True') {
     root.setAttribute('class', 'dark');
   }
