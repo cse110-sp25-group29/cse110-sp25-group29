@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
 });
 
-function uploadFeature() {
+export function uploadFeature() {
     const uploadBtn = document.querySelector('#upload-button');
     
     uploadBtn.addEventListener('click', () => {
@@ -73,11 +73,11 @@ function uploadFeature() {
 
 }
 
-function handleFiles(files) {
+export function handleFiles(files) {
     alert(`You uploaded: ${files[0].name}`);
 }
 
-function yourCardFeature() {
+export function yourCardFeature() {
     const yourCardBtn = document.querySelector('#your-card-button');
 
     yourCardBtn.addEventListener('click', () => {

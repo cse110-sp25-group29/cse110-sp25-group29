@@ -11,23 +11,23 @@
         "eslint-plugin-promise": "^6.6.0",
         "globals": "^16.1.0",
         "jest": "^29.7.0",
-        "jest-puppeteer": "^11.0.0",
+        "jest-environment-jsdom": "^29.7.0",
+        "jest-puppeteer": "^6.0.3",
         "jsdoc": "^4.0.4",
-        "puppeteer": "^24.10.0"
+        "puppeteer": "^13.5.1"
     },
     "scripts": {
         "lint": "eslint . --no-eslintrc --config .CONFIG/.eslintrc.cjs",
         "lint:fix": "eslint . --no-eslintrc --config .CONFIG/.eslintrc.cjs --fix",
-
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-        "e2ehometest": "jest admin/cipipeline/e2e-homepage.test.js",
-        "e2eeditortest": "jest admin/cipipeline/e2e-editor.test.js",
-        "docs": "jsdoc -c .CONFIG/jsdoc.json"
-
+        "unit": "NODE_OPTIONS='--experimental-vm-modules' BABEL_CONFIG_PATH=.CONFIG/babel.config.json jest admin/tests/unit.test.js --config=.CONFIG/jest.config.js",
+        "e2ehometest": "jest --config=.CONFIG/jest.e2e.config.js admin/tests/e2e-homepage.test.js",
+        "e2eeditortest": "jest admin/tests/e2e-editor.test.js",
+        "docs": "jsdoc -c .CONFIG/jsdoc.json",
+        "coverage": "NODE_OPTIONS='--experimental-vm-modules' BABEL_CONFIG_PATH=.CONFIG/babel.config.json jest admin/tests/unit.test.js --config=.CONFIG/jest.config.js --coverage"
     },
     "type": "module",
     "jest": {
-        "transform": {},
         "preset": "jest-puppeteer",
         "verbose": true
     }

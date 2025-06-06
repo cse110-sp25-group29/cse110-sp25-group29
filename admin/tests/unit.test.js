@@ -1,21 +1,60 @@
-import { isPhoneNumber } from '../test-functions/unit';
-test('adds 1 + 2 to equal 3', () => {
-  expect(1 + 2).toBe(3);
-});
-// isPhoneNumber True
-test('Good phone number 1', () => {
-  expect(isPhoneNumber('(510)111-1111')).toBe(true);
+/**
+ * @jest-environment jsdom
+ */
+import { yourCardFeature, uploadFeature, handleFiles } from '../../source/assets/scripts/homepage.js';
+import { jest } from '@jest/globals';
+describe('uploadFeature', () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <button id="upload-button">Upload</button>
+    `;
+    uploadFeature();
+  });
+
+  it('should open upload overlay on button click', () => {
+    document.getElementById('upload-button').click();
+    const overlay = document.getElementById('overlay');
+    const dropZone = document.getElementById('dropZone');
+    expect(overlay).not.toBeNull();
+    expect(dropZone).not.toBeNull();
+  });
 });
 
-test('Good phone number 2', () => {
-  expect(isPhoneNumber('111-9999')).toBe(true);
+describe('handleFiles', () => {
+  it('should alert uploaded file name', () => {
+    window.alert = jest.fn();
+    const fakeFile = new File(['dummy'], 'test.png', { type: 'image/png' });
+    handleFiles([fakeFile]);
+    expect(window.alert).toHaveBeenCalledWith('You uploaded: test.png');
+  });
 });
 
-// isPhoneNumber False
-test('Bad phone number 1', () => {
-  expect(isPhoneNumber('1 11-1111')).toBe(false);
-});
+describe('theme toggle button', () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <button id="theme-toggle">🌙</button>
+    `;
+    document.body.className = ''; 
+    const toggleBtn = document.getElementById('theme-toggle');
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-theme');
+      toggleBtn.textContent = document.body.classList.contains('dark-theme') ? '🔆' : '🌙';
+    });
+  });
 
-test('Bad phone number 2', () => {
-  expect(isPhoneNumber('blah blah blah')).toBe(false);
+  it('toggles to dark-theme and updates icon', () => {
+    const toggleBtn = document.getElementById('theme-toggle');
+    toggleBtn.click();
+    expect(document.body.className).toBe('dark-theme');
+    expect(toggleBtn.textContent).toBe('🔆');
+  });
+
+  it('toggles back to light-theme and updates icon', () => {
+    const toggleBtn = document.getElementById('theme-toggle');
+    document.body.className = 'dark-theme';
+    toggleBtn.textContent = '🔆';
+    toggleBtn.click();
+    expect(document.body.className).toBe('');
+    expect(toggleBtn.textContent).toBe('🌙');
+  });
 });
