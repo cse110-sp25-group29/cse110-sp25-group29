@@ -399,3 +399,15 @@ body.dark-theme .back-canvas {
 #all-card-button .icon svg{
     stroke: #29A55B;
 }
+
+.popup {
+    width: 300px;
+    height: 170px;
+    position: relative;
+    transition: transform 0.6s ease;
+    transform-style: preserve-3d;
+}
+
+.popup.flip {
+    transform: rotateY(180deg);
+}

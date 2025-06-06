@@ -183,15 +183,20 @@ function yourCardFeature() {
         // Create popup
         const popup = document.createElement('div');
         popup.id = "popup";
+        popup.className = "popup";
+
 
         // 
         const frontCard = document.createElement('canvas');
         frontCard.id = "front-card";
-        frontCard.className = "front-card";
+        frontCard.className = "front-canvas";
 
         const backCard = document.createElement('canvas');
         backCard.id = "back-card";
-        backCard.className = "back-card";
+        backCard.className = "back-canvas";
+        // backCard.hidden = true;
+
+       
 
         // Close handler
         closeBtn.addEventListener('click', () => {
@@ -215,9 +220,10 @@ function yourCardFeature() {
         left.appendChild(editBtn);
         right.appendChild(closeBtn);
         popup.appendChild(frontCard);
-        // popup.appendChild(backCard);
+        popup.appendChild(backCard);
         document.body.appendChild(overlay);
         renderYourCard(frontCard, backCard);
+        
     });
 
 }
@@ -244,6 +250,11 @@ function renderYourCard(frontCard, backCard) {
     const backData = cardsList[cardName].back;
     renderScaledPreview(frontCard, frontData, 300, 170);
     renderScaledPreview(backCard, backData, 300, 170);
+    const popup = document.querySelector(".popup");
+    popup.addEventListener('click', () => {
+        console.log('Toggling flip for card:', cardName);
+        popup.classList.toggle('flip');
+    });
 }
 
 
