@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { yourCardFeature, uploadFeature, handleFiles } from '../../source/assets/scripts/homepage.js';
+import { uploadFeature, handleFiles } from '../../source/assets/scripts/homepage.js';
 import { jest } from '@jest/globals';
 describe('uploadFeature', () => {
   beforeEach(() => {
