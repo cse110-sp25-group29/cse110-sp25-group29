@@ -117,6 +117,14 @@ export function reset(saved = true) {
   Topbar.setName(cardName);
 }
 
+const images = [];
+function preloadImages(img) {
+  for (let i = 0; i < img.length; i++) {
+    images[i] = new Image();
+    images[i].src = img[i];
+  }
+}
+
 /**
  * Initializes the objects on the editor page.
  */
@@ -178,4 +186,16 @@ function init() {
   }
 
   Topbar.initListeners();
+
+  preloadImages([
+    './icons/instagram.webp',
+    './icons/facebook.png',
+    './icons/linkedin.png',
+    './icons/github.png',
+    './icons/gmail.webp',
+    './icons/youtube.webp',
+    './icons/tiktok.png',
+    './icons/tumblr.png',
+    './icons/x.png'
+  ]);
 }

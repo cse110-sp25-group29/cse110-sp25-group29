@@ -321,6 +321,7 @@ function triggerSaveAsMenu(e) {
         height: 100px;
         background-color: var(--sidebar-bg);
         padding: 15px;
+        border-radius: 5px;
         top: 40vh;
     }
     
