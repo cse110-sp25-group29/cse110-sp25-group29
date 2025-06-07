@@ -1,10 +1,8 @@
 import { importCardsList } from './editor-page.js'
-import { Canvas } from './canvas.js' 
 
 import { renderScaledPreview } from './view_all_card.js'
 
 const cardsList = importCardsList();
-console.log(cardsList);
 
 document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('theme-toggle');
@@ -17,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     searchInput.addEventListener('input', (e) => {
-        console.log(searchInput.value);
         searchLocalStorage(searchInput);
     });
 
@@ -26,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
 });
 
-function uploadFeature() {
+export function uploadFeature() {
     const uploadBtn = document.querySelector('#upload-button');
     
     uploadBtn.addEventListener('click', () => {
@@ -44,7 +41,6 @@ function uploadFeature() {
         dropZone.id = "dropZone";
         dropZone.innerText = 'Drag and drop a file here';
         dropZone.ondrop = (e) => {
-            console.log("Testing: drop" + e);
             e.preventDefault();
             files = e.dataTransfer.files;
             // handleFiles(files);
@@ -96,7 +92,6 @@ function uploadFeature() {
         confirmlBtn.disabled = true;
 
         confirmlBtn.addEventListener('click', () => {
-            console.log(files)
             if (files) {
                 handleFiles(files);
             }
@@ -128,7 +123,7 @@ function uploadFeature() {
 
 }
 
-function handleFiles(files) {
+export function handleFiles(files) {
     const file = files[0];
     if (!file) return;
 
@@ -143,7 +138,7 @@ function handleFiles(files) {
     // alert(`You uploaded: ${files[0].name}`);
 }
 
-function yourCardFeature() {
+export function yourCardFeature() {
     const yourCardBtn = document.querySelector('#your-card-button');
 
     yourCardBtn.addEventListener('click', () => {
@@ -235,9 +230,8 @@ function yourCardFeature() {
 // frontCanvas.importJSON(cardsList[cardName].front)
 // backCanvas.importJSON(cardsList[cardName].back)
 // let frontCanvas, backCanvas;
-function renderYourCard(frontCard, backCard) {
+export function renderYourCard(frontCard, backCard) {
     const cardName = localStorage.getItem("current_card");
-    console.log("rendering your card");
     // // const cardName = '<insert card name>'
     // frontCanvas = new Canvas('#front-card');
     // backCanvas = new Canvas('#back-card');
@@ -252,16 +246,14 @@ function renderYourCard(frontCard, backCard) {
     renderScaledPreview(backCard, backData, 300, 170);
     const popup = document.querySelector(".popup");
     popup.addEventListener('click', () => {
-        console.log('Toggling flip for card:', cardName);
         popup.classList.toggle('flip');
     });
 }
 
 
-function searchLocalStorage(searchInput) {
+export function searchLocalStorage(searchInput) {
     const searchBar = document.querySelector('.search-bar');
     const keyword = searchInput.value.toLowerCase();
-    console.log(keyword);
     let resultsContainer = document.querySelector('#search-results');
     if (!resultsContainer) {
         resultsContainer = document.createElement('search-results');
@@ -272,7 +264,6 @@ function searchLocalStorage(searchInput) {
         resultsContainer.style.maxHeight = '200px';
         resultsContainer.style.overflowY = 'auto';
         resultsContainer.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.1)';
-
         searchBar.appendChild(resultsContainer);
     }
 
@@ -300,11 +291,13 @@ function searchLocalStorage(searchInput) {
     for (const key in obj) {
         if (key.toLowerCase().includes(keyword) && keyword !== '') {
             const item = document.createElement('div');
-            item.innerText = `Found: ${key}`;
+            // item.innerText = `Found: ${key}`;
+            item.innerHTML = `<a href="assets/editor-page.html" id="search-target-link"> Found: ${key}</a>`;
             item.style.padding = '4px 8px';
             item.style.cursor = 'pointer';
             item.addEventListener('mouseover', () => item.style.backgroundColor = '#f0f0f0');
             item.addEventListener('mouseout', () => item.style.backgroundColor = '');
+            item.addEventListener('click', () => localStorage.setItem('current_card', key));
             resultsContainer.appendChild(item);
             found = true;
         }
