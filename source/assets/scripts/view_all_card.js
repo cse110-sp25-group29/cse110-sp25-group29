@@ -170,6 +170,7 @@ window.addEventListener('DOMContentLoaded', () => {
     
             switch(icon) {
                 case 'edit':
+                    localStorage.setItem('current_card', currentPreviewCard);
                     window.location.href = `editor-page.html?card=${encodeURIComponent(currentPreviewCard)}`;
                     break;
                 case 'star':
@@ -328,6 +329,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 switch (icons[i]) {
                     case 'edit':
+                        localStorage.setItem('current_card', currentPreviewCard);
                         window.location.href = `editor-page.html?card=${encodeURIComponent(currentPreviewCard)}`;
                         break;
                     case 'star':
