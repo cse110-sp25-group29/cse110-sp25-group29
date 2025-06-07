@@ -13,11 +13,12 @@
     --card-bg: #f0f8ff;
     --save-bg: #29A55B;
     --save-hover-bg: #0c893e;
-    --label-width: 100px;
+    --label-width: auto;
     --transition-speed: 0.6s;
     --card-radius: min(15px, 1.5vw);
     --card-width: min(540px, 54vw);
     --card-height: min(300px, 30vw);
+    --svg-transform: 0;
 }
 
 :root.dark {
@@ -31,15 +32,16 @@
     --fieldset-border: #303030;
     --toolbox-text-color: #60c319;
     --selected-tool-bg: #2f6509;
-    --center-bg: #dddddd;
+    --center-bg: #212121;
     --card-bg: #f0f8ff;
     --save-bg: #29A55B;
     --save-hover-bg: #0c893e;
-    --label-width: 100px;
+    --label-width: auto;
     --transition-speed: 0.6s;
     --card-radius: min(15px, 1.5vw);
     --card-width: min(540px, 54vw);
     --card-height: min(300px, 30vw);
+    --svg-transform: brightness(0) saturate(100%) invert(78%) sepia(91%) saturate(2473%) hue-rotate(37deg) brightness(80%) contrast(94%);
 }
 
 * {
@@ -214,10 +216,14 @@ label > div {
     transform: scale(1.10);
 }
 
+.svg-icon {
+    filter: var(--svg-transform);
+}
+
 img.input {
-    width: 40px;
-    height: 40px;
-    margin: 4px;
+    width: 35px;
+    height: 35px;
+    margin: 2px;
     cursor: pointer;
     border-radius: 0px;
     transition: transform 0.2s ease-in-out;
@@ -237,10 +243,6 @@ div:has(input[id="subheading"]) {
 
 div:has(input[id="body"]) {
     font-size: medium;
-}
-
-label {
-    width: auto;
 }
 
 #socials {
@@ -265,12 +267,6 @@ label {
     padding: 5px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-}
-
-img[class="input"] {
-    width: 40px;
-    height: 40px;
-    margin: 2px 2px 2px 2px;
 }
 
 #center {

@@ -243,10 +243,10 @@ class TextboxElement extends HTMLElement {
         <div id="attr-layer">
           Layer
           <button type="button" id="attr-up-one">
-             <img src="./icons/arrow_back.png" />
+             <img src="./icons/arrow-left.svg" />
           </button>
           <button type="button" id="attr-down-one">
-            <img src="./icons/arrow_back.png" />
+            <img src="./icons/arrow-left.svg" />
           </button>
           <button type="button" id="attr-up-all">
             <img src="./icons/arrow_double.png" />
@@ -439,10 +439,10 @@ class BoxElement extends HTMLElement {
         <div id="attr-layer">
           Layer
           <button type="button" id="attr-up-one">
-             <img src="./icons/arrow_back.png" />
+             <img src="./icons/arrow-left.svg" />
           </button>
           <button type="button" id="attr-down-one">
-            <img src="./icons/arrow_back.png" />
+            <img src="./icons/arrow-left.svg" />
           </button>
           <button type="button" id="attr-up-all">
             <img src="./icons/arrow_double.png" />
@@ -593,10 +593,10 @@ class ImageElement extends HTMLElement {
         <div id="attr-layer">
           Layer
           <button type="button" id="attr-up-one">
-             <img src="./icons/arrow_back.png" />
+             <img src="./icons/arrow-left.svg" />
           </button>
           <button type="button" id="attr-down-one">
-            <img src="./icons/arrow_back.png" />
+            <img src="./icons/arrow-left.svg" />
           </button>
           <button type="button" id="attr-up-all">
             <img src="./icons/arrow_double.png" />
