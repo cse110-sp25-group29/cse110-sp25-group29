@@ -5,7 +5,7 @@ layout: default
 
 > *CSE 110 Team 29*
 
-![logo](./branding/logo.png)
+![logo](./branding/banner-0-no-bg.png)
 
 ## Our Brand
 - Color: Black and Green 
