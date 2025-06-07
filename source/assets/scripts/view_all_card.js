@@ -6,7 +6,6 @@ export function renderScaledPreview(canvas, data, width, height) {
         console.error('Failed to get 2D context for canvas');
         return;
     }
-    console.log('Rendering data:', data);
 
     canvas.width = width;
     canvas.height = height;
@@ -21,7 +20,6 @@ export function renderScaledPreview(canvas, data, width, height) {
     ctx.clearRect(0, 0, originalWidth, originalHeight);
 
     if (!data.objects || !data.objects.length) {
-        console.warn('No objects to render, drawing default');
         ctx.fillStyle = 'black';
         ctx.font = '20px Arial';
         ctx.fillText('No Content', 50, 50);
@@ -29,7 +27,6 @@ export function renderScaledPreview(canvas, data, width, height) {
     }
 
     for (const obj of data.objects) {
-        console.log('Rendering object:', obj);
         const d = obj.data;
         switch (obj.type) {
             case 'textbox':
@@ -45,7 +42,6 @@ export function renderScaledPreview(canvas, data, width, height) {
                 const img = new Image();
                 img.src = d.src;
                 img.onload = () => {
-                    console.log('Image loaded:', d.src);
                     ctx.drawImage(img, d.x1, d.y1, d.x2 - d.x1, d.y2 - d.y1);
                 };
                 img.onerror = () => {
@@ -71,11 +67,56 @@ export function renderScaledPreview(canvas, data, width, height) {
     }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+export function downloadCardJSON(cardName) {
     const cardsList = importCardsList();
-    const cardNames = Object.keys(cardsList);
+    const cardData = cardsList[cardName];
+    
+    if (!cardData) {
+        alert('No card found');
+        return;
+    }
+
+    const jsonStr = JSON.stringify(cardData, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${cardName.replace(/[^a-z0-9]/gi, '_')}.json`;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, 100);
+}
+
+export function saveCardsList(cardsList) {
+    localStorage.setItem('cards', JSON.stringify(cardsList));
+}
+
+export async function deleteCard(cardName) {
+    const cardsList = await importCardsList();
+    if (!cardsList[cardName]) {
+        console.error('Cards not found:', cardName);
+        return false;
+    }
+
+    delete cardsList[cardName];
+    saveCardsList(cardsList); 
+
+    const starredCard = JSON.parse(localStorage.getItem('star'));
+    if (starredCard && starredCard.name === cardName) {
+        localStorage.removeItem('star');
+    }
+
+    return true;
+}
+
+
+window.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.show');
     container.innerHTML = '';
+    var currentPreviewCard = null; 
 
     const previewModal = document.createElement('div');
     previewModal.classList.add('preview-modal');
@@ -88,27 +129,173 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const closePreview = document.createElement('button');
     closePreview.classList.add('close-preview');
-    closePreview.innerHTML = '×';
+    const closeIcon = document.createElement('img');
+    closeIcon.src = 'icons/close-green.png';
+    closeIcon.alt = 'Close';
+    closeIcon.style.width = '45px';
+    closeIcon.style.height = '45px';
+    closePreview.appendChild(closeIcon);
     previewContent.appendChild(closePreview);
 
-    const previewCanvas = document.createElement('canvas');
-    previewCanvas.classList.add('preview-canvas');
-    previewContent.appendChild(previewCanvas);
+    const mainContent = document.createElement('div');
+    mainContent.classList.add('preview-main-content');
+    previewContent.appendChild(mainContent);
+
+    const actionButtons = document.createElement('div');
+    actionButtons.classList.add('action-buttons');
+    previewModal.appendChild(actionButtons); 
+
+    const actionIcons = ['edit', 'star', 'download', 'delete'];
+    actionIcons.forEach(icon => {
+        const btn = document.createElement('button');
+        btn.classList.add('action-button');
+        
+        const img = document.createElement('img');
+        img.src = `icons/${icon}.svg`;
+        img.alt = icon;
+        img.style.width = '24px';
+        img.style.height = '24px';
+        
+        btn.appendChild(img);
+        actionButtons.appendChild(btn);
+    
+        btn.addEventListener('click', () => {
+            if (!currentPreviewCard) {
+                console.error('No card selected');
+                return;
+            }
+            
+            const cardsList = importCardsList();
+            const cardData = cardsList[currentPreviewCard];
+    
+            switch(icon) {
+                case 'edit':
+                    window.location.href = `editor-page.html?card=${encodeURIComponent(currentPreviewCard)}`;
+                    break;
+                case 'star':
+                    const starredCard = JSON.parse(localStorage.getItem('star'));
+                    const isStarred = starredCard && starredCard.name === currentPreviewCard;
+                    
+                    if (isStarred) {
+                        localStorage.removeItem('star');
+                        img.src = 'icons/star.svg';
+                    } else {
+                        localStorage.setItem('star', JSON.stringify({
+                            name: currentPreviewCard,
+                            data: cardData,
+                            timestamp: new Date().getTime()
+                        }));
+                        img.src = 'icons/star-filled.svg';
+                    }
+                    break;
+                case 'download':
+                    downloadCardJSON(currentPreviewCard);
+                    break;
+                case 'delete':
+                    if (confirm(`Do you really want to delete "${currentPreviewCard}"?`)) {
+                        if (deleteCard(currentPreviewCard)) {
+                            const cardElement = document.querySelector(`.view-card-button[data-card-name="${currentPreviewCard}"]`);
+                            if (cardElement) {
+                                cardElement.remove();
+                            }
+                            
+                            previewModal.style.display = 'none';
+                            alert(`Deleted: ${currentPreviewCard}`);
+                        }
+                    }
+                    break;
+            }
+        });
+    });
+
+
+    const canvasContainer = document.createElement('div');
+    canvasContainer.classList.add('canvas-container');
+    mainContent.appendChild(canvasContainer);
+
+    const frontCanvas = document.createElement('canvas');
+    frontCanvas.classList.add('preview-canvas', 'front');
+    frontCanvas.width = 800;
+    frontCanvas.height = 445;
+    canvasContainer.appendChild(frontCanvas);
+
+    const backCanvas = document.createElement('canvas');
+    backCanvas.classList.add('preview-canvas', 'back');
+    backCanvas.width = 800;
+    backCanvas.height = 445;
+    backCanvas.style.display = 'none';
+    canvasContainer.appendChild(backCanvas);
+
+    const navContainer = document.createElement('div');
+    navContainer.classList.add('nav-container');
+    mainContent.appendChild(navContainer);
+
+    const leftArrow = document.createElement('button');
+    leftArrow.classList.add('nav-button', 'left');
+    leftArrow.style.display = 'none';
+    const leftArrowImg = document.createElement('img');
+    leftArrowImg.src = 'icons/left.png';
+    leftArrowImg.alt = 'Previous';
+    leftArrowImg.style.width = '45px';
+    leftArrowImg.style.height = '45px';
+    leftArrow.appendChild(leftArrowImg);
+    navContainer.appendChild(leftArrow);
+
+    const rightArrow = document.createElement('button');
+    rightArrow.classList.add('nav-button', 'right');
+    const rightArrowImg = document.createElement('img');
+    rightArrowImg.src = 'icons/right.png';
+    rightArrowImg.alt = 'Next';
+    rightArrowImg.style.width = '45px';
+    rightArrowImg.style.height = '45px';
+    rightArrow.appendChild(rightArrowImg);
+    navContainer.appendChild(rightArrow);
+
+    let currentView = 'front';
+    const toggleView = () => {
+        if (currentView === 'front') {
+            frontCanvas.style.display = 'none';
+            backCanvas.style.display = 'block';
+            leftArrow.style.display = 'block';
+            rightArrow.style.display = 'none';
+            currentView = 'back';
+        } else {
+            frontCanvas.style.display = 'block';
+            backCanvas.style.display = 'none';
+            leftArrow.style.display = 'none';
+            rightArrow.style.display = 'block';
+            currentView = 'front';
+        }
+    };
+
+    leftArrow.addEventListener('click', toggleView);
+    rightArrow.addEventListener('click', toggleView);
 
     closePreview.addEventListener('click', () => {
         previewModal.style.display = 'none';
+        frontCanvas.style.display = 'block';
+        backCanvas.style.display = 'none';
+        leftArrow.style.display = 'none';
+        rightArrow.style.display = 'block';
+        currentView = 'front';
     });
+
+    const cardsList = importCardsList();
+    const cardNames = Object.keys(cardsList);
 
     cardNames.forEach(cardName => {
         const frontData = cardsList[cardName].front;
+        const backData = cardsList[cardName].back;
+
         const btnWrapper = document.createElement('div');
         btnWrapper.classList.add('view-card-button');
+        btnWrapper.dataset.cardName = cardName;
 
         const button = document.createElement('button');
-        button.classList.add('card-main-button'); 
+        button.classList.add('card-main-button');
         
         const flipContainer = document.createElement('div');
-        flipContainer.classList.add('flip-container');
+        flipContainer.classList.add('view-flip-container');
         
         const overlay = document.createElement('div');
         overlay.classList.add('overlay');
@@ -117,37 +304,93 @@ window.addEventListener('DOMContentLoaded', () => {
         const buttonGroup = document.createElement('div');
         buttonGroup.classList.add('button-group');
 
-        const icons = ['Edit', 'flip', 'upload', 'delete'];
+        const icons = ['edit', 'star', 'download', 'delete'];
 
         for (let i = 0; i < 4; i++) {
             const btn = document.createElement('button');
             btn.classList.add('overlay-button');
 
             const img = document.createElement('img');
-            img.src = `icons/${icons[i]}.png`;
+            img.src = `icons/${icons[i]}.svg`;
             img.alt = icons[i];
             img.style.width = '25px';
             img.style.height = '25px';
 
             btn.appendChild(img);
             buttonGroup.appendChild(btn);
+
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentPreviewCard = cardName; 
+
+                const cardsList = importCardsList();
+                const cardData = cardsList[currentPreviewCard];
+
+                switch (icons[i]) {
+                    case 'edit':
+                        window.location.href = `editor-page.html?card=${encodeURIComponent(currentPreviewCard)}`;
+                        break;
+                    case 'star':
+                        const starredCard = JSON.parse(localStorage.getItem('star'));
+                        const isStarred = starredCard && starredCard.name === currentPreviewCard;
+                        
+                        if (isStarred) {
+                            localStorage.removeItem('star');
+                            img.src = 'icons/star.svg';
+                        } else {
+                            localStorage.setItem('star', JSON.stringify({
+                                name: currentPreviewCard,
+                                data: cardData,
+                                timestamp: new Date().getTime()
+                            }));
+                            img.src = 'icons/star-filled.svg';
+                        }
+                        break;
+                    case 'download':
+                        downloadCardJSON(currentPreviewCard);
+                        break;
+                    case 'delete':
+                        if (confirm(`Do you really want to delete "${currentPreviewCard}"?`)) {
+                            if (deleteCard(currentPreviewCard)) {
+                                const cardElement = document.querySelector(`.view-card-button[data-card-name="${currentPreviewCard}"]`);
+                                if (cardElement) {
+                                    cardElement.remove();
+                                }
+                                previewModal.style.display = 'none';
+                                alert(`Deleted: ${currentPreviewCard}`);
+                            }
+                        }
+                        break;
+                }
+            });
         }
+
 
         overlay.appendChild(buttonGroup);
 
-        const frontCanvas = document.createElement('canvas');
-        frontCanvas.classList.add('front-canvas');
-
-        flipContainer.appendChild(frontCanvas);
+        const cardFrontCanvas = document.createElement('canvas');
+        cardFrontCanvas.classList.add('front-canvas');
+        flipContainer.appendChild(cardFrontCanvas);
         button.appendChild(flipContainer);
         btnWrapper.appendChild(button);
         container.appendChild(btnWrapper);
 
-        renderScaledPreview(frontCanvas, frontData, 300, 167);
+        renderScaledPreview(cardFrontCanvas, frontData, 300, 167);
 
         button.addEventListener('click', (e) => {
             if (!e.target.closest('.overlay-button')) {
-                renderScaledPreview(previewCanvas, frontData, 800, 450);
+                currentPreviewCard = cardName;
+                
+                const starredCard = JSON.parse(localStorage.getItem('star'));
+                const starBtn = actionButtons.querySelector('.action-button img[alt="star"]');
+                if (starBtn) {
+                    starBtn.src = (starredCard && starredCard.name === cardName) 
+                        ? 'icons/star-filled.svg' 
+                        : 'icons/star.svg';
+                }
+                
+                renderScaledPreview(frontCanvas, frontData, 800, 445);
+                renderScaledPreview(backCanvas, backData, 800, 445);
                 previewModal.style.display = 'flex';
             }
         });

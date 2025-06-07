@@ -210,6 +210,30 @@ h1 {
     background-color: #29A55B;
 }
 
+.flip-container {
+    width: 300px;
+    height: 167px;
+    border: 4px solid #29A55B;
+    border-radius: 6px;
+    position: relative;
+}
+
+.front-canvas, .back-canvas {
+    width: 300px;
+    height: 167px;
+    max-width: 100%;
+    left: 0;
+    border: none;
+    border-radius: 6px;
+    backface-visibility: hidden;
+}
+
+.back-canvas {
+    transform: rotateY(180deg); 
+}
+
+
+
 /* ===== View All Card ===== */
 .top-bar {
     display: flex;
@@ -288,7 +312,7 @@ h1 {
     filter: brightness(0) saturate(100%) invert(34%) sepia(82%) saturate(362%) hue-rotate(83deg) brightness(94%) contrast(91%);
 }
 
-.flip-container {
+.view-flip-container{
     width: 300px;
     height: 167px;
     border: 4px solid #29A55B;
@@ -296,21 +320,7 @@ h1 {
     position: relative;
 }
 
-.front-canvas {
-    width: 300px;
-    height: 167px;
-    max-width: 100%;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border: none;
-    border-radius: 6px;
-}
-
 /* ====== hover view button ====== */
-
-
 .overlay {
     position: absolute;
     top: 0;
@@ -378,7 +388,18 @@ h1 {
     background-color: #d9f5d8 !important; 
 }
 
-/* ===== new click in ===== */
+.card-main-button {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+/* ===== preview page ===== */
 .preview-modal {
     position: fixed;
     top: 0;
@@ -399,6 +420,24 @@ h1 {
     border-radius: 10px;
     max-width: 90%;
     max-height: 90%;
+    margin-top: 40px;
+}
+
+.close-preview {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 5px; 
+}
+
+.close-preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .preview-canvas {
@@ -407,26 +446,98 @@ h1 {
     display: block;
 }
 
-.close-preview {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #333;
+/* == shift button == */
+.canvas-container {
+    position: relative;
+    width: 800px;
+    height: 445px;
+    margin: 0 auto 20px;
+}
+
+.preview-canvas {
+    width: 800px;
+    height: 445px;
+    border-radius: 8px;
+    display: block;
 }
 
 
-.card-main-button {
-    cursor: pointer;
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px; 
+    height: 60px;
+    border-radius: 50%;
+    background-color: #29A55B;
     border: none;
-    background: transparent;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0;
+    transition: all 0.3s;
+}
+
+.nav-button:hover {
+    background-color: #1e7d4b;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.nav-button img {
     width: 100%;
     height: 100%;
+    object-fit: contain;
 }
+
+.nav-button.left {
+    left: -80px; 
+}
+
+.nav-button.right {
+    right: -80px; 
+}
+
+.preview-content {
+    position: relative;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+/* == buttons on the left == */
+
+.action-buttons {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 10;
+}
+
+.action-button {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #29A55B;
+    border-radius: 50%;
+    background-color: #29A55B;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.action-button:hover {
+    background-color: #EFFFEC;
+    transform: scale(1.1);
+}
+
 
 /* ===== DARK THEME ===== */
 body.dark-theme {
