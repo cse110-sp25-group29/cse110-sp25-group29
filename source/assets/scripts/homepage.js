@@ -5,15 +5,36 @@ import { renderScaledPreview } from './view_all_card.js'
 const cardsList = importCardsList();
 
 document.addEventListener('DOMContentLoaded', () => {
-    const toggleBtn = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('theme');
     const body = document.body;
+    const toggleBtn = document.getElementById('theme-toggle');
+    const themeImg = document.querySelector('#theme-toggle > img');
+
+    if (!savedTheme) {
+        localStorage.setItem('theme', 'light');
+    }
+
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-theme');
+        if (themeImg) {
+            themeImg.src = "assets/icons/light_mode.png";
+        }
+    } else {
+        body.classList.remove('dark-theme');
+        if (themeImg) {
+            themeImg.src = "assets/icons/dark_mode.png";
+        }
+    }
+
     const searchInput = document.querySelector('#search-input')
 
     toggleBtn.addEventListener('click', () => {
         body.classList.toggle('dark-theme');
-        const themeImg = document.querySelector('#theme-toggle > img')
-        // toggleBtn.textContent = body.classList.contains('dark-theme') ? '🔆' : '🌙';
-        themeImg.src = body.classList.contains('dark-theme') ? "assets/icons/light_mode.png" : "assets/icons/dark_mode.png";
+        const themeImg = document.querySelector('#theme-toggle > img');
+        const isDark = body.classList.contains('dark-theme');
+        themeImg.src = isDark ? "assets/icons/light_mode.png" : "assets/icons/dark_mode.png";
+
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
 
     searchInput.addEventListener('input', (e) => {
