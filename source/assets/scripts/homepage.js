@@ -243,6 +243,19 @@ export function yourCardFeature() {
 // let frontCanvas, backCanvas;
 export function renderYourCard(frontCard, backCard) {
     const cardName = localStorage.getItem("current_card");
+    const popup = document.querySelector(".popup");
+    if (cardName) {
+        const frontData = cardsList[cardName].front;
+        const backData = cardsList[cardName].back;
+        renderScaledPreview(frontCard, frontData, 300, 170);
+        renderScaledPreview(backCard, backData, 300, 170);
+        popup.addEventListener('click', () => {
+            popup.classList.toggle('flip');
+        });
+    } else {
+        popup.innerHTML = '<p>You did not set the starred card yet.\n Go to <a href="assets/view_all_card.html">Gallery</a> and select your card!</p>';
+    }
+    return cardName;
     // // const cardName = '<insert card name>'
     // frontCanvas = new Canvas('#front-card');
     // backCanvas = new Canvas('#back-card');
@@ -251,14 +264,9 @@ export function renderYourCard(frontCard, backCard) {
     // console.log(cardsList[cardName]);
     // frontCanvas.importJSON(cardsList[cardName].front)
     // backCanvas.importJSON(cardsList[cardName].back)
-    const frontData = cardsList[cardName].front;
-    const backData = cardsList[cardName].back;
-    renderScaledPreview(frontCard, frontData, 300, 170);
-    renderScaledPreview(backCard, backData, 300, 170);
-    const popup = document.querySelector(".popup");
-    popup.addEventListener('click', () => {
-        popup.classList.toggle('flip');
-    });
+
+
+
 }
 
 

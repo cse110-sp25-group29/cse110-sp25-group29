@@ -77,21 +77,31 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    /* gap: 8px; */
     margin: 30px auto 8px auto;  
 }
 
 .search-icon {
     flex-shrink: 0;
     stroke: #838588;
+    background-color: white;
 }
 
 .search-bar input {
+    /* background:url(../icons/search.svg) left no-repeat white; */
     padding: 10px;
     width: 400px;
     font-size: 16px;
-    border-radius: 10px;
-    border: 1px solid #838588;
+    border-radius: 0 10px 10px 0;
+    height: 20px;
+    border: none;
+}
+
+.search-bar button {
+    background-color: white;
+    border-radius: 10px 0 0 10px;
+    height: 40px;
+    border: none;
 }
 
 
@@ -760,4 +770,8 @@ body.dark-theme .back-canvas {
     border: none;
     text-align: center;
     margin-bottom: 30%;
+}
+
+button-col > div {
+    margin: 10%;
 }
