@@ -5,29 +5,38 @@ import { uploadFeature, handleFiles } from '../../source/assets/scripts/homepage
 import { jest } from '@jest/globals';
 describe('uploadFeature', () => {
   beforeEach(() => {
-    document.body.innerHTML = `
-      <button id="upload-button">Upload</button>
-    `;
+    document.body.innerHTML = `<button id="upload-button">Upload</button>`;
     uploadFeature();
   });
 
-  it('should open upload overlay on button click', () => {
+  it('should create overlay and dropZone on upload button click', () => {
+
     document.getElementById('upload-button').click();
     const overlay = document.getElementById('overlay');
     const dropZone = document.getElementById('dropZone');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+
     expect(overlay).not.toBeNull();
     expect(dropZone).not.toBeNull();
+    expect(confirmBtn).not.toBeNull();
+    expect(cancelBtn).not.toBeNull();
   });
 });
+
 
 describe('handleFiles', () => {
   it('should alert uploaded file name', () => {
     window.alert = jest.fn();
+    window.confirm = jest.fn(() => true); 
+
     const fakeFile = new File(['dummy'], 'test.png', { type: 'image/png' });
     handleFiles([fakeFile]);
+
     expect(window.alert).toHaveBeenCalledWith('You uploaded: test.png');
   });
 });
+
 
 describe('theme toggle button', () => {
   beforeEach(() => {
