@@ -8,62 +8,75 @@
   <body class="body">
     <header class="header">
       <section id="home-button-section">
+        <button class="header-button" id="back-button" title="Back">
+          <img src="./icons/arrow-back.svg">
+        </button>
+
         <button class="header-button" id="home-button" title="Home">
-          <img src="./icons/arrow_back.png">
+          <img src="./icons/home.png">
         </button>
       </section>
 
       <!-- Empty div for positioning -->
       <div></div>
-      <div id="card-title"></div>
+
+      <div id="card-title-container">
+        <span contenteditable="true" id="card-title" name="card-title"></span>
+        <div id="save-star"></div>
+      </div>
         
       <section id="other-buttons">
         <div class="dropdown">
-          <button class="header-button" id="import-button" title="Import">
-            <img src="./icons/download.png">
-          </button>
-          <div class="dropdown-content">
-            <button title="Import from other business card" id="export-duplicate">Open Previous</button>
-            <button title="Import from JSON file" id="export-json">From JSON</button>
-          </div>
-        </div>
-
-        <div class="dropdown">
           <button class="header-button" id="export-button" title="Export">
-            <img src="./icons/upload.png">
+            <img src="./icons/download.svg">
           </button>
           <div class="dropdown-content">
-            <button title="Duplicate to new business card" id="export-duplicate">Duplicate</button>
-            <button title="Export to JSON file" id="export-json">To JSON</button>
-            <button title="Export to PNG file" id="export-png">To PNG</button>
-            <button title="Export to JPG file" id="export-jpg">To JPG</button>
+            <button title="Export to JSON file" id="export-json">To JSON...</button>
+            <button title="Export to PNG file" id="export-png">To PNG...</button>
+            <button title="Export to JPG file" id="export-jpg">To JPG...</button>
           </div>
         </div>
 
         <div class="dropdown">
           <button class="header-button" id="save-button" title="Save">
-            <img src="./icons/save.png">
+            <img src="./icons/save.svg">
           </button>
           <div class="dropdown-content">
             <button title="Save as..." id="save-as">Save As...</button>
           </div>
         </div>
+
+        <div class="dropdown">
+          <button class="header-button" id="import-button" title="Import">
+            <img src="./icons/file.svg">
+          </button>
+          <div class="dropdown-content">
+            <button title="Open a saved card" id="file-open">Open</button>
+            <button title="Create a new card" id="file-new">New</button>
+            <button title="Duplicate to new business card" id="file-duplicate">Duplicate</button>
+          </div>
+        </div>
+        
+        <button type="button" class="header-button" id="reset-button" title="Reset">
+          <img src="./icons/reset.svg">
+        </button>
         
         <button type="button" class="header-button" id="delete-button" title="Delete">
-          <img src="./icons/delete.png">
+          <img src="./icons/delete.svg">
         </button>
       </section>
     </header>
     <main class="main">
       <form id="toolbox">
+        <h2 id="tool-h2">Tool</h2>
+
         <fieldset>
-          <legend>Tool</legend>
           <br>
-          
           <div>
             <label for="select">
             <div>
-              Select<input type="radio" id="select" name="tool" value="0" checked hidden/> 
+              <input type="radio" id="select" name="tool" value="0" checked hidden/> 
+              <img src="./icons/selector-tool.svg" class="input svg-icon"/>
             </div>
             </label>
           </div>
@@ -96,14 +109,14 @@
             <label for="square">
             <div>
               <input type="radio" id="square" name="tool" value="8" hidden/>
-              <img src="./icons/square.png" class="input"/>
+              <img src="./icons/square.svg" class="input svg-icon"/>
             </div>
             </label>
 
             <label for="circle">
             <div>
               <input type="radio" id="circle" name="tool" value="9" hidden/>
-              <img src="./icons/circle.png" class="input"/>
+              <img src="./icons/circle.svg" class="input svg-icon"/>
             </div>
             </label>
           </div>
@@ -111,32 +124,73 @@
           <hr>
 
           <div id="socials">
-            <label for="facebook">
-            <div>
-              <input type="radio" id="facebook" name="tool" value="1" hidden/>
-              <img src="./icons/facebook.png" class="input"/>
-            </div>
-            </label>
-
             <label for="instagram">
             <div>
               <input type="radio" id="instagram" name="tool" value="2" hidden/>
-              <img src="./icons/instagram.webp" class="input"/>
+              <img src="./icons/instagram.svg" class="input svg-icon"/>
+            </div>
+            </label>
+
+            <label for="facebook">
+            <div>
+              <input type="radio" id="facebook" name="tool" value="1" hidden/>
+              <img src="./icons/facebook.svg" class="input svg-icon"/>
+            </div>
+            </label>
+
+            <label for="youtube">
+            <div>
+              <input type="radio" id="youtube" name="tool" value="10" hidden/>
+              <img src="./icons/youtube.svg" class="input svg-icon"/>
+            </div>
+            </label>
+
+            <label for="tiktok">
+            <div>
+              <input type="radio" id="tiktok" name="tool" value="11" hidden/>
+              <img src="./icons/tiktok.svg" class="input svg-icon"/>
             </div>
             </label>
 
             <label for="linkedin">
             <div>
               <input type="radio" id="linkedin" name="tool" value="3" hidden/>
-              <img src="./icons/linkedin.png" class="input"/>
+              <img src="./icons/linkedin.svg" class="input svg-icon"/>
             </div>
             </label>
 
-
-            <label for="github">
+            <label for="mail">
             <div>
-              <input type="radio" id="github" name="tool" value="4" hidden/>
-              <img src="./icons/github.png" class="input"/>
+              <input type="radio" id="mail" name="tool" value="4" hidden/>
+              <img src="./icons/mail.svg" class="input svg-icon"/>
+            </div>
+            </label>
+
+            <label for="tumblr">
+            <div>
+              <input type="radio" id="tumblr" name="tool" value="12" hidden/>
+              <img src="./icons/tumblr.svg" class="input svg-icon"/>
+            </div>
+            </label>
+
+            <label for="x">
+            <div>
+              <input type="radio" id="x" name="tool" value="13" hidden/>
+              <img src="./icons/x.svg" class="input svg-icon"/>
+            </div>
+            </label>
+
+            <label for="website">
+            <div>
+              <input type="radio" id="website" name="tool" value="14" hidden/>
+              <img src="./icons/globe.svg" class="input svg-icon"/>
+            </div>
+            </label>
+
+            <label for="phone">
+            <div>
+              <input type="radio" id="phone" name="tool" value="15" hidden/>
+              <img src="./icons/phone.svg" class="input svg-icon"/>
             </div>
             </label>
           </div>
@@ -155,9 +209,6 @@
 
           <button id="flip-button">Flip to Back!</button>
         </div>
-
-        <!-- probably should be something else -->
-        <!-- <div id="save"><p>Save</p></div> -->
       </section>
 
       <section id="attribute-sel">
