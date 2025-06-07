@@ -33,13 +33,15 @@ export function initListeners() {
   const saveAs = document.querySelector('#save-as');
   saveAs.addEventListener('click', triggerSaveAsMenu);
 
+  const openMenu = document.querySelector('#file-open');
+  openMenu.addEventListener('click', triggerOpenMenu);
+
   const jpgexport = document.getElementById('export-jpg');
   const pngexport = document.getElementById('export-png');
   const jsonexport = document.getElementById('export-json');
   const duplicate = document.getElementById('file-duplicate');
-  const openprev = document.getElementById('file-open');
 
-  openprev.addEventListener('click', () => {
+  /*openprev.addEventListener('click', () => {
     const cards = Editor.importCardsList();
     const cardNames = Object.keys(cards);
     const current = Editor.importCurrentCardName();
@@ -71,7 +73,7 @@ export function initListeners() {
     Editor.setSaved(true);
     Editor.setCardName(prevname);
     Editor.exportCurrentCardName();
-  });
+  });*/
 
   duplicate.addEventListener('click', () => {
     Editor.setSaved(false);
@@ -182,6 +184,116 @@ function triggerDeleteMenu(e) {
   innerDelete.addEventListener('click', (e) => {
     console.log('delete');
     Editor.deleteCard();
+    removePopupMenu();
+  });
+}
+
+function triggerOpenMenu() {
+  const menu = document.querySelector('#popup-menu');
+  if (!menu) { return; }
+
+  menu.innerHTML =
+    `
+    <div id="modal-content">
+      <h2>Open Business Card</h2>
+      <label for="card-select">Select a saved card:</label>
+      <select id="card-select">
+      </select>
+      <button id="open-card-btn">Open</button>
+      <button id="cancel-open-btn">Cancel</button>
+    </div>
+    `;
+  menu.style.display = 'block';
+
+  const style = document.createElement('style');
+  style.innerHTML = 
+    `
+    #popup-menu {
+      position: fixed;
+      top: 40vh;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      width: 300px;
+      background-color: var(--sidebar-bg);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      font-family: sans-serif;
+    }
+
+    #popup-menu h2 {
+      margin-top: 0;
+      font-size: 18px;
+      color: white;
+      text-align: center;
+    }
+
+    #popup-menu label {
+      display: block;
+      margin-bottom: 5px;
+      color: white;
+      font-size: 14px;
+    }
+
+    #popup-menu select {
+      width: 100%;
+      padding: 0.4rem;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    #popup-menu button {
+      width: 100%;
+      background-color: var(--save-bg);
+      border: none;
+      padding: 0.5rem;
+      margin-top: 5px;
+      color: white;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    #popup-menu button:hover {
+      background-color: var(--save-hover-bg);
+    }
+    `;
+
+  menu.appendChild(style);
+
+  const select = document.getElementById('card-select');
+  const cards = Editor.importCardsList();
+  const cardNames = Object.keys(cards);
+  if (cardNames.length === 0){
+    const option = document.createElement('option');
+    option.textContent = 'No saved cards!';
+    option.disabled = true;
+    option.selected = true;
+    select.appendChild(option);
+  } else {
+    for (let i = 0; i < cardNames.length; ++i) {
+      const option = document.createElement('option');
+      option.value = cardNames[i];
+      option.textContent = cardNames[i];
+      select.appendChild(option);
+    }
+  }
+
+  document.getElementById('cancel-open-btn').addEventListener('click', () => {
+    removePopupMenu();
+  });
+
+  const openCard = document.querySelector('#open-card-btn');
+  openCard.addEventListener('click', () => {
+    const selected = select.value;
+    Editor.frontCanvas.importJSON(cards[selected].front);
+    Editor.backCanvas.importJSON(cards[selected].back);
+    Editor.setSaved(true);
+    Editor.setCardName(selected);
+    Editor.exportCurrentCardName();
     removePopupMenu();
   });
 }
