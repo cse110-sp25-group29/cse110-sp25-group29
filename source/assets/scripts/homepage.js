@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     toggleBtn.addEventListener('click', () => {
         body.classList.toggle('dark-theme');
-        toggleBtn.textContent = body.classList.contains('dark-theme') ? '🔆' : '🌙';
+        const themeImg = document.querySelector('#theme-toggle > img')
+        // toggleBtn.textContent = body.classList.contains('dark-theme') ? '🔆' : '🌙';
+        themeImg.src = body.classList.contains('dark-theme') ? "assets/icons/light_mode.png" : "assets/icons/dark_mode.png";
     });
 
     searchInput.addEventListener('input', (e) => {
@@ -31,11 +33,10 @@ export function uploadFeature() {
         const overlay = document.createElement('div');
         overlay.id = "overlay";
         const dialogBox = document.createElement('div');
-        const rect = uploadBtn.getBoundingClientRect();
-        dialogBox.style.left = `${rect.left}px`;
-        dialogBox.style.top = `${rect.top - dialogBox.offsetHeight - 10}px`;
+        // const rect = overlay.getBoundingClientRect();
+        // dialogBox.style.left = `${rect.left}px`;
+        // dialogBox.style.top = `${rect.top - dialogBox.offsetHeight - 10}px`;
         dialogBox.id = "dialogBox";
-        // dialogBox.innerText = 'Drag and drop a file here';
 
         const dropZone = document.createElement('div');
         dropZone.id = "dropZone";
@@ -43,16 +44,8 @@ export function uploadFeature() {
         dropZone.ondrop = (e) => {
             e.preventDefault();
             files = e.dataTransfer.files;
-            // handleFiles(files);
-            // let confirmUpload = handleFiles(files);
-            // if (confirmUpload) {
             dropZone.innerText = dropZone.innerText + '\n' + 'You droped: \n' + files[0].name;
-            //     console.log("up")
-
-            // } else {
-            //     console.log("cancle")
-            // }
-            confirmlBtn.disabled = false;  
+            confirmBtn.disabled = false;  
         };
 
         dropZone.ondragover = (e) => {
@@ -70,15 +63,6 @@ export function uploadFeature() {
         fileInput.style.marginTop = '10px';
         fileInput.onchange = (e) => {
             files = e.target.files;
-            // let confirmUpload = handleFiles(files);
-            // if (confirmUpload) {
-            //     fileInput.innerText = fileInput.innerText + '\n' + files[0].name;
-            //     console.log("up")
-
-            // } else {
-            //     fileInput.value = null;
-            //     console.log("cancle")
-            // }
             confirmlBtn.disabled = false;  
         };
         
@@ -86,16 +70,15 @@ export function uploadFeature() {
         cancelBtn.id = "cancelBtn";
         cancelBtn.innerText = "Cancel";
 
-        const confirmlBtn = document.createElement('button');
-        confirmlBtn.id = "confirmlBtn";
-        confirmlBtn.innerText = "Confirml";
-        confirmlBtn.disabled = true;
+        const confirmBtn = document.createElement('button');
+        confirmBtn.id = "confirmBtn";
+        confirmBtn.innerText = "Confirm";
+        confirmBtn.disabled = true;
 
-        confirmlBtn.addEventListener('click', () => {
+        confirmBtn.addEventListener('click', () => {
             if (files) {
                 handleFiles(files);
             }
-
         })
 
         cancelBtn.addEventListener('click', (e) => {
@@ -105,7 +88,7 @@ export function uploadFeature() {
         dialogBox.appendChild(dropZone);
         dialogBox.appendChild(fileInput);
         dialogBox.appendChild(cancelBtn);
-        dialogBox.appendChild(confirmlBtn);
+        dialogBox.appendChild(confirmBtn);
 
         overlay.appendChild(dialogBox);
         // document.body.appendChild(dialogBox);
@@ -157,22 +140,29 @@ export function yourCardFeature() {
         // closeBtn.innerHTML = 'Close';
         closeBtn.id = 'closeBtn';
         closeBtn.innerHTML = '<img src="assets/icons/Cross.png"/>';
+        closeBtn.classList.add("circle-button");
 
 
         // Create edit button
         const editBtn = document.createElement('button');
         // editBtn.innerHTML = 'Edit';
         editBtn.innerHTML = '<img src="assets/icons/Edit.png"/>';
+        editBtn.id = 'editBtn';
+        editBtn.classList.add("circle-button");
 
         // Create delete button
         const deleteBtn = document.createElement('button');
         // deleteBtn.innerHTML = 'delete';
         deleteBtn.innerHTML = '<img src="assets/icons/delete.png"/>';
+        deleteBtn.id = 'deleteBtn';
+        deleteBtn.classList.add("circle-button");
 
         // Create download button
         const downloadBtn = document.createElement('button');
         // downloadBtn.innerHTML = 'Download';
         downloadBtn.innerHTML = '<img src="assets/icons/download.png"/>';
+        downloadBtn.id = 'downloadBtn';
+        downloadBtn.classList.add("circle-button");
 
 
         // Create popup
@@ -210,9 +200,9 @@ export function yourCardFeature() {
         overlay.appendChild(left);
         overlay.appendChild(popup);
         overlay.appendChild(right);
+        left.appendChild(editBtn);
         left.appendChild(downloadBtn);
         left.appendChild(deleteBtn);
-        left.appendChild(editBtn);
         right.appendChild(closeBtn);
         popup.appendChild(frontCard);
         popup.appendChild(backCard);
