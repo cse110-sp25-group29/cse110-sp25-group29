@@ -117,9 +117,9 @@ export function reset(saved = true) {
   Topbar.setName(cardName);
 }
 
-const images = []
+const images = [];
 function preloadImages(img) {
-  for (var i = 0; i < img.length; i++) {
+  for (let i = 0; i < img.length; i++) {
     images[i] = new Image();
     images[i].src = img[i];
   }
