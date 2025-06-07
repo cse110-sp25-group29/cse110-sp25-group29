@@ -63,7 +63,7 @@ export function uploadFeature() {
         fileInput.style.marginTop = '10px';
         fileInput.onchange = (e) => {
             files = e.target.files;
-            confirmlBtn.disabled = false;  
+            confirmBtn.disabled = false;  
         };
         
         const cancelBtn = document.createElement('button');
