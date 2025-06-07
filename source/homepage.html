@@ -10,7 +10,7 @@
 <body>
     <header>
         <h1>Concard</h1>
-        <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+        <button id="theme-toggle" aria-label="Toggle Theme"><img src="assets/icons/dark_mode.png"></button>
         <div class="search-bar">
             <img src="assets/icons/Search.png" width="36" height="36" alt="Your Card">
             <input id="search-input" type="text" placeholder="Search wallet, person...">
@@ -32,11 +32,13 @@
 
             <div class="card-button">
                 <label>All Cards</label>
-                <a href="assets/view_all_card.html" id="all-card-button">
-                    <span class="icon">
-                        <img src="assets/icons/Gallery_green.png" width="36" height="36" alt="Your Card">
-                    </span>
-                </button>
+                <a href="assets/view_all_card.html">
+                 <!-- id="all-card-button"> -->
+                    <button>
+                        <span class="icon">
+                            <img src="assets/icons/Gallery_green.png" width="36" height="36" alt="All Card">
+                        </span>
+                    </button>
                 </a>
             </div>
         </button-col-1>
@@ -59,9 +61,7 @@
                 </span>
             </button>
             </div>
-        </button-col-2>
-        
-        
+        </button-col-2>      
     </div>
       
 

@@ -146,51 +146,50 @@ h1 {
 #popup {
   background: white;
   padding: 20px;
-  border-radius: 12px;
-  width: 300px;
+  /* border-radius: 12px; */
+  /* width: 600px; */
+  width: 80%;
+  height: 70%;
   max-width: 90%;
-  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  /* box-shadow: 0 0 15px rgba(0,0,0,0.5); */
   position: relative;
 }
 
 #right-col {
-
+    width: 65px;
+    height: 90%;
+    position: relative;
 }
 
 #left-col {
-    display: grid;
+    display: block;
     flex-flow: column;
+    width: 65px;
+    height: 90%;
+    position: relative;
 }
 
 #closeBtn {
-    top: 10px;
-    right: 0px;
-    font-size: 20px;
     cursor: pointer;
+    background-color: #29A55B;
 }
 
-#shareBtn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
+#deleteBtn {
     cursor: pointer;
+    background-color: #ff4b4b;
+    margin: 0;
+
 }
 
 #downloadBtn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
     cursor: pointer;
+    background-color: #29A55B;
 }
 
-#eidtBtn {
-    position: absolute;
-    top: 10px;
-    right: 0px;
-    font-size: 20px;
+#editBtn {
+    /* position: absolute; */
     cursor: pointer;
+    background-color: #29A55B;
 }
 
 #dialogBox {
@@ -506,8 +505,8 @@ body.dark-theme .back-canvas {
 }
 
 .popup {
-    width: 300px;
-    height: 170px;
+    width: 600px;
+    height: 340px;
     position: relative;
     transition: transform 0.6s ease;
     transform-style: preserve-3d;
@@ -515,4 +514,13 @@ body.dark-theme .back-canvas {
 
 .popup.flip {
     transform: rotateY(180deg);
+}
+
+.circle-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    text-align: center;
+    margin-bottom: 30%;
 }
