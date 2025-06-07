@@ -225,14 +225,14 @@ function triggerOpenMenu() {
     #popup-menu h2 {
       margin-top: 0;
       font-size: 18px;
-      color: white;
+      color: black;
       text-align: center;
     }
 
     #popup-menu label {
       display: block;
       margin-bottom: 5px;
-      color: white;
+      color: black;
       font-size: 14px;
     }
 
