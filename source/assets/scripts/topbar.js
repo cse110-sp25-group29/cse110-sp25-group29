@@ -225,14 +225,12 @@ function triggerOpenMenu() {
     #popup-menu h2 {
       margin-top: 0;
       font-size: 18px;
-      color: black;
       text-align: center;
     }
 
     #popup-menu label {
       display: block;
       margin-bottom: 5px;
-      color: black;
       font-size: 14px;
     }
 
@@ -274,10 +272,11 @@ function triggerOpenMenu() {
     option.selected = true;
     select.appendChild(option);
   } else {
-    for (let i = 0; i < cardNames.length; ++i) {
+    for (let i = 0; i < cardNames.length; i++) {
       const option = document.createElement('option');
       option.value = cardNames[i];
       option.textContent = cardNames[i];
+      if (cardNames[i] === Editor.cardName) { option.selected = 'selected'; }
       select.appendChild(option);
     }
   }
