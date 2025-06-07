@@ -296,7 +296,7 @@ h1 {
     position: relative;
 }
 
-.front-canvas {
+.front-canvas, .back-canvas {
     width: 300px;
     height: 167px;
     max-width: 100%;
@@ -306,6 +306,11 @@ h1 {
     left: 0;
     border: none;
     border-radius: 6px;
+    backface-visibility: hidden;
+}
+
+.back-canvas {
+    transform: rotateY(180deg); 
 }
 
 /* ====== hover view button ====== */
