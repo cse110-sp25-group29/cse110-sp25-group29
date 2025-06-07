@@ -5,14 +5,18 @@
 
 
 ## Home Page
+
 [Quick View of Home Page](https://cse110-sp25-group29.github.io/project-homepage/homepage.html)
-![light](source\light.png)
-![dark](source\dark.png)
+![light](source/assets/images/dark.png)
+![dark](source/assets/images/light.png)
+
 
 ## Quick Links
 *See the Table of Contents at the top right corner for easier navigation.*
 
 - [Style Guide](https://github.com/cse110-sp25-group29/cse110-sp25-group29/blob/main/specs/style-guide.md)
+- JSDocs
+- Codacy Coverage Reports
 - [Team Charter](https://github.com/cse110-sp25-group29/cse110-sp25-group29/blob/main/admin/misc/rules.md)
 - [Project Board](https://github.com/orgs/cse110-sp25-group29/projects/2/)
 
@@ -28,6 +32,10 @@ admin/
 │       └── images/
 ├── misc/
 └── videos/
+docs/
+├── fonts/
+├── scripts/
+└── styles/
 source/
 └── assets/
     ├── icons/
@@ -36,8 +44,11 @@ source/
     └── styles/
 specs/
 ├── adrs/
+├── branding/
 ├── brainstorm/
-└── pitch/
+├── flows/
+├── pitch/
+└── wireframes/
 ```
 
 ### `admin`
@@ -46,7 +57,7 @@ specs/
 | Subdirectory | Contents |
 | --- | --- |
 | `adr` | warmup exercise document |
-| `branding` | Boom Boom Powell team branding materials
+| `branding` | Boom Boom Powell team branding materials |
 | `meetings` | all meeting notes and materials |
 | `meetings/img` | images for team meeting notes |
 | `meetings/ui-ux` | UI/UX team meeting notes and materials |
@@ -55,6 +66,14 @@ specs/
 | `videos` | videos made for the team |
 
 - `statusvideo1.mp4` has been uploaded to `/admin/videos/statusvideo1.mp4`. Also it's on [YouTube](https://www.youtube.com/watch?v=qB4SBX5r8Ps).
+
+### `docs`
+
+| Subdirectory | Contents |
+| --- | --- |
+| `fonts` | TBA |
+| `scripts` | TBA |
+| `styles` | TBA |
 
 ### `source`
 *Contains the source code of the project. The top level holds the HTML files*
@@ -74,7 +93,10 @@ specs/
 | --- | --- |
 | `adrs` | Architectural Decision Records |
 | `brainstorm` | materials from initial brainstorm sessions |
+| `branding` | project-related branding materials |
+| `flows` | UX flow charts |
 | `pitch` | materials for the initial product pitch |
+| `wireframes` | High-fidelity UI designs for implementation |
 
 
 ## Roles
@@ -118,6 +140,10 @@ specs/
 - [ ] Checked off by DevOps
 - [ ] Specified behaviors are met (*expand on this list per issue*)
 
+## Setup Guide
+
+*To be added.*
+
 ## GitHub Usage
 
 ### Issues
@@ -147,11 +173,15 @@ Each sub-team has sizing criteria specific to their focus area.
 
 | Size | DevOps | Editor Page | Home Page | UI/UX |
 | --- | --- | --- | --- | --- |
-| `XS` | TBD | TBD | <1 hr | TBD |
-| `S` | TBD | TBD | 1-2 hrs | TBD |
-| `M` | TBD | TBD | 2-4 hrs | TBD |
-| `L` | TBD | TBD | 4-6 hrs | TBD |
-| `XL` | TBD | TBD | >6 hrs | TBD |
+| `XS` | <1hr | <1 hr | <1 hr | minor design changes* |
+| `S` | 1-2 hrs | 1-2 hrs | 1-2 hrs | new branding material & iterations |
+| `M` | 2-4 hrs | 2-4 hrs | 2-4 hrs | ADRs, team notes, flowcharts |
+| `L` | 4-6 hrs | 4-6 hrs | 4-6 hrs | major design changes** |
+| `XL` | >6 hrs | >6 hrs | >6 hrs | new high fidelity designs |
+
+*\* Examples of minor design changes: tweaking icons, rearranging elements, changing colors*
+
+*\*\* Examples of major design changes: new variants & iterations over existing high fidelity designs*
 
 ### Pull Requests & Merging
 
