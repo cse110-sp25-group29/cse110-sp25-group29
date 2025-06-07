@@ -281,120 +281,181 @@ window.addEventListener('DOMContentLoaded', () => {
         currentView = 'front';
     });
 
-    const cardsList = importCardsList();
-    const cardNames = Object.keys(cardsList);
+    const searchButton = document.querySelector('.search-button');
+    const searchInput = document.querySelector('.search-bar-view');
+    const suggestionsBox = document.getElementById('search-suggestions');
 
-    cardNames.forEach(cardName => {
-        const frontData = cardsList[cardName].front;
-        const backData = cardsList[cardName].back;
+    function performSearch() {
+        const searchTerm = searchInput.value.trim();
+        const cardsList = importCardsList();
+        const filteredNames = filterCardsByName(cardsList, searchTerm);
+        renderFilteredCards(cardsList, container, filteredNames);
+        suggestionsBox.style.display = 'none';
+    }
 
-        const btnWrapper = document.createElement('div');
-        btnWrapper.classList.add('view-card-button');
-        btnWrapper.dataset.cardName = cardName;
-
-        const button = document.createElement('button');
-        button.classList.add('card-main-button');
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.trim();
+        const cardsList = importCardsList();
         
-        const flipContainer = document.createElement('div');
-        flipContainer.classList.add('view-flip-container');
-        
-        const overlay = document.createElement('div');
-        overlay.classList.add('overlay');
-        flipContainer.appendChild(overlay);
-        
-        const buttonGroup = document.createElement('div');
-        buttonGroup.classList.add('button-group');
+        if (searchTerm.length > 0) {
+            const suggestions = filterCardsByName(cardsList, searchTerm);
+            suggestionsBox.innerHTML = '';
+            
+            if (suggestions.length > 0) {
+                suggestions.forEach(name => {
+                    const item = document.createElement('div');
+                    item.classList.add('suggestion-item');
+                    item.textContent = name;
+                    item.addEventListener('click', () => {
+                        searchInput.value = name;
+                        performSearch();
+                    });
+                    suggestionsBox.appendChild(item);
+                });
+                suggestionsBox.style.display = 'block';
+            } else {
+                // 添加无结果提示
+                const noResults = document.createElement('div');
+                noResults.classList.add('suggestion-item', 'no-results');
+                noResults.textContent = 'No results found';
+                suggestionsBox.appendChild(noResults);
+                suggestionsBox.style.display = 'block';
+            }
+        } else {
+            suggestionsBox.style.display = 'none';
+            performSearch(); // Show all cards when search is empty
+        }
+    });
 
-        const icons = ['edit', 'star', 'download', 'delete'];
+    searchButton.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
 
-        for (let i = 0; i < 4; i++) {
-            const btn = document.createElement('button');
-            btn.classList.add('overlay-button');
-
-            const img = document.createElement('img');
-            img.src = `icons/${icons[i]}.svg`;
-            img.alt = icons[i];
-            img.style.width = '25px';
-            img.style.height = '25px';
-
-            btn.appendChild(img);
-            buttonGroup.appendChild(btn);
-
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                currentPreviewCard = cardName; 
-
-                const cardsList = importCardsList();
-                const cardData = cardsList[currentPreviewCard];
-
-                switch (icons[i]) {
-                    case 'edit':
-                        localStorage.setItem('current_card', currentPreviewCard);
-                        window.location.href = `editor-page.html?card=${encodeURIComponent(currentPreviewCard)}`;
-                        break;
-                    case 'star':
-                        const starredCard = JSON.parse(localStorage.getItem('star'));
-                        const isStarred = starredCard && starredCard.name === currentPreviewCard;
-                        
-                        if (isStarred) {
-                            localStorage.removeItem('star');
-                            img.src = 'icons/star.svg';
-                        } else {
-                            localStorage.setItem('star', JSON.stringify({
-                                name: currentPreviewCard,
-                                data: cardData,
-                                timestamp: new Date().getTime()
-                            }));
-                            img.src = 'icons/star-filled.svg';
-                        }
-                        break;
-                    case 'download':
-                        downloadCardJSON(currentPreviewCard);
-                        break;
-                    case 'delete':
-                        if (confirm(`Do you really want to delete "${currentPreviewCard}"?`)) {
-                            if (deleteCard(currentPreviewCard)) {
-                                const cardElement = document.querySelector(`.view-card-button[data-card-name="${currentPreviewCard}"]`);
-                                if (cardElement) {
-                                    cardElement.remove();
-                                }
-                                previewModal.style.display = 'none';
-                                alert(`Deleted: ${currentPreviewCard}`);
+    // Initial render of all cards
+    function filterCardsByName(cardsList, searchTerm) {
+        if (!searchTerm) return Object.keys(cardsList);
+        return Object.keys(cardsList).filter(name => 
+            name.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+    
+    function renderFilteredCards(cardsList, container, filteredNames) {
+        container.innerHTML = '';
+        filteredNames.forEach(cardName => {
+            const frontData = cardsList[cardName].front;
+            const backData = cardsList[cardName].back;
+    
+            const btnWrapper = document.createElement('div');
+            btnWrapper.classList.add('view-card-button');
+            btnWrapper.dataset.cardName = cardName;
+    
+            const button = document.createElement('button');
+            button.classList.add('card-main-button');
+            
+            const flipContainer = document.createElement('div');
+            flipContainer.classList.add('view-flip-container');
+            
+            const overlay = document.createElement('div');
+            overlay.classList.add('overlay');
+            flipContainer.appendChild(overlay);
+            
+            const buttonGroup = document.createElement('div');
+            buttonGroup.classList.add('button-group');
+    
+            const icons = ['edit', 'star', 'download', 'delete'];
+    
+            for (let i = 0; i < 4; i++) {
+                const btn = document.createElement('button');
+                btn.classList.add('overlay-button');
+    
+                const img = document.createElement('img');
+                img.src = `icons/${icons[i]}.svg`;
+                img.alt = icons[i];
+                img.style.width = '25px';
+                img.style.height = '25px';
+    
+                btn.appendChild(img);
+                buttonGroup.appendChild(btn);
+    
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    currentPreviewCard = cardName; 
+    
+                    const cardsList = importCardsList();
+                    const cardData = cardsList[currentPreviewCard];
+    
+                    switch (icons[i]) {
+                        case 'edit':
+                            localStorage.setItem('current_card', currentPreviewCard);
+                            window.location.href = `editor-page.html?card=${encodeURIComponent(currentPreviewCard)}`;
+                            break;
+                        case 'star':
+                            const starredCard = JSON.parse(localStorage.getItem('star'));
+                            const isStarred = starredCard && starredCard.name === currentPreviewCard;
+                            
+                            if (isStarred) {
+                                localStorage.removeItem('star');
+                                img.src = 'icons/star.svg';
+                            } else {
+                                localStorage.setItem('star', JSON.stringify({
+                                    name: currentPreviewCard,
+                                    data: cardData,
+                                    timestamp: new Date().getTime()
+                                }));
+                                img.src = 'icons/star-filled.svg';
                             }
-                        }
-                        break;
+                            break;
+                        case 'download':
+                            downloadCardJSON(currentPreviewCard);
+                            break;
+                        case 'delete':
+                            if (confirm(`Do you really want to delete "${currentPreviewCard}"?`)) {
+                                if (deleteCard(currentPreviewCard)) {
+                                    const cardElement = document.querySelector(`.view-card-button[data-card-name="${currentPreviewCard}"]`);
+                                    if (cardElement) {
+                                        cardElement.remove();
+                                    }
+                                    previewModal.style.display = 'none';
+                                    alert(`Deleted: ${currentPreviewCard}`);
+                                }
+                            }
+                            break;
+                    }
+                });
+            }
+    
+            overlay.appendChild(buttonGroup);
+    
+            const cardFrontCanvas = document.createElement('canvas');
+            cardFrontCanvas.classList.add('front-canvas');
+            flipContainer.appendChild(cardFrontCanvas);
+            button.appendChild(flipContainer);
+            btnWrapper.appendChild(button);
+            container.appendChild(btnWrapper);
+    
+            renderScaledPreview(cardFrontCanvas, frontData, 300, 167);
+    
+            button.addEventListener('click', (e) => {
+                if (!e.target.closest('.overlay-button')) {
+                    currentPreviewCard = cardName;
+                    
+                    const starredCard = JSON.parse(localStorage.getItem('star'));
+                    const starBtn = actionButtons.querySelector('.action-button img[alt="star"]');
+                    if (starBtn) {
+                        starBtn.src = (starredCard && starredCard.name === cardName) 
+                            ? 'icons/star-filled.svg' 
+                            : 'icons/star.svg';
+                    }
+                    
+                    renderScaledPreview(frontCanvas, frontData, 800, 445);
+                    renderScaledPreview(backCanvas, backData, 800, 445);
+                    previewModal.style.display = 'flex';
                 }
             });
-        }
-
-
-        overlay.appendChild(buttonGroup);
-
-        const cardFrontCanvas = document.createElement('canvas');
-        cardFrontCanvas.classList.add('front-canvas');
-        flipContainer.appendChild(cardFrontCanvas);
-        button.appendChild(flipContainer);
-        btnWrapper.appendChild(button);
-        container.appendChild(btnWrapper);
-
-        renderScaledPreview(cardFrontCanvas, frontData, 300, 167);
-
-        button.addEventListener('click', (e) => {
-            if (!e.target.closest('.overlay-button')) {
-                currentPreviewCard = cardName;
-                
-                const starredCard = JSON.parse(localStorage.getItem('star'));
-                const starBtn = actionButtons.querySelector('.action-button img[alt="star"]');
-                if (starBtn) {
-                    starBtn.src = (starredCard && starredCard.name === cardName) 
-                        ? 'icons/star-filled.svg' 
-                        : 'icons/star.svg';
-                }
-                
-                renderScaledPreview(frontCanvas, frontData, 800, 445);
-                renderScaledPreview(backCanvas, backData, 800, 445);
-                previewModal.style.display = 'flex';
-            }
         });
-    });
+    }
+    const cardsList = importCardsList();
+    renderFilteredCards(cardsList, container, Object.keys(cardsList));
 });
