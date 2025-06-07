@@ -130,6 +130,18 @@ function preloadImages(img) {
  */
 export let frontCanvas, backCanvas;
 function init() {
+  preloadImages([
+    './icons/instagram.webp',
+    './icons/facebook.png',
+    './icons/linkedin.png',
+    './icons/github.png',
+    './icons/gmail.webp',
+    './icons/youtube.webp',
+    './icons/tiktok.png',
+    './icons/tumblr.png',
+    './icons/x.png'
+  ]);
+
   frontCanvas = new Canvas.Canvas('#front-card', true);
   backCanvas = new Canvas.Canvas('#back-card', false);
   document.querySelector('#front-card').style.transform = 'rotateY(0deg)';
@@ -180,22 +192,14 @@ function init() {
   });
 
   const root = document.querySelector('html');
-  const darkMode = localStorage.getItem('darkmode');
-  if (darkMode === 'True') {
+  const darkMode = localStorage.getItem('theme');
+  if (darkMode === 'dark') {
     root.setAttribute('class', 'dark');
   }
 
   Topbar.initListeners();
 
-  preloadImages([
-    './icons/instagram.webp',
-    './icons/facebook.png',
-    './icons/linkedin.png',
-    './icons/github.png',
-    './icons/gmail.webp',
-    './icons/youtube.webp',
-    './icons/tiktok.png',
-    './icons/tumblr.png',
-    './icons/x.png'
-  ]);
+  setTimeout(() => { // ensure images are drawn
+    frontCanvas.renderCanvas();
+  }, 10);
 }
