@@ -41,7 +41,7 @@ export function renderScaledPreview(canvas, data, width, height) {
                 ctx.fillStyle = `rgb(${d.r},${d.g},${d.b})`;
                 ctx.fillRect(d.x1, d.y1, d.x2 - d.x1, d.y2 - d.y1);
                 break;
-            case 'image':{
+            case 'image':
                 const img = new Image();
                 img.src = d.src;
                 img.onload = () => {
@@ -52,7 +52,6 @@ export function renderScaledPreview(canvas, data, width, height) {
                     console.error('Failed to load image:', d.src);
                 };
                 break;
-            }
             case 'ellipse':
                 ctx.fillStyle = `rgb(${d.r},${d.g},${d.b})`;
                 ctx.beginPath();
@@ -73,45 +72,83 @@ export function renderScaledPreview(canvas, data, width, height) {
 
 window.addEventListener('DOMContentLoaded', () => {
     const cardsList = importCardsList();
-    console.log("cardlist", cardsList)
     const cardNames = Object.keys(cardsList);
-    const buttons = document.querySelectorAll('.show .view-card-button');
+    const container = document.querySelector('.show');
+    container.innerHTML = '';
 
-    buttons.forEach((btnWrapper, index) => {
-        const button = btnWrapper.querySelector('button');
-        const flipInner = btnWrapper.querySelector('.flip-inner');
-        const frontCanvas = btnWrapper.querySelector('.front-canvas');
-        const backCanvas = btnWrapper.querySelector('.back-canvas');
+    const previewModal = document.createElement('div');
+    previewModal.classList.add('preview-modal');
+    previewModal.style.display = 'none';
+    document.body.appendChild(previewModal);
 
-        if (index < cardNames.length) {
-            const cardName = cardNames[index];
-            const frontData = cardsList[cardName].front;
-            const backData = cardsList[cardName].back;
+    const previewContent = document.createElement('div');
+    previewContent.classList.add('preview-content');
+    previewModal.appendChild(previewContent);
 
-            renderScaledPreview(frontCanvas, frontData, 300, 170);
-            renderScaledPreview(backCanvas, backData, 300, 170);
+    const closePreview = document.createElement('button');
+    closePreview.classList.add('close-preview');
+    closePreview.innerHTML = '×';
+    previewContent.appendChild(closePreview);
 
-            button.addEventListener('click', () => {
-                console.log('Toggling flip for card:', cardName);
-                flipInner.classList.toggle('flip');
-            });
-        } else {
-            const ctx = frontCanvas.getContext('2d');
-            const img = new Image();
-            img.src = 'icons/Person_green.png';
-            img.onload = () => {
-                ctx.clearRect(0, 0, frontCanvas.width, frontCanvas.height);
-                const x = (frontCanvas.width - img.width) / 2.2;
-                const y = (frontCanvas.height - img.height) / 2;
-                ctx.drawImage(img, x, y);
-            };
-            img.onerror = () => {
-                console.error('Failed to load default image');
-            };
-            const backCtx = backCanvas.getContext('2d');
-            backCtx.fillStyle = 'black';
-            backCtx.font = '20px Arial';
-            backCtx.fillText('No Back Content', 50, 50);
+    const previewCanvas = document.createElement('canvas');
+    previewCanvas.classList.add('preview-canvas');
+    previewContent.appendChild(previewCanvas);
+
+    closePreview.addEventListener('click', () => {
+        previewModal.style.display = 'none';
+    });
+
+    cardNames.forEach(cardName => {
+        const frontData = cardsList[cardName].front;
+        const btnWrapper = document.createElement('div');
+        btnWrapper.classList.add('view-card-button');
+
+        const button = document.createElement('button');
+        button.classList.add('card-main-button'); 
+        
+        const flipContainer = document.createElement('div');
+        flipContainer.classList.add('flip-container');
+        
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        flipContainer.appendChild(overlay);
+        
+        const buttonGroup = document.createElement('div');
+        buttonGroup.classList.add('button-group');
+
+        const icons = ['Edit', 'flip', 'upload', 'delete'];
+
+        for (let i = 0; i < 4; i++) {
+            const btn = document.createElement('button');
+            btn.classList.add('overlay-button');
+
+            const img = document.createElement('img');
+            img.src = `icons/${icons[i]}.png`;
+            img.alt = icons[i];
+            img.style.width = '25px';
+            img.style.height = '25px';
+
+            btn.appendChild(img);
+            buttonGroup.appendChild(btn);
         }
+
+        overlay.appendChild(buttonGroup);
+
+        const frontCanvas = document.createElement('canvas');
+        frontCanvas.classList.add('front-canvas');
+
+        flipContainer.appendChild(frontCanvas);
+        button.appendChild(flipContainer);
+        btnWrapper.appendChild(button);
+        container.appendChild(btnWrapper);
+
+        renderScaledPreview(frontCanvas, frontData, 300, 167);
+
+        button.addEventListener('click', (e) => {
+            if (!e.target.closest('.overlay-button')) {
+                renderScaledPreview(previewCanvas, frontData, 800, 450);
+                previewModal.style.display = 'flex';
+            }
+        });
     });
 });
