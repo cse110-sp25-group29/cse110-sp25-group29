@@ -191,7 +191,6 @@ export function yourCardFeature() {
         popup.id = "popup";
         popup.className = "popup";
 
-
         // 
         const frontCard = document.createElement('canvas');
         frontCard.id = "front-card";
@@ -201,8 +200,6 @@ export function yourCardFeature() {
         backCard.id = "back-card";
         backCard.className = "back-canvas";
         // backCard.hidden = true;
-
-       
 
         // Close handler
         closeBtn.addEventListener('click', () => {
