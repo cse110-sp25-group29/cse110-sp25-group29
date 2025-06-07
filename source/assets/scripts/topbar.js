@@ -41,7 +41,7 @@ export function initListeners() {
   const jsonexport = document.getElementById('export-json');
   const duplicate = document.getElementById('file-duplicate');
 
-  /*openprev.addEventListener('click', () => {
+  /* openprev.addEventListener('click', () => {
     const cards = Editor.importCardsList();
     const cardNames = Object.keys(cards);
     const current = Editor.importCurrentCardName();
@@ -73,7 +73,7 @@ export function initListeners() {
     Editor.setSaved(true);
     Editor.setCardName(prevname);
     Editor.exportCurrentCardName();
-  });*/
+  }); */
 
   duplicate.addEventListener('click', () => {
     Editor.setSaved(false);
@@ -206,7 +206,7 @@ function triggerOpenMenu() {
   menu.style.display = 'block';
 
   const style = document.createElement('style');
-  style.innerHTML = 
+  style.innerHTML =
     `
     #popup-menu {
       position: fixed;
@@ -267,7 +267,7 @@ function triggerOpenMenu() {
   const select = document.getElementById('card-select');
   const cards = Editor.importCardsList();
   const cardNames = Object.keys(cards);
-  if (cardNames.length === 0){
+  if (cardNames.length === 0) {
     const option = document.createElement('option');
     option.textContent = 'No saved cards!';
     option.disabled = true;
