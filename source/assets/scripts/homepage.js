@@ -84,7 +84,7 @@ export function uploadFeature() {
         fileInput.style.marginTop = '10px';
         fileInput.onchange = (e) => {
             files = e.target.files;
-            confirmlBtn.disabled = false;  
+            confirmBtn.disabled = false;  
         };
         
         const cancelBtn = document.createElement('button');
@@ -306,9 +306,15 @@ export function searchLocalStorage(searchInput) {
             item.innerHTML = `<a href="assets/editor-page.html" id="search-target-link"> Found: ${key}</a>`;
             item.style.padding = '4px 8px';
             item.style.cursor = 'pointer';
-            item.addEventListener('mouseover', () => item.style.backgroundColor = '#f0f0f0');
-            item.addEventListener('mouseout', () => item.style.backgroundColor = '');
-            item.addEventListener('click', () => localStorage.setItem('current_card', key));
+            item.addEventListener('mouseover', () => {
+                item.style.backgroundColor = '#f0f0f0';
+            });
+            item.addEventListener('mouseout', () => { 
+                item.style.backgroundColor = '';
+            });
+            item.addEventListener('click', () => {
+                localStorage.setItem('current_card', key);
+            });
             resultsContainer.appendChild(item);
             found = true;
         }

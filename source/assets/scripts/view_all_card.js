@@ -41,7 +41,7 @@ export function renderScaledPreview(canvas, data, width, height) {
                 ctx.fillStyle = `rgb(${d.r},${d.g},${d.b})`;
                 ctx.fillRect(d.x1, d.y1, d.x2 - d.x1, d.y2 - d.y1);
                 break;
-            case 'image':
+            case 'image': {
                 const img = new Image();
                 img.src = d.src;
                 img.onload = () => {
@@ -52,6 +52,7 @@ export function renderScaledPreview(canvas, data, width, height) {
                     console.error('Failed to load image:', d.src);
                 };
                 break;
+            }
             case 'ellipse':
                 ctx.fillStyle = `rgb(${d.r},${d.g},${d.b})`;
                 ctx.beginPath();
