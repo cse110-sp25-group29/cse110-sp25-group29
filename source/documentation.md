@@ -2,7 +2,7 @@
 
 This is a full-featured project for designing, previewing, editing, and managing custom cards using HTML, CSS, and JavaScript.
 
----
+
 
 ## Project Structure
 
@@ -24,14 +24,12 @@ source/
 └── documentation.md          # Documentation
 ```
 
----
 
 ## Features
 
 - Dark/light theme toggle
 - ...
 
----
 
 ## Technologies
 
@@ -40,7 +38,7 @@ source/
 - **Jest** for unit testing
 - **JSDoc** for documentation
 
----
 
 ## API Documentation
-[Look Here](../docs/index.html)
+
+[Look Here](https://cse110-sp25-group29.github.io/cse110-sp25-group29/docs/index.html)
