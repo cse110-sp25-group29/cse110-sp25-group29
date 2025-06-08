@@ -1,6 +1,7 @@
 import { importCardsList } from './editor-page.js';
 import { handleFiles,  } from './homepage.js';
 
+// render cards by scale
 export function renderScaledPreview(canvas, data, width, height) {
     const ctx = canvas.getContext('2d');
     if (!ctx) {
@@ -68,6 +69,7 @@ export function renderScaledPreview(canvas, data, width, height) {
     }
 }
 
+// download current card to json
 export function downloadCardJSON(cardName) {
     const cardsList = importCardsList();
     const cardData = cardsList[cardName];
@@ -91,10 +93,12 @@ export function downloadCardJSON(cardName) {
     }, 100);
 }
 
+// save new card list to localstorage
 export function saveCardsList(cardsList) {
     localStorage.setItem('cards', JSON.stringify(cardsList));
 }
 
+// define upload
 export function uploadFeature() {
     const uploadBtn = document.querySelector('.icon-button.upload');
     
@@ -167,6 +171,7 @@ export function uploadFeature() {
     });
 }
 
+// delete card
 export async function deleteCard(cardName) {
     const cardsList = await importCardsList();
     if (!cardsList[cardName]) {
@@ -184,6 +189,7 @@ export async function deleteCard(cardName) {
     return true;
 }
 
+// define star actions
 export function handleStarCard(cardName, cardData) {
     const starredCard = JSON.parse(localStorage.getItem('star'));
     
@@ -205,6 +211,7 @@ export function handleStarCard(cardName, cardData) {
     }
 }
 
+// get card's star status
 export function getStarStatus(cardName) {
     const starredCard = JSON.parse(localStorage.getItem('star'));
     return starredCard && starredCard.name === cardName;
@@ -246,6 +253,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     uploadFeature();
 
+    // add delete preview (confirmation)
     function deletePreview(){
         const deleteOverlay = document.createElement('div');
         deleteOverlay.id = "overlay";
@@ -315,13 +323,14 @@ window.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('current_card', currentPreviewCard);
                     window.location.href = './editor-page.html';
                     break;
-                case 'star':
+                case 'star':{
                     const result = handleStarCard(currentPreviewCard, cardData);
                     if (result.success) {
                         img.src = result.action === 'star' ? './icons/star-filled.svg' : './icons/star.svg';
                         starBtn = img; 
                     }
                     break;
+                }
                 case 'download':
                     downloadCardJSON(currentPreviewCard);
                     break;
@@ -332,6 +341,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // define preview page
     const canvasContainer = document.createElement('div');
     canvasContainer.classList.add('canvas-container');
     mainContent.appendChild(canvasContainer);
@@ -404,6 +414,7 @@ window.addEventListener('DOMContentLoaded', () => {
         window.dispatchEvent(new Event('cardsUpdated'));
     });
 
+    // define search function
     const searchButton = document.querySelector('.search-button');
     const searchInput = document.querySelector('.search-bar-view');
     const suggestionsBox = document.getElementById('search-suggestions');
@@ -462,6 +473,7 @@ window.addEventListener('DOMContentLoaded', () => {
             name.toLowerCase().includes(searchTerm.toLowerCase()));
     }
     
+    // filter cards by search
     function renderFilteredCards(cardsList, container, filteredNames) {
         container.innerHTML = '';
         const starredCard = JSON.parse(localStorage.getItem('star'));
@@ -474,7 +486,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
         sortedNames.forEach(cardName => {
             const frontData = cardsList[cardName].front;
-            const backData = cardsList[cardName].back;
     
             const btnWrapper = document.createElement('div');
             btnWrapper.classList.add('view-card-button');
@@ -524,7 +535,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             localStorage.setItem('current_card', currentPreviewCard);
                             window.location.href = `editor-page.html?card=${encodeURIComponent(currentPreviewCard)}`;
                             break;
-                        case 'star':
+                        case 'star':{
                             const result = handleStarCard(currentPreviewCard, cardData);
                             if (result.success) {
                                 img.src = result.action === 'star' ? './icons/star-filled.svg' : './icons/star.svg';
@@ -533,6 +544,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                 }
                             }
                             break;
+                        }
                         case 'download':
                             downloadCardJSON(currentPreviewCard);
                             break;
@@ -591,6 +603,7 @@ window.addEventListener('DOMContentLoaded', () => {
         renderFilteredCards(cardsList, container, Object.keys(cardsList));
     });
 
+    // init rendering cards
     const cardsList = importCardsList();
     renderFilteredCards(cardsList, container, Object.keys(cardsList));
 });
