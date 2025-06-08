@@ -253,34 +253,35 @@ export function yourCardFeature() {
             downloadBtn.addEventListener('click', ()=> {
                 downloadCardJSON(cardName);
             });
-            deleteBtn.addEventListener('click', () => {
-                const deleteOverlay = document.createElement('div');
-                deleteOverlay.id = "overlay";
-                const deleteConfirmation = document.createElement('deleteConfirmation');
-                deleteConfirmation.id = "dialogBox";
-                const message = document.createElement('p');
+            // deleteBtn.addEventListener('click', () => {
+            //     const deleteOverlay = document.createElement('div');
+            //     deleteOverlay.id = "overlay";
+            //     const deleteConfirmation = document.createElement('deleteConfirmation');
+            //     deleteConfirmation.id = "dialogBox";
+            //     const message = document.createElement('p');
                 
-                const cancelBtn = document.createElement('button');
-                const confirmBtn = document.createElement('button');
-                message.innerHTML = "Are you sure to delete this card?";
-                cancelBtn.innerText = "Cancel";
-                confirmBtn.innerText = "Confirm";
-                cancelBtn.addEventListener('click', ()=> {
-                    document.body.removeChild(deleteOverlay);
-                })
+            //     const cancelBtn = document.createElement('button');
+            //     const confirmBtn = document.createElement('button');
+            //     message.innerHTML = "Are you sure to delete this card?";
+            //     cancelBtn.innerText = "Cancel";
+            //     confirmBtn.innerText = "Confirm";
+            //     cancelBtn.addEventListener('click', ()=> {
+            //         document.body.removeChild(deleteOverlay);
+            //     })
 
-                confirmBtn.addEventListener('click', ()=>{
-                    deleteCard(cardName);
-                    localStorage.setItem('current_card', '');
-                    window.location.reload();
-                });
+            //     confirmBtn.addEventListener('click', ()=>{
+            //         deleteCard(cardName);
+            //         localStorage.setItem('current_card', '');
+            //         window.location.reload();
+            //     });
                 
-                deleteConfirmation.appendChild(message);
-                deleteConfirmation.appendChild(cancelBtn);
-                deleteConfirmation.appendChild(confirmBtn);
-                deleteOverlay.appendChild(deleteConfirmation);
-                document.body.appendChild(deleteOverlay);
-            });
+            //     deleteConfirmation.appendChild(message);
+            //     deleteConfirmation.appendChild(cancelBtn);
+            //     deleteConfirmation.appendChild(confirmBtn);
+            //     deleteOverlay.appendChild(deleteConfirmation);
+            //     document.body.appendChild(deleteOverlay);
+            // });
+            deleteDialog(deleteBtn, cardName, "home");
         }
 
         // Optional: clicking outside popup also closes it
@@ -304,6 +305,39 @@ export function yourCardFeature() {
         popup.appendChild(backCard);
         document.body.appendChild(overlay);
         renderYourCard(frontCard, backCard, cardName); 
+    });
+}
+
+export function deleteDialog(deleteBtn, cardName, page) {
+    deleteBtn.addEventListener('click', () => {
+        const deleteOverlay = document.createElement('div');
+        deleteOverlay.id = "overlay";
+        const deleteConfirmation = document.createElement('deleteConfirmation');
+        deleteConfirmation.id = "dialogBox";
+        const message = document.createElement('p');
+        
+        const cancelBtn = document.createElement('button');
+        const confirmBtn = document.createElement('button');
+        message.innerHTML = "Are you sure to delete this card?";
+        cancelBtn.innerText = "Cancel";
+        confirmBtn.innerText = "Confirm";
+        cancelBtn.addEventListener('click', ()=> {
+            document.body.removeChild(deleteOverlay);
+        })
+
+        confirmBtn.addEventListener('click', ()=>{
+            deleteCard(cardName);
+            if (page === "home") {
+                localStorage.setItem('current_card', '');
+            }
+            window.location.reload();
+        });
+        
+        deleteConfirmation.appendChild(message);
+        deleteConfirmation.appendChild(cancelBtn);
+        deleteConfirmation.appendChild(confirmBtn);
+        deleteOverlay.appendChild(deleteConfirmation);
+        document.body.appendChild(deleteOverlay);
     });
 }
 
