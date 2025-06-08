@@ -257,7 +257,7 @@ export function yourCardFeature() {
                 const deleteOverlay = document.createElement('div');
                 deleteOverlay.id = "overlay";
                 const deleteConfirmation = document.createElement('deleteConfirmation');
-                deleteConfirmation.id = "delete-confirmation";
+                deleteConfirmation.id = "dialogBox";
                 const message = document.createElement('p');
                 
                 const cancelBtn = document.createElement('button');
