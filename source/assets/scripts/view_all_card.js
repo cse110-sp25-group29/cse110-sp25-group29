@@ -183,15 +183,41 @@ export async function deleteCard(cardName) {
         return false;
     }
 
-    delete cardsList[cardName];
-    saveCardsList(cardsList); 
-
-    const starredCard = JSON.parse(localStorage.getItem('star'));
-    if (starredCard && starredCard.name === cardName) {
+    // 如果是 star 卡片，先清除 star 状态
+    if (getStarStatus(cardName)) {
         localStorage.removeItem('star');
     }
 
+    delete cardsList[cardName];
+    saveCardsList(cardsList); 
     return true;
+}
+
+export function handleStarCard(cardName, cardData) {
+    const starredCard = JSON.parse(localStorage.getItem('star'));
+    
+    if (starredCard && starredCard.name === cardName) {
+        localStorage.removeItem('star');
+        return { action: 'unstar', success: true };
+    }
+    else if (starredCard) {
+        alert(`You have starred card: ${starredCard.name}\nPlease unstar it first!`);
+        return { action: 'rejected', success: false };
+    }
+    else {
+        localStorage.setItem('star', JSON.stringify({
+            name: cardName,
+            data: cardData,
+            timestamp: new Date().getTime()
+        }));
+        return { action: 'star', success: true };
+    }
+}
+
+
+export function getStarStatus(cardName) {
+    const starredCard = JSON.parse(localStorage.getItem('star'));
+    return starredCard && starredCard.name === cardName;
 }
 
 
@@ -258,19 +284,11 @@ window.addEventListener('DOMContentLoaded', () => {
                     window.location.href = `editor-page.html?card=${encodeURIComponent(currentPreviewCard)}`;
                     break;
                 case 'star':
-                    const starredCard = JSON.parse(localStorage.getItem('star'));
-                    const isStarred = starredCard && starredCard.name === currentPreviewCard;
-                    
-                    if (isStarred) {
-                        localStorage.removeItem('star');
-                        img.src = 'icons/star.svg';
-                    } else {
-                        localStorage.setItem('star', JSON.stringify({
-                            name: currentPreviewCard,
-                            data: cardData,
-                            timestamp: new Date().getTime()
-                        }));
-                        img.src = 'icons/star-filled.svg';
+                    const result = handleStarCard(currentPreviewCard, cardData);
+                    if (result.success) {
+                        img.src = result.action === 'star' 
+                            ? 'icons/star-filled.svg' 
+                            : 'icons/star.svg';
                     }
                     break;
                 case 'download':
@@ -475,19 +493,11 @@ window.addEventListener('DOMContentLoaded', () => {
                             window.location.href = `editor-page.html?card=${encodeURIComponent(currentPreviewCard)}`;
                             break;
                         case 'star':
-                            const starredCard = JSON.parse(localStorage.getItem('star'));
-                            const isStarred = starredCard && starredCard.name === currentPreviewCard;
-                            
-                            if (isStarred) {
-                                localStorage.removeItem('star');
-                                img.src = 'icons/star.svg';
-                            } else {
-                                localStorage.setItem('star', JSON.stringify({
-                                    name: currentPreviewCard,
-                                    data: cardData,
-                                    timestamp: new Date().getTime()
-                                }));
-                                img.src = 'icons/star-filled.svg';
+                            const result = handleStarCard(currentPreviewCard, cardData);
+                            if (result.success) {
+                                img.src = result.action === 'star' 
+                                    ? 'icons/star-filled.svg' 
+                                    : 'icons/star.svg';
                             }
                             break;
                         case 'download':
@@ -524,12 +534,9 @@ window.addEventListener('DOMContentLoaded', () => {
                 if (!e.target.closest('.overlay-button')) {
                     currentPreviewCard = cardName;
                     
-                    const starredCard = JSON.parse(localStorage.getItem('star'));
-                    const starBtn = actionButtons.querySelector('.action-button img[alt="star"]');
+                    const isStarred = getStarStatus(cardName);
                     if (starBtn) {
-                        starBtn.src = (starredCard && starredCard.name === cardName) 
-                            ? 'icons/star-filled.svg' 
-                            : 'icons/star.svg';
+                        starBtn.src = isStarred ? 'icons/star-filled.svg' : 'icons/star.svg';
                     }
                     
                     renderScaledPreview(frontCanvas, frontData, 800, 445);
