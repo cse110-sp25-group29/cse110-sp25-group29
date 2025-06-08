@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedTheme === 'dark') {
         body.classList.add('dark-theme');
         if (themeImg) {
-            themeImg.src = "icons/light-mode.svg";
-            concardHeading.src = "icons/title-centered-dark.svg";
+            themeImg.src = "./icons/light-mode.svg";
+            concardHeading.src = "./icons/title-centered-dark.svg";
         }
     } else {
         body.classList.remove('dark-theme');
         if (themeImg) {
-            themeImg.src = "icons/dark-mode.svg";
-            concardHeading.src = "icons/title-centered-light.svg";
+            themeImg.src = "./icons/dark-mode.svg";
+            concardHeading.src = "./icons/title-centered-light.svg";
         }
     }
 
@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('dark-theme');
         const themeImg = document.querySelector('#theme-toggle > img');
         const isDark = body.classList.contains('dark-theme');
-        themeImg.src = isDark ? "icons/light-mode.svg" : "icons/dark-mode.svg";
-        concardHeading.src = isDark ? "icons/title-centered-dark.svg" : "icons/title-centered-light.svg";
+        themeImg.src = isDark ? "./icons/light-mode.svg" : "./icons/dark-mode.svg";
+        concardHeading.src = isDark ? "./icons/title-centered-dark.svg" : "./icons/title-centered-light.svg";
 
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
@@ -208,21 +208,21 @@ export function yourCardFeature() {
     
         const editBtn = document.createElement('button');
         // editBtn.innerHTML = 'Edit';
-        editBtn.innerHTML = '<img src="icons/edit.svg"/>';
+        editBtn.innerHTML = '<img src="./icons/edit.svg"/>';
         editBtn.id = 'editBtn';
         editBtn.classList.add("circle-button");
 
         // Create delete button
         const deleteBtn = document.createElement('button');
         // deleteBtn.innerHTML = 'delete';
-        deleteBtn.innerHTML = '<img src="icons/delete.svg"/>';
+        deleteBtn.innerHTML = '<img src="./icons/delete.svg"/>';
         deleteBtn.id = 'deleteBtn';
         deleteBtn.classList.add("circle-button");
 
         // Create download button
         const downloadBtn = document.createElement('button');
         // downloadBtn.innerHTML = 'Download';
-        downloadBtn.innerHTML = '<img src="icons/download.svg"/>';
+        downloadBtn.innerHTML = '<img src="./icons/download.svg"/>';
         downloadBtn.id = 'downloadBtn';
         downloadBtn.classList.add("circle-button");
 
