@@ -229,7 +229,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const closePreview = document.createElement('button');
     closePreview.classList.add('close-preview');
     const closeIcon = document.createElement('img');
-    closeIcon.src = './icons/close-green.png';
+    closeIcon.src = './icons/close.svg';
     closeIcon.alt = 'Close';
     closeIcon.style.width = '45px';
     closeIcon.style.height = '45px';
