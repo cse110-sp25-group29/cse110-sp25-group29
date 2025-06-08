@@ -228,7 +228,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const closePreview = document.createElement('button');
     closePreview.classList.add('close-preview');
     const closeIcon = document.createElement('img');
-    closeIcon.src = 'icons/close-green.png';
+    closeIcon.src = './icons/close-green.png';
     closeIcon.alt = 'Close';
     closeIcon.style.width = '45px';
     closeIcon.style.height = '45px';
@@ -254,10 +254,10 @@ window.addEventListener('DOMContentLoaded', () => {
         const img = document.createElement('img');
         if (icon === 'star') {
             const flag = getStarStatus(currentPreviewCard);
-            img.src = flag ? 'icons/star-filled.svg' : `icons/${icon}.svg`;
+            img.src = flag ? './icons/star-filled.svg' : `./icons/${icon}.svg`;
             starBtn = img; 
         } else {
-            img.src = `icons/${icon}.svg`;
+            img.src = `./icons/${icon}.svg`;
         }
         img.alt = icon;
         img.style.width = '24px';
@@ -278,12 +278,12 @@ window.addEventListener('DOMContentLoaded', () => {
             switch(icon) {
                 case 'edit':
                     localStorage.setItem('current_card', currentPreviewCard);
-                    window.location.href = `editor-page.html?card=${encodeURIComponent(currentPreviewCard)}`;
+                    window.location.href = './editor-page.html';
                     break;
                 case 'star':
                     const result = handleStarCard(currentPreviewCard, cardData);
                     if (result.success) {
-                        img.src = result.action === 'star' ? 'icons/star-filled.svg' : 'icons/star.svg';
+                        img.src = result.action === 'star' ? './icons/star-filled.svg' : './icons/star.svg';
                         starBtn = img; 
                     }
                     break;
@@ -331,7 +331,7 @@ window.addEventListener('DOMContentLoaded', () => {
     leftArrow.classList.add('nav-button', 'left');
     leftArrow.style.display = 'none';
     const leftArrowImg = document.createElement('img');
-    leftArrowImg.src = 'icons/left.png';
+    leftArrowImg.src = './icons/left.png';
     leftArrowImg.alt = 'Previous';
     leftArrowImg.style.width = '45px';
     leftArrowImg.style.height = '45px';
@@ -341,7 +341,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const rightArrow = document.createElement('button');
     rightArrow.classList.add('nav-button', 'right');
     const rightArrowImg = document.createElement('img');
-    rightArrowImg.src = 'icons/right.png';
+    rightArrowImg.src = './icons/right.png';
     rightArrowImg.alt = 'Next';
     rightArrowImg.style.width = '45px';
     rightArrowImg.style.height = '45px';
@@ -474,9 +474,9 @@ window.addEventListener('DOMContentLoaded', () => {
                 btn.classList.add('overlay-button');
     
                 const img = document.createElement('img');
-                img.src = `icons/${icons[i]}.svg`;
+                img.src = `./icons/${icons[i]}.svg`;
                 if (icons[i] === 'star') {
-                    img.src = getStarStatus(cardName) ? 'icons/star-filled.svg' : `icons/${icons[i]}.svg`;
+                    img.src = getStarStatus(cardName) ? './icons/star-filled.svg' : `./icons/${icons[i]}.svg`;
                 }
                     
                 img.alt = icons[i];
@@ -501,9 +501,9 @@ window.addEventListener('DOMContentLoaded', () => {
                         case 'star':
                             const result = handleStarCard(currentPreviewCard, cardData);
                             if (result.success) {
-                                img.src = result.action === 'star' ? 'icons/star-filled.svg' : 'icons/star.svg';
+                                img.src = result.action === 'star' ? './icons/star-filled.svg' : './icons/star.svg';
                                 if (starBtn) {
-                                    starBtn.src = result.action === 'star' ? 'icons/star-filled.svg' : 'icons/star.svg';
+                                    starBtn.src = result.action === 'star' ? './icons/star-filled.svg' : './icons/star.svg';
                                 }
                             }
                             break;
@@ -553,7 +553,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     }
                     const isStarred = getStarStatus(cardName);
                     if (starBtn) {
-                        starBtn.src = isStarred ? 'icons/star-filled.svg' : 'icons/star.svg';
+                        starBtn.src = isStarred ? './icons/star-filled.svg' : './icons/star.svg';
                     } else {
                         console.warn('starBtn is not defined');
                     }
