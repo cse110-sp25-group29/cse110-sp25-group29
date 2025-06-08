@@ -15,7 +15,7 @@ export function initListeners() {
   // go back to home menu
   const home = document.querySelector('#home-button');
   home.addEventListener('click', (e) => {
-    window.location.href = '../homepage.html';
+    window.location.href = './homepage.html';
   });
 
   // lets the user edit the card name directly

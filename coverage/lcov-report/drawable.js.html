@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/328</span>
+                <span class='fraction'>0/339</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/165</span>
+                <span class='fraction'>0/175</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/271</span>
+                <span class='fraction'>0/281</span>
             </div>
         
             
@@ -713,7 +713,19 @@
 <a name='L648'></a><a href='#L648'>648</a>
 <a name='L649'></a><a href='#L649'>649</a>
 <a name='L650'></a><a href='#L650'>650</a>
-<a name='L651'></a><a href='#L651'>651</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L651'></a><a href='#L651'>651</a>
+<a name='L652'></a><a href='#L652'>652</a>
+<a name='L653'></a><a href='#L653'>653</a>
+<a name='L654'></a><a href='#L654'>654</a>
+<a name='L655'></a><a href='#L655'>655</a>
+<a name='L656'></a><a href='#L656'>656</a>
+<a name='L657'></a><a href='#L657'>657</a>
+<a name='L658'></a><a href='#L658'>658</a>
+<a name='L659'></a><a href='#L659'>659</a>
+<a name='L660'></a><a href='#L660'>660</a>
+<a name='L661'></a><a href='#L661'>661</a>
+<a name='L662'></a><a href='#L662'>662</a>
+<a name='L663'></a><a href='#L663'>663</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1186,6 +1198,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1224,16 +1237,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1279,6 +1302,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1836,6 +1860,7 @@ export class Textbox extends Drawable {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    this.bold = false;</span>
 <span class="cstat-no" title="statement not covered" >    this.italics = false;</span>
+<span class="cstat-no" title="statement not covered" >    this.underline = false;</span>
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  in</span>it(e) {
@@ -1872,7 +1897,8 @@ export class Textbox extends Drawable {
 <span class="cstat-no" title="statement not covered" >    return this.selected;</span>
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  ov</span>erSelf(x, y) { // probably needs improvement
+<span class="fstat-no" title="function not covered" >  ov</span>erSelf(x, y) {
+<span class="cstat-no" title="statement not covered" >    this.canvas.getContext('2d').font = `${this.bold ? ' bold' : ''} ${this.italics ? ' italic' : ''} ${this.fontSize}px ${this.fontStyle}`;</span>
 <span class="cstat-no" title="statement not covered" >    return this.x &lt;= x &amp;&amp; x &lt;= this.x + this.canvas.getContext('2d').measureText(this.text).width &amp;&amp; this.y &lt;= y + this.fontSize &amp;&amp; y &lt;= this.y;</span>
   }
 &nbsp;
@@ -1881,6 +1907,15 @@ export class Textbox extends Drawable {
 <span class="cstat-no" title="statement not covered" >    ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    ctx.fillText(this.text, this.x, this.y);</span>
+<span class="cstat-no" title="statement not covered" >    if (this.underline) {</span>
+<span class="cstat-no" title="statement not covered" >      ctx.strokeStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;</span>
+<span class="cstat-no" title="statement not covered" >      ctx.lineWidth = this.fontSize / 10;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      ctx.beginPath();</span>
+<span class="cstat-no" title="statement not covered" >      ctx.moveTo(this.x, this.y + this.fontSize / 8);</span>
+<span class="cstat-no" title="statement not covered" >      ctx.lineTo(this.x + ctx.measureText(this.text).width, this.y + this.fontSize / 8);</span>
+<span class="cstat-no" title="statement not covered" >      ctx.stroke();</span>
+    }
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  dr</span>awFocus(ctx) {
@@ -1937,6 +1972,7 @@ export class Textbox extends Drawable {
 <span class="cstat-no" title="statement not covered" >    if ('size' in data &amp;&amp; typeof data.size === 'number') <span class="cstat-no" title="statement not covered" >this.fontSize = data.size;</span></span>
 <span class="cstat-no" title="statement not covered" >    if ('bold' in data &amp;&amp; typeof data.bold === 'boolean') <span class="cstat-no" title="statement not covered" >this.bold = data.bold;</span></span>
 <span class="cstat-no" title="statement not covered" >    if ('italics' in data &amp;&amp; typeof data.italics === 'boolean') <span class="cstat-no" title="statement not covered" >this.italics = data.italics;</span></span>
+<span class="cstat-no" title="statement not covered" >    if ('underline' in data &amp;&amp; typeof data.underline === 'boolean') <span class="cstat-no" title="statement not covered" >this.underline = data.underline;</span></span>
 <span class="cstat-no" title="statement not covered" >    if ('r' in data &amp;&amp; typeof data.r === 'number') <span class="cstat-no" title="statement not covered" >this.r = data.r;</span></span>
 <span class="cstat-no" title="statement not covered" >    if ('g' in data &amp;&amp; typeof data.g === 'number') <span class="cstat-no" title="statement not covered" >this.g = data.g;</span></span>
 <span class="cstat-no" title="statement not covered" >    if ('b' in data &amp;&amp; typeof data.b === 'number') <span class="cstat-no" title="statement not covered" >this.b = data.b;</span></span>
@@ -2020,7 +2056,7 @@ export class Ellipse extends Box {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-07T03:32:10.728Z
+                at 2025-06-08T04:12:54.447Z
             </div>
         <script src="prettify.js"></script>
         <script>
