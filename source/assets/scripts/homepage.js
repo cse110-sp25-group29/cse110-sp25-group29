@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 export function newCard() {
-    localStorage.setItem('current_card', 'untitle');
+    localStorage.setItem('current_card', '');
 }
 
 export function uploadFeature() {
