@@ -1,7 +1,13 @@
 import { importCardsList } from './editor-page.js';
 import { handleFiles,  } from './homepage.js';
 
-// render cards by scale
+/**
+ * Render a preview of a card on a canvas with scaling applied.
+ * @param {HTMLCanvasElement} canvas - The canvas to render on.
+ * @param {Object} data - The card data object.
+ * @param {number} width - Target width for rendering.
+ * @param {number} height - Target height for rendering.
+ */
 export function renderScaledPreview(canvas, data, width, height) {
     const ctx = canvas.getContext('2d');
     if (!ctx) {
@@ -69,7 +75,10 @@ export function renderScaledPreview(canvas, data, width, height) {
     }
 }
 
-// download current card to json
+/**
+ * Download the selected card's data as a JSON file.
+ * @param {string} cardName - The name of the card to download.
+ */
 export function downloadCardJSON(cardName) {
     const cardsList = importCardsList();
     const cardData = cardsList[cardName];
@@ -93,12 +102,17 @@ export function downloadCardJSON(cardName) {
     }, 100);
 }
 
-// save new card list to localstorage
+/**
+ * Save the updated card list to local storage.
+ * @param {Object} cardsList - The full card list to save.
+ */
 export function saveCardsList(cardsList) {
     localStorage.setItem('cards', JSON.stringify(cardsList));
 }
 
-// define upload
+/**
+ * Set up the upload button to allow file uploads via dialog or drag-drop.
+ */
 export function uploadFeature() {
     const uploadBtn = document.querySelector('.icon-button.upload');
     
@@ -171,7 +185,11 @@ export function uploadFeature() {
     });
 }
 
-// delete card
+/**
+ * Delete a specific card from local storage and trigger a UI update.
+ * @param {string} cardName - The name of the card to delete.
+ * @returns {Promise<boolean>} - True if deleted, false if card not found.
+ */
 export async function deleteCard(cardName) {
     const cardsList = await importCardsList();
     if (!cardsList[cardName]) {
@@ -189,7 +207,12 @@ export async function deleteCard(cardName) {
     return true;
 }
 
-// define star actions
+/**
+ * Handle the logic to star or unstar a card. Only one card can be starred.
+ * @param {string} cardName - The name of the card to (un)star.
+ * @param {Object} cardData - The card data to store if starring.
+ * @returns {Object} - Action result and success flag.
+ */
 export function handleStarCard(cardName, cardData) {
     const starredCard = JSON.parse(localStorage.getItem('star'));
     
@@ -211,7 +234,11 @@ export function handleStarCard(cardName, cardData) {
     }
 }
 
-// get card's star status
+/**
+ * Check if a specific card is currently starred.
+ * @param {string} cardName - The name of the card to check.
+ * @returns {boolean} - True if the card is starred.
+ */
 export function getStarStatus(cardName) {
     const starredCard = JSON.parse(localStorage.getItem('star'));
     return starredCard && starredCard.name === cardName;
@@ -467,13 +494,24 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    /**
+     * Filter card names by a search term (case-insensitive).
+     * @param {Object} cardsList - The full card list.
+     * @param {string} searchTerm - The term to filter by.
+     * @returns {string[]} - Filtered list of card names.
+     */
     function filterCardsByName(cardsList, searchTerm) {
         if (!searchTerm) return Object.keys(cardsList);
         return Object.keys(cardsList).filter(name => 
             name.toLowerCase().includes(searchTerm.toLowerCase()));
     }
     
-    // filter cards by search
+    /**
+     * Render the list of cards, placing starred card first if it exists.
+     * @param {Object} cardsList - All cards.
+     * @param {HTMLElement} container - The HTML element to render into.
+     * @param {string[]} filteredNames - Filtered card name list to render.
+     */
     function renderFilteredCards(cardsList, container, filteredNames) {
         container.innerHTML = '';
         const starredCard = JSON.parse(localStorage.getItem('star'));
