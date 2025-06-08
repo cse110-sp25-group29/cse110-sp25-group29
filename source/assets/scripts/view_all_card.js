@@ -183,13 +183,14 @@ export async function deleteCard(cardName) {
         return false;
     }
 
-    // 如果是 star 卡片，先清除 star 状态
     if (getStarStatus(cardName)) {
         localStorage.removeItem('star');
     }
 
     delete cardsList[cardName];
     saveCardsList(cardsList); 
+    // rerender
+    window.dispatchEvent(new Event('cardsUpdated'));
     return true;
 }
 
@@ -198,6 +199,8 @@ export function handleStarCard(cardName, cardData) {
     
     if (starredCard && starredCard.name === cardName) {
         localStorage.removeItem('star');
+        // rerender
+        window.dispatchEvent(new Event('cardsUpdated'));
         return { action: 'unstar', success: true };
     }
     else if (starredCard) {
@@ -210,6 +213,8 @@ export function handleStarCard(cardName, cardData) {
             data: cardData,
             timestamp: new Date().getTime()
         }));
+        // rerender
+        window.dispatchEvent(new Event('cardsUpdated'));
         return { action: 'star', success: true };
     }
 }
@@ -261,7 +266,11 @@ window.addEventListener('DOMContentLoaded', () => {
         btn.classList.add('action-button');
         
         const img = document.createElement('img');
-        img.src = `icons/${icon}.svg`;
+        if (icon == 'star') {
+            img.src = getStarStatus(currentPreviewCard) ? 'icons/star-filled.svg' : `icons/${icon}.svg`;
+        }else{
+            img.src = `icons/${icon}.svg`;
+        }
         img.alt = icon;
         img.style.width = '24px';
         img.style.height = '24px';
@@ -435,7 +444,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initial render of all cards
     function filterCardsByName(cardsList, searchTerm) {
         if (!searchTerm) return Object.keys(cardsList);
         return Object.keys(cardsList).filter(name => 
@@ -444,7 +452,16 @@ window.addEventListener('DOMContentLoaded', () => {
     
     function renderFilteredCards(cardsList, container, filteredNames) {
         container.innerHTML = '';
-        filteredNames.forEach(cardName => {
+        const starredCard = JSON.parse(localStorage.getItem('star'));
+        const starredCardName = starredCard?.name;
+
+        // sort card by star
+        let sortedNames = [...filteredNames];
+        if (starredCardName && sortedNames.includes(starredCardName)) {
+            sortedNames = [starredCardName, ...sortedNames.filter(name => name !== starredCardName)];
+        }
+
+        sortedNames.forEach(cardName => {
             const frontData = cardsList[cardName].front;
             const backData = cardsList[cardName].back;
     
@@ -473,6 +490,12 @@ window.addEventListener('DOMContentLoaded', () => {
     
                 const img = document.createElement('img');
                 img.src = `icons/${icons[i]}.svg`;
+                if (icons[i] == 'star') {
+                    img.src = getStarStatus(cardName) ? 'icons/star-filled.svg' : `icons/${icons[i]}.svg`;
+                }else{
+                    img.src = `icons/${icons[i]}.svg`;
+                }
+                    
                 img.alt = icons[i];
                 img.style.width = '25px';
                 img.style.height = '25px';
