@@ -237,16 +237,16 @@ h1 {
 
 
 .flip-container {
-    width: 300px;
-    height: 167px;
+    width: 600px;
+    height: 340px;
     border: 4px solid #29A55B;
     border-radius: 6px;
     position: relative;
 }
 
 .front-canvas, .back-canvas {
-    width: 300px;
-    height: 167px;
+    /* width: 600;
+    height: 340; */
     max-width: 100%;
     left: 0;
     border: none;
@@ -347,8 +347,8 @@ h1 {
 }
 
 .front-canvas, .back-canvas {
-    width: 300px;
-    height: 167px;
+    /* width: 80%;
+    height: 70%; */
     max-width: 100%;
     display: block;
     position: absolute;
@@ -750,6 +750,7 @@ body.dark-theme .search-icon {
 body.dark-theme .front-canvas,
 body.dark-theme .back-canvas {
     border-color: #74c866;
+    background-color: white;
 }
 
 /* #all-card-button {

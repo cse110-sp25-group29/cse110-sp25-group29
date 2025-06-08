@@ -76,11 +76,8 @@ export function uploadFeature() {
 
         dropZone.ondragover = (e) => {
             e.preventDefault();
-            if (savedTheme === 'dark') {
-
-            } else {
+            if (savedTheme === 'light') {
                 dropZone.style.backgroundColor = '#e0f7fa';
-
             }
         };
 
@@ -154,7 +151,7 @@ export function handleFiles(files) {
 
 export function yourCardFeature() {
     const yourCardBtn = document.querySelector('#your-card-button');
-
+    const cardName = localStorage.getItem("star");
     yourCardBtn.addEventListener('click', () => {
         // Create overlay
         const overlay = document.createElement('div');
@@ -174,6 +171,8 @@ export function yourCardFeature() {
 
 
         // Create edit button
+        const editLink = document.createElement('a');
+        editLink.href = "assets/editor-page.html";
         const editBtn = document.createElement('button');
         // editBtn.innerHTML = 'Edit';
         editBtn.innerHTML = '<img src="assets/icons/edit.svg"/>';
@@ -218,6 +217,10 @@ export function yourCardFeature() {
             document.body.removeChild(overlay);
         });
 
+        editBtn.addEventListener('click', ()=> {
+            localStorage.setItem('current_card', cardName);
+        });
+
         // Optional: clicking outside popup also closes it
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) {
@@ -227,17 +230,18 @@ export function yourCardFeature() {
 
         // Add content
         // popup.innerHTML += `<h2>Your Card</h2><p>Some other content goes here.</p>`;
+        editLink.appendChild(editBtn);
         overlay.appendChild(left);
         overlay.appendChild(popup);
         overlay.appendChild(right);
-        left.appendChild(editBtn);
+        left.appendChild(editLink);
         left.appendChild(downloadBtn);
         left.appendChild(deleteBtn);
         right.appendChild(closeBtn);
         popup.appendChild(frontCard);
         popup.appendChild(backCard);
         document.body.appendChild(overlay);
-        renderYourCard(frontCard, backCard);
+        renderYourCard(frontCard, backCard, cardName);
         
     });
 
@@ -250,14 +254,13 @@ export function yourCardFeature() {
 // frontCanvas.importJSON(cardsList[cardName].front)
 // backCanvas.importJSON(cardsList[cardName].back)
 // let frontCanvas, backCanvas;
-export function renderYourCard(frontCard, backCard) {
-    const cardName = localStorage.getItem("star");
+export function renderYourCard(frontCard, backCard, cardName) {
     const popup = document.querySelector(".popup");
     if (cardName) {
         const frontData = cardsList[cardName].front;
         const backData = cardsList[cardName].back;
-        renderScaledPreview(frontCard, frontData, 300, 170);
-        renderScaledPreview(backCard, backData, 300, 170);
+        renderScaledPreview(frontCard, frontData, 1200, 680);
+        renderScaledPreview(backCard, backData, 1200, 680);
         popup.addEventListener('click', () => {
             popup.classList.toggle('flip');
         });
