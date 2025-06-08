@@ -1,5 +1,5 @@
 import { importCardsList } from './editor-page.js';
-import { handleFiles } from './homepage.js';
+import { handleFiles,  } from './homepage.js';
 
 export function renderScaledPreview(canvas, data, width, height) {
     const ctx = canvas.getContext('2d');
@@ -210,6 +210,7 @@ export function getStarStatus(cardName) {
     return starredCard && starredCard.name === cardName;
 }
 
+
 window.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.show');
     container.innerHTML = '';
@@ -244,6 +245,40 @@ window.addEventListener('DOMContentLoaded', () => {
     previewModal.appendChild(actionButtons); 
 
     uploadFeature();
+
+    function deletePreview(){
+        const deleteOverlay = document.createElement('div');
+        deleteOverlay.id = "overlay";
+        const deleteConfirmation = document.createElement('deleteConfirmation');
+        deleteConfirmation.id = "dialogBox";
+        const message = document.createElement('p');
+        
+        const cancelBtn = document.createElement('button');
+        const confirmBtn = document.createElement('button');
+        message.innerHTML = "Are you sure to delete this card?";
+        cancelBtn.innerText = "Cancel";
+        confirmBtn.innerText = "Confirm";
+        cancelBtn.addEventListener('click', ()=> {
+            document.body.removeChild(deleteOverlay);
+        })
+
+        confirmBtn.addEventListener('click', ()=>{
+            if (deleteCard(currentPreviewCard)) {
+                const cardElement = document.querySelector(`.view-card-button[data-card-name="${currentPreviewCard}"]`);
+                if (cardElement) {
+                    cardElement.remove();
+                }
+                previewModal.style.display = 'none';
+            }
+            window.location.reload();
+        });
+        
+        deleteConfirmation.appendChild(message);
+        deleteConfirmation.appendChild(cancelBtn);
+        deleteConfirmation.appendChild(confirmBtn);
+        deleteOverlay.appendChild(deleteConfirmation);
+        document.body.appendChild(deleteOverlay);
+    }
 
     // preview buttons
     const actionIcons = ['edit', 'star', 'download', 'delete'];
@@ -291,16 +326,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     downloadCardJSON(currentPreviewCard);
                     break;
                 case 'delete':
-                    if (confirm(`Do you really want to delete "${currentPreviewCard}"?`)) {
-                        if (deleteCard(currentPreviewCard)) {
-                            const cardElement = document.querySelector(`.view-card-button[data-card-name="${currentPreviewCard}"]`);
-                            if (cardElement) {
-                                cardElement.remove();
-                            }
-                            previewModal.style.display = 'none';
-                            alert(`Deleted: ${currentPreviewCard}`);
-                        }
-                    }
+                    deletePreview();
                     break;
             }
         });
@@ -511,16 +537,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             downloadCardJSON(currentPreviewCard);
                             break;
                         case 'delete':
-                            if (confirm(`Do you really want to delete "${currentPreviewCard}"?`)) {
-                                if (deleteCard(currentPreviewCard)) {
-                                    const cardElement = document.querySelector(`.view-card-button[data-card-name="${currentPreviewCard}"]`);
-                                    if (cardElement) {
-                                        cardElement.remove();
-                                    }
-                                    previewModal.style.display = 'none';
-                                    alert(`Deleted: ${currentPreviewCard}`);
-                                }
-                            }
+                            deletePreview();
                             break;
                     }
                 });
