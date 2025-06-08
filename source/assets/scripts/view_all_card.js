@@ -103,9 +103,6 @@ export function uploadFeature() {
         const overlay = document.createElement('div');
         overlay.id = "overlay";
         const dialogBox = document.createElement('div');
-        // const rect = overlay.getBoundingClientRect();
-        // dialogBox.style.left = `${rect.left}px`;
-        // dialogBox.style.top = `${rect.top - dialogBox.offsetHeight - 10}px`;
         dialogBox.id = "dialogBox";
 
         const dropZone = document.createElement('div');
@@ -127,7 +124,6 @@ export function uploadFeature() {
             dropZone.style.backgroundColor = '#f9f9f9';
         };
 
-        // File input
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
         fileInput.style.marginTop = '10px';
@@ -149,7 +145,7 @@ export function uploadFeature() {
             if (files) {
                 handleFiles(files);
             }
-        })
+        });
 
         cancelBtn.addEventListener('click', (e) => {
             document.body.removeChild(overlay);
@@ -161,19 +157,14 @@ export function uploadFeature() {
         dialogBox.appendChild(confirmBtn);
 
         overlay.appendChild(dialogBox);
-        // document.body.appendChild(dialogBox);
         document.body.appendChild(overlay);
 
-        // if (e.target == dialogBox) {
-        //     document.body.removeChild(dialogBox);
-        // }
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) {
                 document.body.removeChild(overlay);
             }
         });
     });
-
 }
 
 export async function deleteCard(cardName) {
@@ -189,7 +180,6 @@ export async function deleteCard(cardName) {
 
     delete cardsList[cardName];
     saveCardsList(cardsList); 
-    // rerender
     window.dispatchEvent(new Event('cardsUpdated'));
     return true;
 }
@@ -199,37 +189,32 @@ export function handleStarCard(cardName, cardData) {
     
     if (starredCard && starredCard.name === cardName) {
         localStorage.removeItem('star');
-        // rerender
-        window.dispatchEvent(new Event('cardsUpdated'));
+        // window.dispatchEvent(new Event('cardsUpdated'));
         return { action: 'unstar', success: true };
-    }
-    else if (starredCard) {
+    } else if (starredCard) {
         alert(`You have starred card: ${starredCard.name}\nPlease unstar it first!`);
         return { action: 'rejected', success: false };
-    }
-    else {
+    } else {
         localStorage.setItem('star', JSON.stringify({
             name: cardName,
             data: cardData,
             timestamp: new Date().getTime()
         }));
-        // rerender
         window.dispatchEvent(new Event('cardsUpdated'));
         return { action: 'star', success: true };
     }
 }
-
 
 export function getStarStatus(cardName) {
     const starredCard = JSON.parse(localStorage.getItem('star'));
     return starredCard && starredCard.name === cardName;
 }
 
-
 window.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.show');
     container.innerHTML = '';
-    var currentPreviewCard = null; 
+    let currentPreviewCard = null; 
+    let starBtn = null; 
 
     const previewModal = document.createElement('div');
     previewModal.classList.add('preview-modal');
@@ -260,15 +245,18 @@ window.addEventListener('DOMContentLoaded', () => {
 
     uploadFeature();
 
+    // preview buttons
     const actionIcons = ['edit', 'star', 'download', 'delete'];
     actionIcons.forEach(icon => {
         const btn = document.createElement('button');
         btn.classList.add('action-button');
         
         const img = document.createElement('img');
-        if (icon == 'star') {
-            img.src = getStarStatus(currentPreviewCard) ? 'icons/star-filled.svg' : `icons/${icon}.svg`;
-        }else{
+        if (icon === 'star') {
+            const flag = getStarStatus(currentPreviewCard);
+            img.src = flag ? 'icons/star-filled.svg' : `icons/${icon}.svg`;
+            starBtn = img; 
+        } else {
             img.src = `icons/${icon}.svg`;
         }
         img.alt = icon;
@@ -295,9 +283,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 case 'star':
                     const result = handleStarCard(currentPreviewCard, cardData);
                     if (result.success) {
-                        img.src = result.action === 'star' 
-                            ? 'icons/star-filled.svg' 
-                            : 'icons/star.svg';
+                        img.src = result.action === 'star' ? 'icons/star-filled.svg' : 'icons/star.svg';
+                        starBtn = img; 
                     }
                     break;
                 case 'download':
@@ -310,7 +297,6 @@ window.addEventListener('DOMContentLoaded', () => {
                             if (cardElement) {
                                 cardElement.remove();
                             }
-                            
                             previewModal.style.display = 'none';
                             alert(`Deleted: ${currentPreviewCard}`);
                         }
@@ -319,7 +305,6 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
 
     const canvasContainer = document.createElement('div');
     canvasContainer.classList.add('canvas-container');
@@ -390,6 +375,7 @@ window.addEventListener('DOMContentLoaded', () => {
         leftArrow.style.display = 'none';
         rightArrow.style.display = 'block';
         currentView = 'front';
+        window.dispatchEvent(new Event('cardsUpdated'));
     });
 
     const searchButton = document.querySelector('.search-button');
@@ -455,7 +441,6 @@ window.addEventListener('DOMContentLoaded', () => {
         const starredCard = JSON.parse(localStorage.getItem('star'));
         const starredCardName = starredCard?.name;
 
-        // sort card by star
         let sortedNames = [...filteredNames];
         if (starredCardName && sortedNames.includes(starredCardName)) {
             sortedNames = [starredCardName, ...sortedNames.filter(name => name !== starredCardName)];
@@ -481,7 +466,7 @@ window.addEventListener('DOMContentLoaded', () => {
             
             const buttonGroup = document.createElement('div');
             buttonGroup.classList.add('button-group');
-    
+            
             const icons = ['edit', 'star', 'download', 'delete'];
     
             for (let i = 0; i < 4; i++) {
@@ -490,10 +475,8 @@ window.addEventListener('DOMContentLoaded', () => {
     
                 const img = document.createElement('img');
                 img.src = `icons/${icons[i]}.svg`;
-                if (icons[i] == 'star') {
+                if (icons[i] === 'star') {
                     img.src = getStarStatus(cardName) ? 'icons/star-filled.svg' : `icons/${icons[i]}.svg`;
-                }else{
-                    img.src = `icons/${icons[i]}.svg`;
                 }
                     
                 img.alt = icons[i];
@@ -518,9 +501,10 @@ window.addEventListener('DOMContentLoaded', () => {
                         case 'star':
                             const result = handleStarCard(currentPreviewCard, cardData);
                             if (result.success) {
-                                img.src = result.action === 'star' 
-                                    ? 'icons/star-filled.svg' 
-                                    : 'icons/star.svg';
+                                img.src = result.action === 'star' ? 'icons/star-filled.svg' : 'icons/star.svg';
+                                if (starBtn) {
+                                    starBtn.src = result.action === 'star' ? 'icons/star-filled.svg' : 'icons/star.svg';
+                                }
                             }
                             break;
                         case 'download':
@@ -556,12 +540,23 @@ window.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', (e) => {
                 if (!e.target.closest('.overlay-button')) {
                     currentPreviewCard = cardName;
-                    
+                    const cardsList = importCardsList();
+                    if (!cardsList[cardName]) {
+                        console.error('Card not found:', cardName);
+                        return;
+                    }
+                    const frontData = cardsList[cardName].front;
+                    const backData = cardsList[cardName].back;
+                    if (!frontData || !backData) {
+                        console.error('Invalid card data for:', cardName, frontData, backData);
+                        return;
+                    }
                     const isStarred = getStarStatus(cardName);
                     if (starBtn) {
                         starBtn.src = isStarred ? 'icons/star-filled.svg' : 'icons/star.svg';
+                    } else {
+                        console.warn('starBtn is not defined');
                     }
-                    
                     renderScaledPreview(frontCanvas, frontData, 800, 445);
                     renderScaledPreview(backCanvas, backData, 800, 445);
                     previewModal.style.display = 'flex';
@@ -571,6 +566,10 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('cardsUpdated', () => {
+        if (previewModal.style.display === 'flex') {
+            console.log('Preview modal is open, skipping re-render');
+            return;
+        }
         const cardsList = importCardsList();
         renderFilteredCards(cardsList, container, Object.keys(cardsList));
     });
