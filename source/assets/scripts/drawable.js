@@ -109,64 +109,6 @@ export class Drawable {
 }
 
 /**
- * Deprecated. Used to create a line on the screen.
- */
-export class Line extends Drawable {
-  constructor(parent) {
-    super();
-
-    this.parent = parent;
-    this.canvas = this.parent.canvas;
-
-    this.r = 41;
-    this.g = 165;
-    this.b = 62;
-  }
-
-  init(e) {
-    const scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width;
-    const scaleY = this.canvas.height / this.canvas.getBoundingClientRect().height;
-
-    this.x1 = (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX;
-    this.y1 = (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY;
-    this.x2 = (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX;
-    this.y2 = (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY;
-
-    return true;
-  }
-
-  onMouseDown(e) {
-    return false;
-  }
-
-  onDrag(e) {
-    const scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width;
-    const scaleY = this.canvas.height / this.canvas.getBoundingClientRect().height;
-
-    this.x2 = (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX;
-    this.y2 = (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY;
-  }
-
-  onMouseUp(e) {
-    return false;
-  }
-
-  drawSelf(ctx) {
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
-
-    ctx.beginPath();
-    ctx.moveTo(this.x1, this.y1);
-    ctx.lineTo(this.x2, this.y2);
-    ctx.stroke();
-  }
-
-  drawFocus(ctx) {
-
-  }
-}
-
-/**
  * Creates a box on the screen. Can be locked into shape by holding shift.
  */
 export class Box extends Drawable {

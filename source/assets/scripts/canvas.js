@@ -535,6 +535,11 @@ export class Canvas {
     if (this.focus !== null) { this.focus.drawFocus(ctx); }
   }
 
+  /**
+   * Triggers on any change to the card.
+   * Updates the name in the top bar to reflect
+   * changes to the card.
+   */
   onAnyChange() {
     if (Editor.saved) {
       Editor.setSaved(false);
