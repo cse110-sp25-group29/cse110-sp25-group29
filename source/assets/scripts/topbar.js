@@ -3,7 +3,7 @@ import * as Editor from './editor-page.js';
 export function initListeners() {
   const home = document.querySelector('#home-button');
   home.addEventListener('click', (e) => {
-    window.location.href = '../homepage.html';
+    window.location.href = './homepage.html';
   });
 
   const del = document.querySelector('#delete-button');
