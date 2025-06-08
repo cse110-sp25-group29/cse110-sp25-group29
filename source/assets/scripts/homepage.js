@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const toggleBtn = document.getElementById('theme-toggle');
     const themeImg = document.querySelector('#theme-toggle > img');
+    const concardHeading = document.querySelector('#concard');
 
     if (!savedTheme) {
         localStorage.setItem('theme', 'light');
@@ -17,12 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedTheme === 'dark') {
         body.classList.add('dark-theme');
         if (themeImg) {
-            themeImg.src = "assets/icons/light_mode.png";
+            themeImg.src = "assets/icons/light-mode.svg";
+            concardHeading.src = "assets/icons/title-centered-dark.svg";
         }
     } else {
         body.classList.remove('dark-theme');
         if (themeImg) {
-            themeImg.src = "assets/icons/dark_mode.png";
+            themeImg.src = "assets/icons/dark-mode.svg";
+            concardHeading.src = "assets/icons/title-centered-light.svg";
         }
     }
 
@@ -32,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('dark-theme');
         const themeImg = document.querySelector('#theme-toggle > img');
         const isDark = body.classList.contains('dark-theme');
-        themeImg.src = isDark ? "assets/icons/light_mode.png" : "assets/icons/dark_mode.png";
+        themeImg.src = isDark ? "assets/icons/light-mode.svg" : "assets/icons/dark-mode.svg";
+        concardHeading.src = isDark ? "assets/icons/title-centered-dark.svg" : "assets/icons/title-centered-light.svg";
 
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
@@ -48,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 export function uploadFeature() {
     const uploadBtn = document.querySelector('#upload-button');
+    const savedTheme = localStorage.getItem('theme');
     
     uploadBtn.addEventListener('click', () => {
         let files;
@@ -71,7 +76,12 @@ export function uploadFeature() {
 
         dropZone.ondragover = (e) => {
             e.preventDefault();
-            dropZone.style.backgroundColor = '#e0f7fa';
+            if (savedTheme === 'dark') {
+
+            } else {
+                dropZone.style.backgroundColor = '#e0f7fa';
+
+            }
         };
 
         dropZone.ondragleave = () => {
@@ -160,28 +170,27 @@ export function yourCardFeature() {
         const closeBtn = document.createElement('button');
         // closeBtn.innerHTML = 'Close';
         closeBtn.id = 'closeBtn';
-        closeBtn.innerHTML = '<img src="assets/icons/Cross.png"/>';
         closeBtn.classList.add("circle-button");
 
 
         // Create edit button
         const editBtn = document.createElement('button');
         // editBtn.innerHTML = 'Edit';
-        editBtn.innerHTML = '<img src="assets/icons/Edit.png"/>';
+        editBtn.innerHTML = '<img src="assets/icons/edit.svg"/>';
         editBtn.id = 'editBtn';
         editBtn.classList.add("circle-button");
 
         // Create delete button
         const deleteBtn = document.createElement('button');
         // deleteBtn.innerHTML = 'delete';
-        deleteBtn.innerHTML = '<img src="assets/icons/delete.png"/>';
+        deleteBtn.innerHTML = '<img src="assets/icons/delete.svg"/>';
         deleteBtn.id = 'deleteBtn';
         deleteBtn.classList.add("circle-button");
 
         // Create download button
         const downloadBtn = document.createElement('button');
         // downloadBtn.innerHTML = 'Download';
-        downloadBtn.innerHTML = '<img src="assets/icons/download.png"/>';
+        downloadBtn.innerHTML = '<img src="assets/icons/download.svg"/>';
         downloadBtn.id = 'downloadBtn';
         downloadBtn.classList.add("circle-button");
 
@@ -242,7 +251,7 @@ export function yourCardFeature() {
 // backCanvas.importJSON(cardsList[cardName].back)
 // let frontCanvas, backCanvas;
 export function renderYourCard(frontCard, backCard) {
-    const cardName = localStorage.getItem("current_card");
+    const cardName = localStorage.getItem("star");
     const popup = document.querySelector(".popup");
     if (cardName) {
         const frontData = cardsList[cardName].front;
@@ -277,12 +286,12 @@ export function searchLocalStorage(searchInput) {
     if (!resultsContainer) {
         resultsContainer = document.createElement('search-results');
         resultsContainer.id = 'search-results';
-        resultsContainer.style.position = 'absolute';
-        resultsContainer.style.backgroundColor = '#fff';
+        // resultsContainer.style.position = 'absolute';
+        // resultsContainer.style.backgroundColor = '#fff';
         // resultsContainer.style.border = '1px solid #ccc';
         resultsContainer.style.maxHeight = '200px';
         resultsContainer.style.overflowY = 'auto';
-        resultsContainer.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.1)';
+        // resultsContainer.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.1)';
         searchBar.appendChild(resultsContainer);
     }
 
@@ -307,15 +316,21 @@ export function searchLocalStorage(searchInput) {
     }
 
     let found = false;
+    const savedTheme = localStorage.getItem('theme');
     for (const key in obj) {
         if (key.toLowerCase().includes(keyword) && keyword !== '') {
             const item = document.createElement('div');
+            item.id = "search-result";
             // item.innerText = `Found: ${key}`;
             item.innerHTML = `<a href="assets/editor-page.html" id="search-target-link"> Found: ${key}</a>`;
             item.style.padding = '4px 8px';
             item.style.cursor = 'pointer';
             item.addEventListener('mouseover', () => {
-                item.style.backgroundColor = '#f0f0f0';
+                if(savedTheme === 'light') {
+                    item.style.backgroundColor = '#EFFFEC';
+                } else {
+                    item.style.backgroundColor = '#2e302d';
+                }
             });
             item.addEventListener('mouseout', () => { 
                 item.style.backgroundColor = '';
