@@ -1,16 +1,24 @@
 import * as Editor from './editor-page.js';
 
+/**
+ * Initializes all listener actions for the top bar,
+ * which will then have functionality when the
+ * user clicks on them.
+ */
 export function initListeners() {
+  // go back to previous page
   const back = document.querySelector('#back-button');
   back.addEventListener('click', () => {
     window.history.back();
   });
 
+  // go back to home menu
   const home = document.querySelector('#home-button');
   home.addEventListener('click', (e) => {
     window.location.href = './homepage.html';
   });
 
+  // lets the user edit the card name directly
   const cardTitle = document.querySelector('#card-title');
   cardTitle.addEventListener('focusout', () => {
     let name = cardTitle.innerHTML;
@@ -21,18 +29,24 @@ export function initListeners() {
     }
   });
 
+  // resets the card to its last save
   const reset = document.querySelector('#reset-button');
   reset.addEventListener('click', Editor.reset);
 
+  // delete button
+  // triggers a confirmation before deleting
   const del = document.querySelector('#delete-button');
   del.addEventListener('click', triggerDeleteMenu);
 
+  // saves the card
   const saveNormal = document.querySelector('#save-button');
   saveNormal.addEventListener('click', Editor.saveAs);
 
+  // triggers the save as menu
   const saveAs = document.querySelector('#save-as');
   saveAs.addEventListener('click', triggerSaveAsMenu);
 
+  // triggers the open card menu
   const openMenu = document.querySelector('#file-open');
   openMenu.addEventListener('click', triggerOpenMenu);
 
@@ -41,61 +55,32 @@ export function initListeners() {
   const jsonexport = document.getElementById('export-json');
   const duplicate = document.getElementById('file-duplicate');
 
-  /* openprev.addEventListener('click', () => {
-    const cards = Editor.importCardsList();
-    const cardNames = Object.keys(cards);
-    const current = Editor.importCurrentCardName();
-    if (cardNames.length === 0) {
-      alert('No saves in local storage!');
-      return;
-    }
-    let prevname = null;
-    for (let i = 0; i < cardNames.length; ++i) {
-      if (cardNames[i] === current) {
-        if (i !== 0) {
-          prevname = cardNames[i - 1];
-        } else {
-          prevname = cardNames[cardNames.length - 1];
-        }
-        break;
-      }
-    }
-
-    if (!prevname) prevname = cardNames[cardNames.length - 1];
-    if (prevname === current) {
-      alert(`${prevname} is the only save in storage.`);
-      return;
-    }
-
-    Editor.frontCanvas.importJSON(cards[prevname].front);
-    Editor.backCanvas.importJSON(cards[prevname].back);
-
-    Editor.setSaved(true);
-    Editor.setCardName(prevname);
-    Editor.exportCurrentCardName();
-  }); */
-
+  // duplicates the current card
   duplicate.addEventListener('click', () => {
     Editor.setSaved(false);
     Editor.setCardName(`Copy of ${Editor.cardName}`);
   });
 
+  // exports the current card shown to JPG
+  // only saves front or back one at a time
   jpgexport.addEventListener('click', () => {
     const active = Editor.frontCanvas.active;
     let activeCanvas;
     let name;
     if (active) {
       activeCanvas = Editor.frontCanvas;
-      name = 'front-card.jpg';
+      name = `${Editor.cardName}-front.jpg`;
     } else {
       activeCanvas = Editor.backCanvas;
-      name = 'back-card.jpg';
+      name = `${Editor.cardName}-back.jpg`;
     }
 
     const url = activeCanvas.canvas.toDataURL('image/jpeg', 0.95);
     Editor.downloadURL(url, name);
   });
 
+  // exports the current card shown to PNG
+  // only saves front or back one at a time
   pngexport.addEventListener('click', () => {
     const active = Editor.frontCanvas.active;
     let activeCanvas;
@@ -103,16 +88,17 @@ export function initListeners() {
 
     if (active) {
       activeCanvas = Editor.frontCanvas;
-      name = 'front-card.png';
+      name = `${Editor.cardName}-front.png`;
     } else {
       activeCanvas = Editor.backCanvas;
-      name = 'back-card.png';
+      name = `${Editor.cardName}-back.png`;
     }
 
     const url = activeCanvas.canvas.toDataURL('image/png');
     Editor.downloadURL(url, name);
   });
 
+  // exports the current card to JSON
   jsonexport.addEventListener('click', () => {
     const exportData = {
       front: Editor.frontCanvas.exportJSON(),
@@ -121,7 +107,7 @@ export function initListeners() {
     const str = JSON.stringify(exportData, null, 2);
     const blob = new Blob([str], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    Editor.downloadURL(url, 'front-and-back.json');
+    Editor.downloadURL(url, `${Editor.cardName}.json`);
     URL.revokeObjectURL(url);
   });
 
@@ -131,6 +117,12 @@ export function initListeners() {
   });
 }
 
+/**
+ * Removes the current popup menu, hiding it from
+ * the user. This is important because we reuse the same
+ * div to handle the popup menu, so we need to hide it away
+ * whenever a menu is gone; we can't delete it.
+ */
 export function removePopupMenu() {
   const menu = document.querySelector('#popup-menu');
   if (!menu) { return; }
@@ -139,6 +131,12 @@ export function removePopupMenu() {
   menu.style.display = 'none';
 }
 
+/**
+ * Makes the popup menu into a confirmation screen before
+ * the user deletes the current card.
+ *
+ * @param {*} e The click event triggering the menu; unused
+ */
 function triggerDeleteMenu(e) {
   const menu = document.querySelector('#popup-menu');
   if (!menu) { return; }
@@ -188,6 +186,11 @@ function triggerDeleteMenu(e) {
   });
 }
 
+/**
+ * Triggers an open menu, where the user can
+ * select a card to open from their list of currently
+ * available cards.
+ */
 function triggerOpenMenu() {
   const menu = document.querySelector('#popup-menu');
   if (!menu) { return; }
@@ -297,6 +300,12 @@ function triggerOpenMenu() {
   });
 }
 
+/**
+ * Opens a "save as" menu, where the user can choose the
+ * name of their card that they want to save it as.
+ *
+ * @param {*} e The click event triggering the menu; unused
+ */
 function triggerSaveAsMenu(e) {
   const menu = document.querySelector('#popup-menu');
   if (!menu) { return; }
@@ -352,6 +361,12 @@ function triggerSaveAsMenu(e) {
   });
 }
 
+/**
+ * Sets the name in the top bar, adding an asterisk
+ * if the card isn't saved.
+ *
+ * @param {String} name Name to set to
+ */
 export function setName(name) {
   if (!name) { name = 'Untitled'; }
 
