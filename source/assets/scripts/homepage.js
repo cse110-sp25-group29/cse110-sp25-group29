@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const toggleBtn = document.getElementById('theme-toggle');
     const themeImg = document.querySelector('#theme-toggle > img');
+    const concardHeading = document.querySelector('#concard');
 
     if (!savedTheme) {
         localStorage.setItem('theme', 'light');
@@ -17,12 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedTheme === 'dark') {
         body.classList.add('dark-theme');
         if (themeImg) {
-            themeImg.src = "assets/icons/light_mode.png";
+            themeImg.src = "assets/icons/light-mode.svg";
+            concardHeading.src = "assets/icons/title-centered-dark.svg";
         }
     } else {
         body.classList.remove('dark-theme');
         if (themeImg) {
-            themeImg.src = "assets/icons/dark_mode.png";
+            themeImg.src = "assets/icons/dark-mode.svg";
+            concardHeading.src = "assets/icons/title-centered-light.svg";
         }
     }
 
@@ -32,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('dark-theme');
         const themeImg = document.querySelector('#theme-toggle > img');
         const isDark = body.classList.contains('dark-theme');
-        themeImg.src = isDark ? "assets/icons/light_mode.png" : "assets/icons/dark_mode.png";
+        themeImg.src = isDark ? "assets/icons/light-mode.svg" : "assets/icons/dark-mode.svg";
+        concardHeading.src = isDark ? "assets/icons/title-centered-dark.svg" : "assets/icons/title-centered-light.svg";
 
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
@@ -48,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 export function uploadFeature() {
     const uploadBtn = document.querySelector('#upload-button');
+    const savedTheme = localStorage.getItem('theme');
     
     uploadBtn.addEventListener('click', () => {
         let files;
@@ -71,7 +76,9 @@ export function uploadFeature() {
 
         dropZone.ondragover = (e) => {
             e.preventDefault();
-            dropZone.style.backgroundColor = '#e0f7fa';
+            if (savedTheme === 'light') {
+                dropZone.style.backgroundColor = '#e0f7fa';
+            }
         };
 
         dropZone.ondragleave = () => {
@@ -170,7 +177,7 @@ export function handleFiles(files) {
 
 export function yourCardFeature() {
     const yourCardBtn = document.querySelector('#your-card-button');
-
+    const cardName = localStorage.getItem("star");
     yourCardBtn.addEventListener('click', () => {
         // Create overlay
         const overlay = document.createElement('div');
@@ -186,28 +193,29 @@ export function yourCardFeature() {
         const closeBtn = document.createElement('button');
         // closeBtn.innerHTML = 'Close';
         closeBtn.id = 'closeBtn';
-        closeBtn.innerHTML = '<img src="assets/icons/Cross.png"/>';
         closeBtn.classList.add("circle-button");
 
 
         // Create edit button
+        const editLink = document.createElement('a');
+        editLink.href = "assets/editor-page.html";
         const editBtn = document.createElement('button');
         // editBtn.innerHTML = 'Edit';
-        editBtn.innerHTML = '<img src="assets/icons/Edit.png"/>';
+        editBtn.innerHTML = '<img src="assets/icons/edit.svg"/>';
         editBtn.id = 'editBtn';
         editBtn.classList.add("circle-button");
 
         // Create delete button
         const deleteBtn = document.createElement('button');
         // deleteBtn.innerHTML = 'delete';
-        deleteBtn.innerHTML = '<img src="assets/icons/delete.png"/>';
+        deleteBtn.innerHTML = '<img src="assets/icons/delete.svg"/>';
         deleteBtn.id = 'deleteBtn';
         deleteBtn.classList.add("circle-button");
 
         // Create download button
         const downloadBtn = document.createElement('button');
         // downloadBtn.innerHTML = 'Download';
-        downloadBtn.innerHTML = '<img src="assets/icons/download.png"/>';
+        downloadBtn.innerHTML = '<img src="assets/icons/download.svg"/>';
         downloadBtn.id = 'downloadBtn';
         downloadBtn.classList.add("circle-button");
 
@@ -235,6 +243,10 @@ export function yourCardFeature() {
             document.body.removeChild(overlay);
         });
 
+        editBtn.addEventListener('click', ()=> {
+            localStorage.setItem('current_card', cardName);
+        });
+
         // Optional: clicking outside popup also closes it
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) {
@@ -244,17 +256,18 @@ export function yourCardFeature() {
 
         // Add content
         // popup.innerHTML += `<h2>Your Card</h2><p>Some other content goes here.</p>`;
+        editLink.appendChild(editBtn);
         overlay.appendChild(left);
         overlay.appendChild(popup);
         overlay.appendChild(right);
-        left.appendChild(editBtn);
+        left.appendChild(editLink);
         left.appendChild(downloadBtn);
         left.appendChild(deleteBtn);
         right.appendChild(closeBtn);
         popup.appendChild(frontCard);
         popup.appendChild(backCard);
         document.body.appendChild(overlay);
-        renderYourCard(frontCard, backCard);
+        renderYourCard(frontCard, backCard, cardName);
         
     });
 
@@ -267,14 +280,13 @@ export function yourCardFeature() {
 // frontCanvas.importJSON(cardsList[cardName].front)
 // backCanvas.importJSON(cardsList[cardName].back)
 // let frontCanvas, backCanvas;
-export function renderYourCard(frontCard, backCard) {
-    const cardName = localStorage.getItem("current_card");
+export function renderYourCard(frontCard, backCard, cardName) {
     const popup = document.querySelector(".popup");
     if (cardName) {
         const frontData = cardsList[cardName].front;
         const backData = cardsList[cardName].back;
-        renderScaledPreview(frontCard, frontData, 300, 170);
-        renderScaledPreview(backCard, backData, 300, 170);
+        renderScaledPreview(frontCard, frontData, 1200, 680);
+        renderScaledPreview(backCard, backData, 1200, 680);
         popup.addEventListener('click', () => {
             popup.classList.toggle('flip');
         });
@@ -303,12 +315,12 @@ export function searchLocalStorage(searchInput) {
     if (!resultsContainer) {
         resultsContainer = document.createElement('search-results');
         resultsContainer.id = 'search-results';
-        resultsContainer.style.position = 'absolute';
-        resultsContainer.style.backgroundColor = '#fff';
+        // resultsContainer.style.position = 'absolute';
+        // resultsContainer.style.backgroundColor = '#fff';
         // resultsContainer.style.border = '1px solid #ccc';
         resultsContainer.style.maxHeight = '200px';
         resultsContainer.style.overflowY = 'auto';
-        resultsContainer.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.1)';
+        // resultsContainer.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.1)';
         searchBar.appendChild(resultsContainer);
     }
 
@@ -333,15 +345,21 @@ export function searchLocalStorage(searchInput) {
     }
 
     let found = false;
+    const savedTheme = localStorage.getItem('theme');
     for (const key in obj) {
         if (key.toLowerCase().includes(keyword) && keyword !== '') {
             const item = document.createElement('div');
+            item.id = "search-result";
             // item.innerText = `Found: ${key}`;
             item.innerHTML = `<a href="assets/editor-page.html" id="search-target-link"> Found: ${key}</a>`;
             item.style.padding = '4px 8px';
             item.style.cursor = 'pointer';
             item.addEventListener('mouseover', () => {
-                item.style.backgroundColor = '#f0f0f0';
+                if(savedTheme === 'light') {
+                    item.style.backgroundColor = '#EFFFEC';
+                } else {
+                    item.style.backgroundColor = '#2e302d';
+                }
             });
             item.addEventListener('mouseout', () => { 
                 item.style.backgroundColor = '';
