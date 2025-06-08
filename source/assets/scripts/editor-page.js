@@ -5,15 +5,28 @@ import * as Topbar from './topbar.js';
 
 window.addEventListener('DOMContentLoaded', init);
 
+export function downloadURL(url, name) {
+  const link = document.createElement('a');
+  link.download = name;
+  link.href = url;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
 export let saved = false;
 export function setSaved(value) {
   saved = value;
 }
 
 export let cardName = 'Untitled';
+export function setCardName(name) {
+  cardName = name;
+  Topbar.setName(name);
+}
+
 export function saveAs(name) {
   if (name && cardName !== name) {
-    delete cardsList[cardName];
     cardName = name;
     cardsList[cardName] = {
       front: frontCanvas.exportJSON(),
@@ -37,19 +50,26 @@ export function saveAs(name) {
 
 export function deleteCard() {
   delete cardsList[cardName];
+  openNew();
+}
 
+export function nextUntitled() {
   if (!('Untitled' in cardsList)) {
-    cardName = 'Untitled';
+    return 'Untitled';
   } else {
     let num = 1;
     while (`Untitled${num}` in cardsList) num += 1;
-    cardName = `Untitled${num}`;
+    return `Untitled${num}`;
   }
+}
+
+export function openNew() {
+  cardName = nextUntitled();
 
   exportCurrentCardName();
   exportCardsList();
 
-  reset();
+  reset(false);
 }
 
 let cardsList;
@@ -59,21 +79,21 @@ export function importCardsList() {
   else return JSON.parse(cardsList);
 }
 
-function exportCardsList() {
+export function exportCardsList() {
   if (cardsList) { localStorage.setItem('cards', JSON.stringify(cardsList)); }
 }
 
-function importCurrentCardName() {
+export function importCurrentCardName() {
   const cardName = localStorage.getItem('current_card');
-  if (!cardName) return 'Untitled';
+  if (!cardName) return nextUntitled();
   else return cardName;
 }
 
-function exportCurrentCardName() {
+export function exportCurrentCardName() {
   localStorage.setItem('current_card', cardName);
 }
 
-function reset() {
+export function reset(saved = true) {
   console.log('reset');
   frontCanvas.setActive(true);
   backCanvas.setActive(false);
@@ -82,26 +102,46 @@ function reset() {
   document.querySelector('#back-card').style.transform = 'rotateY(180deg)';
   document.querySelector('#flip-button').innerHTML = 'Flip to Back!';
 
-  cardName = importCurrentCardName();
   cardsList = importCardsList();
+  cardName = importCurrentCardName();
   if (cardName in cardsList) {
     console.log('importing from previous');
     frontCanvas.importJSON(cardsList[cardName].front);
     backCanvas.importJSON(cardsList[cardName].back);
   } else {
-    frontCanvas.importJSON({});
-    backCanvas.importJSON({});
+    frontCanvas.importJSON({ objects: [] });
+    backCanvas.importJSON({ objects: [] });
   }
 
-  setSaved(true);
+  setSaved(saved);
   Topbar.setName(cardName);
+}
+
+const images = [];
+function preloadImages(img) {
+  for (let i = 0; i < img.length; i++) {
+    images[i] = new Image();
+    images[i].src = img[i];
+  }
 }
 
 /**
  * Initializes the objects on the editor page.
  */
-let frontCanvas, backCanvas;
+export let frontCanvas, backCanvas;
 function init() {
+  preloadImages([
+    './icons/instagram.webp',
+    './icons/facebook.png',
+    './icons/linkedin.png',
+    './icons/github.png',
+    './icons/gmail.webp',
+    './icons/youtube.webp',
+    './icons/tiktok.png',
+    './icons/tumblr.png',
+    './icons/x.png'
+  ]);
+
   frontCanvas = new Canvas.Canvas('#front-card', true);
   backCanvas = new Canvas.Canvas('#back-card', false);
   document.querySelector('#front-card').style.transform = 'rotateY(0deg)';
@@ -116,8 +156,8 @@ function init() {
   backCanvas.attachToolbar(toolbar);
   backCanvas.attachAttributeMenu(attributeMenu);
 
-  cardName = importCurrentCardName();
   cardsList = importCardsList();
+  cardName = importCurrentCardName();
   if (cardName in cardsList) {
     console.log('importing from previous');
     frontCanvas.importJSON(cardsList[cardName].front);
@@ -151,5 +191,15 @@ function init() {
     if (key === 'KeyS' && (e.ctrlKey || e.altKey)) { saveAs(); }
   });
 
+  const root = document.querySelector('html');
+  const darkMode = localStorage.getItem('theme');
+  if (darkMode === 'dark') {
+    root.setAttribute('class', 'dark');
+  }
+
   Topbar.initListeners();
+
+  setTimeout(() => { // ensure images are drawn
+    frontCanvas.renderCanvas();
+  }, 10);
 }
