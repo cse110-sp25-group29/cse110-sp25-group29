@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: drawable.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: drawable.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Interface for Drawable objects to adhere to.
  * All Drawable objects must implement the following classes
  * so that the Canvas object can call on them.
@@ -254,7 +282,7 @@ export class Box extends Drawable {
     if (yi / 2 >= 1) { this.y2 = this.startY2 + mouseY; }
 
     // for snapping to aspect ratio
-    if (this.parent.shiftHeld && xi % 3 !== 0 && yi % 3 !== 0) {
+    if (this.parent.shiftHeld &amp;&amp; xi % 3 !== 0 &amp;&amp; yi % 3 !== 0) {
       if (Math.abs(this.x1 - this.x2) >= Math.abs(this.y1 - this.y2)) {
         const dx = Math.abs(this.x1 - this.x2);
 
@@ -321,7 +349,7 @@ export class Box extends Drawable {
       [(this.x1 + this.x2) / 2, this.y1], [(this.x1 + this.x2) / 2, this.y2],
       [this.x1, (this.y1 + this.y2) / 2], [this.x2, (this.y1 + this.y2) / 2]];
 
-    for (let pt = 0; pt < pts.length; pt++) {
+    for (let pt = 0; pt &lt; pts.length; pt++) {
       ctx.fillStyle = 'rgb(255, 255, 255)';
       ctx.fillRect(pts[pt][0] - 7, pts[pt][1] - 7, 15, 15);
 
@@ -336,7 +364,7 @@ export class Box extends Drawable {
     const minY = Math.min(this.y1, this.y2);
     const maxY = Math.max(this.y1, this.y2);
 
-    return minX <= x && x <= maxX && minY <= y && y <= maxY;
+    return minX &lt;= x &amp;&amp; x &lt;= maxX &amp;&amp; minY &lt;= y &amp;&amp; y &lt;= maxY;
   }
 
   overSelection(x, y) {
@@ -345,10 +373,10 @@ export class Box extends Drawable {
       [this.x1, (this.y1 + this.y2) / 2], [this.x2, (this.y1 + this.y2) / 2],
       [(this.x1 + this.x2) / 2, Math.min(this.y1, this.y2) - 40]];
 
-    for (let pt = 0; pt < pts.length; pt++) {
+    for (let pt = 0; pt &lt; pts.length; pt++) {
       const dx = Math.abs(pts[pt][0] - x);
       const dy = Math.abs(pts[pt][1] - y);
-      if (dx <= 7 && dy <= 7) { return pt + 1; }
+      if (dx &lt;= 7 &amp;&amp; dy &lt;= 7) { return pt + 1; }
     }
 
     return 0;
@@ -378,13 +406,13 @@ export class Box extends Drawable {
 
   import(data) {
     if (!data) return;
-    if ('x1' in data && typeof data.x1 === 'number') this.x1 = data.x1;
-    if ('y1' in data && typeof data.y1 === 'number') this.y1 = data.y1;
-    if ('x2' in data && typeof data.x2 === 'number') this.x2 = data.x2;
-    if ('y2' in data && typeof data.y2 === 'number') this.y2 = data.y2;
-    if ('r' in data && typeof data.r === 'number') this.r = data.r;
-    if ('g' in data && typeof data.g === 'number') this.g = data.g;
-    if ('b' in data && typeof data.b === 'number') this.b = data.b;
+    if ('x1' in data &amp;&amp; typeof data.x1 === 'number') this.x1 = data.x1;
+    if ('y1' in data &amp;&amp; typeof data.y1 === 'number') this.y1 = data.y1;
+    if ('x2' in data &amp;&amp; typeof data.x2 === 'number') this.x2 = data.x2;
+    if ('y2' in data &amp;&amp; typeof data.y2 === 'number') this.y2 = data.y2;
+    if ('r' in data &amp;&amp; typeof data.r === 'number') this.r = data.r;
+    if ('g' in data &amp;&amp; typeof data.g === 'number') this.g = data.g;
+    if ('b' in data &amp;&amp; typeof data.b === 'number') this.b = data.b;
   }
 }
 
@@ -438,11 +466,11 @@ export class Image extends Box {
 
   import(data) {
     if (!data) return;
-    if ('x1' in data && typeof data.x1 === 'number') this.x1 = data.x1;
-    if ('y1' in data && typeof data.y1 === 'number') this.y1 = data.y1;
-    if ('x2' in data && typeof data.x2 === 'number') this.x2 = data.x2;
-    if ('y2' in data && typeof data.y2 === 'number') this.y2 = data.y2;
-    if ('src' in data && typeof data.src === 'string') {
+    if ('x1' in data &amp;&amp; typeof data.x1 === 'number') this.x1 = data.x1;
+    if ('y1' in data &amp;&amp; typeof data.y1 === 'number') this.y1 = data.y1;
+    if ('x2' in data &amp;&amp; typeof data.x2 === 'number') this.x2 = data.x2;
+    if ('y2' in data &amp;&amp; typeof data.y2 === 'number') this.y2 = data.y2;
+    if ('src' in data &amp;&amp; typeof data.src === 'string') {
       this.src = data.src;
       this.img.src = this.src;
     }
@@ -471,7 +499,6 @@ export class Textbox extends Drawable {
 
     this.bold = false;
     this.italics = false;
-    this.underline = false;
   }
 
   init(e) {
@@ -508,9 +535,8 @@ export class Textbox extends Drawable {
     return this.selected;
   }
 
-  overSelf(x, y) {
-    this.canvas.getContext('2d').font = `${this.bold ? ' bold' : ''} ${this.italics ? ' italic' : ''} ${this.fontSize}px ${this.fontStyle}`;
-    return this.x <= x && x <= this.x + this.canvas.getContext('2d').measureText(this.text).width && this.y <= y + this.fontSize && y <= this.y;
+  overSelf(x, y) { // probably needs improvement
+    return this.x &lt;= x &amp;&amp; x &lt;= this.x + this.canvas.getContext('2d').measureText(this.text).width &amp;&amp; this.y &lt;= y + this.fontSize &amp;&amp; y &lt;= this.y;
   }
 
   drawSelf(ctx) {
@@ -518,15 +544,6 @@ export class Textbox extends Drawable {
     ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
 
     ctx.fillText(this.text, this.x, this.y);
-    if (this.underline) {
-      ctx.strokeStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
-      ctx.lineWidth = this.fontSize / 10;
-
-      ctx.beginPath();
-      ctx.moveTo(this.x, this.y + this.fontSize / 8);
-      ctx.lineTo(this.x + ctx.measureText(this.text).width, this.y + this.fontSize / 8);
-      ctx.stroke();
-    }
   }
 
   drawFocus(ctx) {
@@ -576,17 +593,16 @@ export class Textbox extends Drawable {
 
   import(data) {
     if (!data) return;
-    if ('x' in data && typeof data.x === 'number') this.x = data.x;
-    if ('y' in data && typeof data.y === 'number') this.y = data.y;
-    if ('text' in data && typeof data.text === 'string') this.text = data.text;
-    if ('style' in data && typeof data.style === 'string') this.fontStyle = data.style;
-    if ('size' in data && typeof data.size === 'number') this.fontSize = data.size;
-    if ('bold' in data && typeof data.bold === 'boolean') this.bold = data.bold;
-    if ('italics' in data && typeof data.italics === 'boolean') this.italics = data.italics;
-    if ('underline' in data && typeof data.underline === 'boolean') this.underline = data.underline;
-    if ('r' in data && typeof data.r === 'number') this.r = data.r;
-    if ('g' in data && typeof data.g === 'number') this.g = data.g;
-    if ('b' in data && typeof data.b === 'number') this.b = data.b;
+    if ('x' in data &amp;&amp; typeof data.x === 'number') this.x = data.x;
+    if ('y' in data &amp;&amp; typeof data.y === 'number') this.y = data.y;
+    if ('text' in data &amp;&amp; typeof data.text === 'string') this.text = data.text;
+    if ('style' in data &amp;&amp; typeof data.style === 'string') this.fontStyle = data.style;
+    if ('size' in data &amp;&amp; typeof data.size === 'number') this.fontSize = data.size;
+    if ('bold' in data &amp;&amp; typeof data.bold === 'boolean') this.bold = data.bold;
+    if ('italics' in data &amp;&amp; typeof data.italics === 'boolean') this.italics = data.italics;
+    if ('r' in data &amp;&amp; typeof data.r === 'number') this.r = data.r;
+    if ('g' in data &amp;&amp; typeof data.g === 'number') this.g = data.g;
+    if ('b' in data &amp;&amp; typeof data.b === 'number') this.b = data.b;
   }
 }
 
@@ -642,7 +658,7 @@ export class Ellipse extends Box {
       [(this.x1 + this.x2) / 2, this.y1], [(this.x1 + this.x2) / 2, this.y2],
       [this.x1, (this.y1 + this.y2) / 2], [this.x2, (this.y1 + this.y2) / 2]];
 
-    for (let pt = 0; pt < pts.length; pt++) {
+    for (let pt = 0; pt &lt; pts.length; pt++) {
       ctx.fillStyle = 'rgb(255, 255, 255)';
       ctx.fillRect(pts[pt][0] - 7, pts[pt][1] - 7, 15, 15);
 
@@ -657,6 +673,29 @@ export class Ellipse extends Box {
     const rx = Math.abs(this.x2 - this.x1) / 2;
     const ry = Math.abs(this.y2 - this.y1) / 2;
 
-    return ((centerX - x) / rx) ** 2 + ((centerY - y) / ry) ** 2 <= 1;
+    return ((centerX - x) / rx) ** 2 + ((centerY - y) / ry) ** 2 &lt;= 1;
   }
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AttributeMenu.html">AttributeMenu</a></li><li><a href="Box.html">Box</a></li><li><a href="Canvas.html">Canvas</a></li><li><a href="Drawable.html">Drawable</a></li><li><a href="Ellipse.html">Ellipse</a></li><li><a href="Image.html">Image</a></li><li><a href="Line.html">Line</a></li><li><a href="Textbox.html">Textbox</a></li><li><a href="Toolbar.html">Toolbar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#consistentStyle">consistentStyle</a></li><li><a href="global.html#frontCanvas">frontCanvas</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jun 06 2025 23:49:10 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

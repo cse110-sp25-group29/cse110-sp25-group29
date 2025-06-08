@@ -1,18 +1,37 @@
-import * as Toolbar from './toolbar.js';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: editor-page.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: editor-page.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as Toolbar from './toolbar.js';
 import * as AttributeMenu from './attribute-menu.js';
 import * as Canvas from './canvas.js';
 import * as Topbar from './topbar.js';
 
 window.addEventListener('DOMContentLoaded', init);
-
-export function downloadURL(url, name) {
-  const link = document.createElement('a');
-  link.download = name;
-  link.href = url;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
 
 export let saved = false;
 export function setSaved(value) {
@@ -20,13 +39,9 @@ export function setSaved(value) {
 }
 
 export let cardName = 'Untitled';
-export function setCardName(name) {
-  cardName = name;
-  Topbar.setName(name);
-}
-
 export function saveAs(name) {
-  if (name && cardName !== name) {
+  if (name &amp;&amp; cardName !== name) {
+    delete cardsList[cardName];
     cardName = name;
     cardsList[cardName] = {
       front: frontCanvas.exportJSON(),
@@ -50,26 +65,19 @@ export function saveAs(name) {
 
 export function deleteCard() {
   delete cardsList[cardName];
-  openNew();
-}
 
-export function nextUntitled() {
   if (!('Untitled' in cardsList)) {
-    return 'Untitled';
+    cardName = 'Untitled';
   } else {
     let num = 1;
     while (`Untitled${num}` in cardsList) num += 1;
-    return `Untitled${num}`;
+    cardName = `Untitled${num}`;
   }
-}
-
-export function openNew() {
-  cardName = nextUntitled();
 
   exportCurrentCardName();
   exportCardsList();
 
-  reset(false);
+  reset();
 }
 
 let cardsList;
@@ -79,21 +87,21 @@ export function importCardsList() {
   else return JSON.parse(cardsList);
 }
 
-export function exportCardsList() {
+function exportCardsList() {
   if (cardsList) { localStorage.setItem('cards', JSON.stringify(cardsList)); }
 }
 
-export function importCurrentCardName() {
+function importCurrentCardName() {
   const cardName = localStorage.getItem('current_card');
-  if (!cardName) return nextUntitled();
+  if (!cardName) return 'Untitled';
   else return cardName;
 }
 
-export function exportCurrentCardName() {
+function exportCurrentCardName() {
   localStorage.setItem('current_card', cardName);
 }
 
-export function reset(saved = true) {
+function reset() {
   console.log('reset');
   frontCanvas.setActive(true);
   backCanvas.setActive(false);
@@ -102,46 +110,26 @@ export function reset(saved = true) {
   document.querySelector('#back-card').style.transform = 'rotateY(180deg)';
   document.querySelector('#flip-button').innerHTML = 'Flip to Back!';
 
-  cardsList = importCardsList();
   cardName = importCurrentCardName();
+  cardsList = importCardsList();
   if (cardName in cardsList) {
     console.log('importing from previous');
     frontCanvas.importJSON(cardsList[cardName].front);
     backCanvas.importJSON(cardsList[cardName].back);
   } else {
-    frontCanvas.importJSON({ objects: [] });
-    backCanvas.importJSON({ objects: [] });
+    frontCanvas.importJSON({});
+    backCanvas.importJSON({});
   }
 
-  setSaved(saved);
+  setSaved(true);
   Topbar.setName(cardName);
-}
-
-const images = [];
-function preloadImages(img) {
-  for (let i = 0; i < img.length; i++) {
-    images[i] = new Image();
-    images[i].src = img[i];
-  }
 }
 
 /**
  * Initializes the objects on the editor page.
  */
-export let frontCanvas, backCanvas;
+let frontCanvas, backCanvas;
 function init() {
-  preloadImages([
-    './icons/instagram.webp',
-    './icons/facebook.png',
-    './icons/linkedin.png',
-    './icons/github.png',
-    './icons/gmail.webp',
-    './icons/youtube.webp',
-    './icons/tiktok.png',
-    './icons/tumblr.png',
-    './icons/x.png'
-  ]);
-
   frontCanvas = new Canvas.Canvas('#front-card', true);
   backCanvas = new Canvas.Canvas('#back-card', false);
   document.querySelector('#front-card').style.transform = 'rotateY(0deg)';
@@ -156,8 +144,8 @@ function init() {
   backCanvas.attachToolbar(toolbar);
   backCanvas.attachAttributeMenu(attributeMenu);
 
-  cardsList = importCardsList();
   cardName = importCurrentCardName();
+  cardsList = importCardsList();
   if (cardName in cardsList) {
     console.log('importing from previous');
     frontCanvas.importJSON(cardsList[cardName].front);
@@ -188,18 +176,31 @@ function init() {
   document.addEventListener('keypress', (e) => {
     const key = e.code;
     console.log(e);
-    if (key === 'KeyS' && (e.ctrlKey || e.altKey)) { saveAs(); }
+    if (key === 'KeyS' &amp;&amp; (e.ctrlKey || e.altKey)) { saveAs(); }
   });
 
-  const root = document.querySelector('html');
-  const darkMode = localStorage.getItem('theme');
-  if (darkMode === 'dark') {
-    root.setAttribute('class', 'dark');
-  }
-
   Topbar.initListeners();
-
-  setTimeout(() => { // ensure images are drawn
-    frontCanvas.renderCanvas();
-  }, 10);
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AttributeMenu.html">AttributeMenu</a></li><li><a href="Box.html">Box</a></li><li><a href="Canvas.html">Canvas</a></li><li><a href="Drawable.html">Drawable</a></li><li><a href="Ellipse.html">Ellipse</a></li><li><a href="Image.html">Image</a></li><li><a href="Line.html">Line</a></li><li><a href="Textbox.html">Textbox</a></li><li><a href="Toolbar.html">Toolbar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#consistentStyle">consistentStyle</a></li><li><a href="global.html#frontCanvas">frontCanvas</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jun 06 2025 23:49:10 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
