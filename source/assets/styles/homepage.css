@@ -87,7 +87,6 @@ h1 {
 .card-button .icon svg{
     stroke: #29A55B;
 }
-  
 
 .search-bar {
     display: flex;
@@ -174,14 +173,18 @@ h1 {
   /* background: #EFFFEC; */
   background: white;
   padding: 20px;
-  width: 80%;
+  /* width: 80%;
+  height: 80%; */
+  width: 600px;
+  height: 340px;
   max-width: 90%;
   position: relative;
 }
 
 #right-col {
     width: 65px;
-    height: 90%;
+    /* height: 90%; */
+    height: 500px;
     position: relative;
 }
 
@@ -189,7 +192,8 @@ h1 {
     display: block;
     flex-flow: column;
     width: 65px;
-    height: 90%;
+    /* height: 90%; */
+    height: 500px;
     position: relative;
 }
 
