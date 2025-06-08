@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedTheme === 'dark') {
         body.classList.add('dark-theme');
         if (themeImg) {
-            themeImg.src = "assets/icons/light-mode.svg";
-            concardHeading.src = "assets/icons/title-centered-dark.svg";
+            themeImg.src = "icons/light-mode.svg";
+            concardHeading.src = "icons/title-centered-dark.svg";
         }
     } else {
         body.classList.remove('dark-theme');
         if (themeImg) {
-            themeImg.src = "assets/icons/dark-mode.svg";
-            concardHeading.src = "assets/icons/title-centered-light.svg";
+            themeImg.src = "icons/dark-mode.svg";
+            concardHeading.src = "icons/title-centered-light.svg";
         }
     }
 
@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('dark-theme');
         const themeImg = document.querySelector('#theme-toggle > img');
         const isDark = body.classList.contains('dark-theme');
-        themeImg.src = isDark ? "assets/icons/light-mode.svg" : "assets/icons/dark-mode.svg";
-        concardHeading.src = isDark ? "assets/icons/title-centered-dark.svg" : "assets/icons/title-centered-light.svg";
+        themeImg.src = isDark ? "icons/light-mode.svg" : "icons/dark-mode.svg";
+        concardHeading.src = isDark ? "icons/title-centered-dark.svg" : "icons/title-centered-light.svg";
 
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
@@ -208,21 +208,21 @@ export function yourCardFeature() {
     
         const editBtn = document.createElement('button');
         // editBtn.innerHTML = 'Edit';
-        editBtn.innerHTML = '<img src="assets/icons/edit.svg"/>';
+        editBtn.innerHTML = '<img src="icons/edit.svg"/>';
         editBtn.id = 'editBtn';
         editBtn.classList.add("circle-button");
 
         // Create delete button
         const deleteBtn = document.createElement('button');
         // deleteBtn.innerHTML = 'delete';
-        deleteBtn.innerHTML = '<img src="assets/icons/delete.svg"/>';
+        deleteBtn.innerHTML = '<img src="icons/delete.svg"/>';
         deleteBtn.id = 'deleteBtn';
         deleteBtn.classList.add("circle-button");
 
         // Create download button
         const downloadBtn = document.createElement('button');
         // downloadBtn.innerHTML = 'Download';
-        downloadBtn.innerHTML = '<img src="assets/icons/download.svg"/>';
+        downloadBtn.innerHTML = '<img src="icons/download.svg"/>';
         downloadBtn.id = 'downloadBtn';
         downloadBtn.classList.add("circle-button");
 
@@ -246,7 +246,7 @@ export function yourCardFeature() {
         });
 
         if (cardName) {
-            editLink.href = "assets/editor-page.html";
+            editLink.href = "editor-page.html";
             editBtn.addEventListener('click', ()=> {
                 localStorage.setItem('current_card', cardName);
             });
@@ -352,7 +352,7 @@ export function renderYourCard(frontCard, backCard, cardName) {
             popup.classList.toggle('flip');
         });
     } else {
-        popup.innerHTML = '<p>You did not set the starred card yet.\n Go to <a href="assets/view_all_card.html">Gallery</a> and select your card!</p>';
+        popup.innerHTML = '<p>You did not set the starred card yet.\n Go to <a href="view_all_card.html">Gallery</a> and select your card!</p>';
     }
     return cardName;
 }
@@ -396,7 +396,7 @@ export function searchLocalStorage(searchInput) {
             const item = document.createElement('div');
             item.id = "search-result";
             // item.innerText = `Found: ${key}`;
-            item.innerHTML = `<a href="assets/editor-page.html" id="search-target-link"> Found: ${key}</a>`;
+            item.innerHTML = `<a href="editor-page.html" id="search-target-link"> Found: ${key}</a>`;
             item.style.padding = '4px 8px';
             item.style.cursor = 'pointer';
             item.addEventListener('mouseover', () => {
