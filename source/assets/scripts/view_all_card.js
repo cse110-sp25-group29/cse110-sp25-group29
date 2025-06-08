@@ -1,4 +1,5 @@
 import { importCardsList } from './editor-page.js';
+import { handleFiles } from './homepage.js';
 
 export function renderScaledPreview(canvas, data, width, height) {
     const ctx = canvas.getContext('2d');
@@ -94,6 +95,87 @@ export function saveCardsList(cardsList) {
     localStorage.setItem('cards', JSON.stringify(cardsList));
 }
 
+export function uploadFeature() {
+    const uploadBtn = document.querySelector('.icon-button.upload');
+    
+    uploadBtn.addEventListener('click', () => {
+        let files;
+        const overlay = document.createElement('div');
+        overlay.id = "overlay";
+        const dialogBox = document.createElement('div');
+        // const rect = overlay.getBoundingClientRect();
+        // dialogBox.style.left = `${rect.left}px`;
+        // dialogBox.style.top = `${rect.top - dialogBox.offsetHeight - 10}px`;
+        dialogBox.id = "dialogBox";
+
+        const dropZone = document.createElement('div');
+        dropZone.id = "dropZone";
+        dropZone.innerText = 'Drag and drop a file here';
+        dropZone.ondrop = (e) => {
+            e.preventDefault();
+            files = e.dataTransfer.files;
+            dropZone.innerText = dropZone.innerText + '\n' + 'You droped: \n' + files[0].name;
+            confirmBtn.disabled = false;  
+        };
+
+        dropZone.ondragover = (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = '#e0f7fa';
+        };
+
+        dropZone.ondragleave = () => {
+            dropZone.style.backgroundColor = '#f9f9f9';
+        };
+
+        // File input
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.style.marginTop = '10px';
+        fileInput.onchange = (e) => {
+            files = e.target.files;
+            confirmBtn.disabled = false;  
+        };
+        
+        const cancelBtn = document.createElement('button');
+        cancelBtn.id = "cancelBtn";
+        cancelBtn.innerText = "Cancel";
+
+        const confirmBtn = document.createElement('button');
+        confirmBtn.id = "confirmBtn";
+        confirmBtn.innerText = "Confirm";
+        confirmBtn.disabled = true;
+
+        confirmBtn.addEventListener('click', () => {
+            if (files) {
+                handleFiles(files);
+            }
+        })
+
+        cancelBtn.addEventListener('click', (e) => {
+            document.body.removeChild(overlay);
+        });
+
+        dialogBox.appendChild(dropZone);
+        dialogBox.appendChild(fileInput);
+        dialogBox.appendChild(cancelBtn);
+        dialogBox.appendChild(confirmBtn);
+
+        overlay.appendChild(dialogBox);
+        // document.body.appendChild(dialogBox);
+        document.body.appendChild(overlay);
+
+        // if (e.target == dialogBox) {
+        //     document.body.removeChild(dialogBox);
+        // }
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                document.body.removeChild(overlay);
+            }
+        });
+    });
+
+}
+
 export async function deleteCard(cardName) {
     const cardsList = await importCardsList();
     if (!cardsList[cardName]) {
@@ -144,6 +226,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const actionButtons = document.createElement('div');
     actionButtons.classList.add('action-buttons');
     previewModal.appendChild(actionButtons); 
+
+    uploadFeature();
 
     const actionIcons = ['edit', 'star', 'download', 'delete'];
     actionIcons.forEach(icon => {
@@ -314,7 +398,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 });
                 suggestionsBox.style.display = 'block';
             } else {
-                // 添加无结果提示
                 const noResults = document.createElement('div');
                 noResults.classList.add('suggestion-item', 'no-results');
                 noResults.textContent = 'No results found';
@@ -323,7 +406,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             suggestionsBox.style.display = 'none';
-            performSearch(); // Show all cards when search is empty
+            performSearch(); 
         }
     });
 
@@ -456,6 +539,12 @@ window.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    window.addEventListener('cardsUpdated', () => {
+        const cardsList = importCardsList();
+        renderFilteredCards(cardsList, container, Object.keys(cardsList));
+    });
+
     const cardsList = importCardsList();
     renderFilteredCards(cardsList, container, Object.keys(cardsList));
 });

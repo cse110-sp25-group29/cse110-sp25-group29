@@ -131,15 +131,41 @@ export function handleFiles(files) {
     const file = files[0];
     if (!file) return;
 
-    const confirmUpload = confirm(`Do you want to upload the file: "${file.name}"?`);
-    if (confirmUpload) {
-        alert(`You uploaded: ${file.name}`);
-        return true;
-    } else {
-        alert("Upload canceled.");
+    const reader = new FileReader();
+    
+    reader.onload = (event) => {
+        try {
+            const uploadedData = JSON.parse(event.target.result);
+            const confirmUpload = confirm(`Do you want to upload the file: "${file.name}"?`);
+            
+            if (confirmUpload) {
+                const existingCards = JSON.parse(localStorage.getItem('cards')) || {};
+                const cardName = file.name.replace('.json', '');
+                existingCards[cardName] = uploadedData;
+                
+                localStorage.setItem('cards', JSON.stringify(existingCards));
+                
+                alert(`Card "${cardName}" uploaded successfully!`);
+                
+                window.dispatchEvent(new Event('cardsUpdated'));
+                return true;
+            } else {
+                alert("Upload canceled.");
+                return false;
+            }
+        } catch (error) {
+            alert("Error parsing JSON file. Please make sure it's a valid card file.");
+            console.error("Error parsing JSON:", error);
+            return false;
+        }
+    };
+    
+    reader.onerror = () => {
+        alert("Error reading file.");
         return false;
-    }
-    // alert(`You uploaded: ${files[0].name}`);
+    };
+    
+    reader.readAsText(file);
 }
 
 export function yourCardFeature() {
