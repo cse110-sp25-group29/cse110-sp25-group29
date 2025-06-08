@@ -856,3 +856,11 @@ body.dark-theme #search-results {
 body.dark-theme #search-results a {
     color: #74c866;
 }
+
+#delete-confirmation {
+    /* position: fixed; */
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+}

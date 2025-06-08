@@ -1,6 +1,6 @@
 import { importCardsList } from './editor-page.js'
 
-import { renderScaledPreview } from './view_all_card.js'
+import { renderScaledPreview, downloadCardJSON, deleteCard } from './view_all_card.js'
 
 const cardsList = importCardsList();
 
@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('theme-toggle');
     const themeImg = document.querySelector('#theme-toggle > img');
     const concardHeading = document.querySelector('#concard');
+    const newCardBtn = document.querySelector('#new-card-button');
 
     if (!savedTheme) {
         localStorage.setItem('theme', 'light');
@@ -45,10 +46,18 @@ document.addEventListener('DOMContentLoaded', () => {
         searchLocalStorage(searchInput);
     });
 
+    newCardBtn.addEventListener('click', ()=>{
+        newCard();
+    })
+
     yourCardFeature();
     uploadFeature();
     
 });
+
+export function newCard() {
+    localStorage.setItem('current_card', 'untitle');
+}
 
 export function uploadFeature() {
     const uploadBtn = document.querySelector('#upload-button');
@@ -59,9 +68,6 @@ export function uploadFeature() {
         const overlay = document.createElement('div');
         overlay.id = "overlay";
         const dialogBox = document.createElement('div');
-        // const rect = overlay.getBoundingClientRect();
-        // dialogBox.style.left = `${rect.left}px`;
-        // dialogBox.style.top = `${rect.top - dialogBox.offsetHeight - 10}px`;
         dialogBox.id = "dialogBox";
 
         const dropZone = document.createElement('div');
@@ -119,12 +125,8 @@ export function uploadFeature() {
         dialogBox.appendChild(confirmBtn);
 
         overlay.appendChild(dialogBox);
-        // document.body.appendChild(dialogBox);
         document.body.appendChild(overlay);
 
-        // if (e.target == dialogBox) {
-        //     document.body.removeChild(dialogBox);
-        // }
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) {
                 document.body.removeChild(overlay);
@@ -177,7 +179,13 @@ export function handleFiles(files) {
 
 export function yourCardFeature() {
     const yourCardBtn = document.querySelector('#your-card-button');
-    const cardName = localStorage.getItem("star");
+    const starredCard = JSON.parse(localStorage.getItem('star'));
+    let cardName = false;
+
+    if (starredCard) {
+        cardName = starredCard.name;
+    }
+
     yourCardBtn.addEventListener('click', () => {
         // Create overlay
         const overlay = document.createElement('div');
@@ -195,10 +203,9 @@ export function yourCardFeature() {
         closeBtn.id = 'closeBtn';
         closeBtn.classList.add("circle-button");
 
-
         // Create edit button
         const editLink = document.createElement('a');
-        editLink.href = "assets/editor-page.html";
+    
         const editBtn = document.createElement('button');
         // editBtn.innerHTML = 'Edit';
         editBtn.innerHTML = '<img src="assets/icons/edit.svg"/>';
@@ -219,14 +226,11 @@ export function yourCardFeature() {
         downloadBtn.id = 'downloadBtn';
         downloadBtn.classList.add("circle-button");
 
-
         // Create popup
         const popup = document.createElement('div');
         popup.id = "popup";
         popup.className = "popup";
 
-
-        // 
         const frontCard = document.createElement('canvas');
         frontCard.id = "front-card";
         frontCard.className = "front-canvas";
@@ -236,16 +240,48 @@ export function yourCardFeature() {
         backCard.className = "back-canvas";
         // backCard.hidden = true;
 
-       
-
         // Close handler
         closeBtn.addEventListener('click', () => {
             document.body.removeChild(overlay);
         });
 
-        editBtn.addEventListener('click', ()=> {
-            localStorage.setItem('current_card', cardName);
-        });
+        if (cardName) {
+            editLink.href = "assets/editor-page.html";
+            editBtn.addEventListener('click', ()=> {
+                localStorage.setItem('current_card', cardName);
+            });
+            downloadBtn.addEventListener('click', ()=> {
+                downloadCardJSON(cardName);
+            });
+            deleteBtn.addEventListener('click', () => {
+                const deleteOverlay = document.createElement('div');
+                deleteOverlay.id = "overlay";
+                const deleteConfirmation = document.createElement('deleteConfirmation');
+                deleteConfirmation.id = "delete-confirmation";
+                const message = document.createElement('p');
+                
+                const cancelBtn = document.createElement('button');
+                const confirmBtn = document.createElement('button');
+                message.innerHTML = "Are you sure to delete this card?";
+                cancelBtn.innerText = "Cancel";
+                confirmBtn.innerText = "Confirm";
+                cancelBtn.addEventListener('click', ()=> {
+                    document.body.removeChild(deleteOverlay);
+                })
+
+                confirmBtn.addEventListener('click', ()=>{
+                    deleteCard(cardName);
+                    localStorage.setItem('current_card', '');
+                    window.location.reload();
+                });
+                
+                deleteConfirmation.appendChild(message);
+                deleteConfirmation.appendChild(cancelBtn);
+                deleteConfirmation.appendChild(confirmBtn);
+                deleteOverlay.appendChild(deleteConfirmation);
+                document.body.appendChild(deleteOverlay);
+            });
+        }
 
         // Optional: clicking outside popup also closes it
         overlay.addEventListener('click', (e) => {
@@ -267,19 +303,10 @@ export function yourCardFeature() {
         popup.appendChild(frontCard);
         popup.appendChild(backCard);
         document.body.appendChild(overlay);
-        renderYourCard(frontCard, backCard, cardName);
-        
+        renderYourCard(frontCard, backCard, cardName); 
     });
-
 }
-// const cardName = '<insert card name>'
 
-// const frontCanvas = new Canvas('<to front>') // i.e. '#front-card'
-// const backCanvas = new Canvas('<to back>')
-
-// frontCanvas.importJSON(cardsList[cardName].front)
-// backCanvas.importJSON(cardsList[cardName].back)
-// let frontCanvas, backCanvas;
 export function renderYourCard(frontCard, backCard, cardName) {
     const popup = document.querySelector(".popup");
     if (cardName) {
@@ -294,19 +321,7 @@ export function renderYourCard(frontCard, backCard, cardName) {
         popup.innerHTML = '<p>You did not set the starred card yet.\n Go to <a href="assets/view_all_card.html">Gallery</a> and select your card!</p>';
     }
     return cardName;
-    // // const cardName = '<insert card name>'
-    // frontCanvas = new Canvas('#front-card');
-    // backCanvas = new Canvas('#back-card');
-    // document.querySelector('#front-card').style.transform = 'rotateY(0deg)';
-    // document.querySelector('#back-card').style.transform = 'rotateY(180deg)';
-    // console.log(cardsList[cardName]);
-    // frontCanvas.importJSON(cardsList[cardName].front)
-    // backCanvas.importJSON(cardsList[cardName].back)
-
-
-
 }
-
 
 export function searchLocalStorage(searchInput) {
     const searchBar = document.querySelector('.search-bar');
@@ -315,12 +330,8 @@ export function searchLocalStorage(searchInput) {
     if (!resultsContainer) {
         resultsContainer = document.createElement('search-results');
         resultsContainer.id = 'search-results';
-        // resultsContainer.style.position = 'absolute';
-        // resultsContainer.style.backgroundColor = '#fff';
-        // resultsContainer.style.border = '1px solid #ccc';
         resultsContainer.style.maxHeight = '200px';
         resultsContainer.style.overflowY = 'auto';
-        // resultsContainer.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.1)';
         searchBar.appendChild(resultsContainer);
     }
 
