@@ -438,7 +438,18 @@ window.addEventListener('DOMContentLoaded', () => {
         leftArrow.style.display = 'none';
         rightArrow.style.display = 'block';
         currentView = 'front';
-        window.dispatchEvent(new Event('cardsUpdated'));
+
+        const searchTerm = searchInput.value.trim();
+        const cardsList = importCardsList();
+        const filteredNames = filterCardsByName(cardsList, searchTerm);
+
+        if (searchTerm && filteredNames.length > 0) {
+            renderFilteredCards(cardsList, container, filteredNames);
+        } else {
+            renderFilteredCards(cardsList, container, Object.keys(cardsList));
+        }
+
+        suggestionsBox.style.display = 'none';
     });
 
     // define search function
@@ -637,8 +648,15 @@ window.addEventListener('DOMContentLoaded', () => {
             console.log('Preview modal is open, skipping re-render');
             return;
         }
+        const searchTerm = searchInput.value.trim();
         const cardsList = importCardsList();
-        renderFilteredCards(cardsList, container, Object.keys(cardsList));
+        const filteredNames = filterCardsByName(cardsList, searchTerm);
+
+        if (searchTerm && filteredNames.length > 0) {
+            renderFilteredCards(cardsList, container, filteredNames);
+        } else {
+            renderFilteredCards(cardsList, container, Object.keys(cardsList));
+        }
     });
 
     // init rendering cards
