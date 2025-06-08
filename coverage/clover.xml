@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1749414686413" clover="3.2.0">
-  <project timestamp="1749414686413" name="All files">
+<coverage generated="1749415204096" clover="3.2.0">
+  <project timestamp="1749415204096" name="All files">
     <metrics statements="244" coveredstatements="178" conditionals="50" coveredconditionals="24" methods="33" coveredmethods="13" elements="327" coveredelements="215" complexity="0" loc="244" ncloc="244" packages="1" files="1" classes="1"/>
     <file name="homepage.js" path="/Users/brandonkhor/Desktop/code/cse110-sp25-group29/source/assets/scripts/homepage.js">
       <metrics statements="244" coveredstatements="178" conditionals="50" coveredconditionals="24" methods="33" coveredmethods="13"/>
