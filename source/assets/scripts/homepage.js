@@ -138,7 +138,9 @@ export function uploadFeature() {
 
 export function handleFiles(files) {
     const file = files[0];
-    if (!file) return;
+    if (!file) {
+        return false;
+    }
 
     const reader = new FileReader();
     
@@ -253,34 +255,6 @@ export function yourCardFeature() {
             downloadBtn.addEventListener('click', ()=> {
                 downloadCardJSON(cardName);
             });
-            // deleteBtn.addEventListener('click', () => {
-            //     const deleteOverlay = document.createElement('div');
-            //     deleteOverlay.id = "overlay";
-            //     const deleteConfirmation = document.createElement('deleteConfirmation');
-            //     deleteConfirmation.id = "dialogBox";
-            //     const message = document.createElement('p');
-                
-            //     const cancelBtn = document.createElement('button');
-            //     const confirmBtn = document.createElement('button');
-            //     message.innerHTML = "Are you sure to delete this card?";
-            //     cancelBtn.innerText = "Cancel";
-            //     confirmBtn.innerText = "Confirm";
-            //     cancelBtn.addEventListener('click', ()=> {
-            //         document.body.removeChild(deleteOverlay);
-            //     })
-
-            //     confirmBtn.addEventListener('click', ()=>{
-            //         deleteCard(cardName);
-            //         localStorage.setItem('current_card', '');
-            //         window.location.reload();
-            //     });
-                
-            //     deleteConfirmation.appendChild(message);
-            //     deleteConfirmation.appendChild(cancelBtn);
-            //     deleteConfirmation.appendChild(confirmBtn);
-            //     deleteOverlay.appendChild(deleteConfirmation);
-            //     document.body.appendChild(deleteOverlay);
-            // });
             deleteDialog(deleteBtn, cardName, "home");
         }
 
