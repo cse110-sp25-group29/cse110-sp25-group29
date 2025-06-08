@@ -1,5 +1,4 @@
 import { importCardsList } from './editor-page.js'
-
 import { renderScaledPreview, downloadCardJSON, deleteCard } from './view_all_card.js'
 
 const cardsList = importCardsList();
@@ -55,10 +54,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
 });
 
+/**
+ * Before jump to editor-page, clears the current card selection in localStorage.
+ */
 export function newCard() {
     localStorage.setItem('current_card', '');
 }
 
+/**
+ * Adds upload functionality triggered by the upload button.
+ * Allows drag-and-drop or file input, shows a confirmation dialog,
+ * and reads/parses the uploaded JSON file.
+ */
 export function uploadFeature() {
     const uploadBtn = document.querySelector('#upload-button');
     const savedTheme = localStorage.getItem('theme');
@@ -136,6 +143,12 @@ export function uploadFeature() {
 
 }
 
+/**
+ * Handles parsing and storing of uploaded JSON card files.
+ * 
+ * @param {FileList} files - List of uploaded files (only the first is processed).
+ * @returns {boolean} Whether the upload and parsing succeeded.
+ */
 export function handleFiles(files) {
     const file = files[0];
     if (!file) {
@@ -179,6 +192,9 @@ export function handleFiles(files) {
     reader.readAsText(file);
 }
 
+/**
+ * Displays the starred card in an overlay preview, with options to edit, download, or delete.
+ */
 export function yourCardFeature() {
     const yourCardBtn = document.querySelector('#your-card-button');
     const starredCard = JSON.parse(localStorage.getItem('star'));
@@ -282,6 +298,13 @@ export function yourCardFeature() {
     });
 }
 
+/**
+ * Attaches a delete confirmation dialog to a button.
+ * 
+ * @param {HTMLElement} deleteBtn - Button that triggers the dialog.
+ * @param {string} cardName - Name of the card to delete.
+ * @param {string} page - Context where the delete happens, e.g. "home".
+ */
 export function deleteDialog(deleteBtn, cardName, page) {
     deleteBtn.addEventListener('click', () => {
         const deleteOverlay = document.createElement('div');
@@ -315,6 +338,14 @@ export function deleteDialog(deleteBtn, cardName, page) {
     });
 }
 
+/**
+ * Renders the front and back sides of a card into canvases.
+ * 
+ * @param {HTMLCanvasElement} frontCard - Canvas for the front of the card.
+ * @param {HTMLCanvasElement} backCard - Canvas for the back of the card.
+ * @param {string} cardName - The name of the card to render.
+ * @returns {string|false} - The card name, or false if not found.
+ */
 export function renderYourCard(frontCard, backCard, cardName) {
     const popup = document.querySelector(".popup");
     if (cardName) {
@@ -331,6 +362,11 @@ export function renderYourCard(frontCard, backCard, cardName) {
     return cardName;
 }
 
+/**
+ * Searches localStorage card names and displays matching results in a dropdown under the input.
+ * 
+ * @param {HTMLInputElement} searchInput - The input element the user types in.
+ */
 export function searchLocalStorage(searchInput) {
     const searchBar = document.querySelector('.search-bar');
     const keyword = searchInput.value.toLowerCase();
