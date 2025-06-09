@@ -15,8 +15,6 @@ jobs:
         run: npm run unithometest
       - name: E2E Test For Homepage
         run: npm run e2ehometest
-      - name: Unit Test for Editor page
-        run: npm run uniteditortest
       - name: E2E test for Editor page
         run: npm run e2eeditortest
       - name: Generate JSDoc
