@@ -1,4 +1,32 @@
-import { importCardsList } from './editor-page.js';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: view_all_card.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: view_all_card.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { importCardsList } from './editor-page.js';
 import { handleFiles,  } from './homepage.js';
 
 /**
@@ -188,7 +216,7 @@ export function uploadFeature() {
 /**
  * Delete a specific card from local storage and trigger a UI update.
  * @param {string} cardName - The name of the card to delete.
- * @returns {Promise<boolean>} - True if deleted, false if card not found.
+ * @returns {Promise&lt;boolean>} - True if deleted, false if card not found.
  */
 export async function deleteCard(cardName) {
     const cardsList = await importCardsList();
@@ -216,7 +244,7 @@ export async function deleteCard(cardName) {
 export function handleStarCard(cardName, cardData) {
     const starredCard = JSON.parse(localStorage.getItem('star'));
     
-    if (starredCard && starredCard.name === cardName) {
+    if (starredCard &amp;&amp; starredCard.name === cardName) {
         localStorage.removeItem('star');
         // window.dispatchEvent(new Event('cardsUpdated'));
         return { action: 'unstar', success: true };
@@ -241,7 +269,7 @@ export function handleStarCard(cardName, cardData) {
  */
 export function getStarStatus(cardName) {
     const starredCard = JSON.parse(localStorage.getItem('star'));
-    return starredCard && starredCard.name === cardName;
+    return starredCard &amp;&amp; starredCard.name === cardName;
 }
 
 
@@ -250,14 +278,6 @@ window.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = '';
     let currentPreviewCard = null; 
     let starBtn = null; 
-
-    // new card button
-    const addButton = document.querySelector('.icon-button.add');
-    if (addButton) {
-        addButton.addEventListener('click', () => {
-            localStorage.removeItem('current_card');
-        });
-    }
 
     const previewModal = document.createElement('div');
     previewModal.classList.add('preview-modal');
@@ -451,7 +471,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const cardsList = importCardsList();
         const filteredNames = filterCardsByName(cardsList, searchTerm);
 
-        if (searchTerm && filteredNames.length > 0) {
+        if (searchTerm &amp;&amp; filteredNames.length > 0) {
             renderFilteredCards(cardsList, container, filteredNames);
         } else {
             renderFilteredCards(cardsList, container, Object.keys(cardsList));
@@ -537,7 +557,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const starredCardName = starredCard?.name;
 
         let sortedNames = [...filteredNames];
-        if (starredCardName && sortedNames.includes(starredCardName)) {
+        if (starredCardName &amp;&amp; sortedNames.includes(starredCardName)) {
             sortedNames = [starredCardName, ...sortedNames.filter(name => name !== starredCardName)];
         }
 
@@ -563,7 +583,7 @@ window.addEventListener('DOMContentLoaded', () => {
             
             const icons = ['edit', 'star', 'download', 'delete'];
     
-            for (let i = 0; i < 4; i++) {
+            for (let i = 0; i &lt; 4; i++) {
                 const btn = document.createElement('button');
                 btn.classList.add('overlay-button');
     
@@ -660,7 +680,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const cardsList = importCardsList();
         const filteredNames = filterCardsByName(cardsList, searchTerm);
 
-        if (searchTerm && filteredNames.length > 0) {
+        if (searchTerm &amp;&amp; filteredNames.length > 0) {
             renderFilteredCards(cardsList, container, filteredNames);
         } else {
             renderFilteredCards(cardsList, container, Object.keys(cardsList));
@@ -670,4 +690,26 @@ window.addEventListener('DOMContentLoaded', () => {
     // init rendering cards
     const cardsList = importCardsList();
     renderFilteredCards(cardsList, container, Object.keys(cardsList));
-});
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AttributeMenu.html">AttributeMenu</a></li><li><a href="Box.html">Box</a></li><li><a href="Canvas.html">Canvas</a></li><li><a href="Drawable.html">Drawable</a></li><li><a href="Ellipse.html">Ellipse</a></li><li><a href="Image.html">Image</a></li><li><a href="Textbox.html">Textbox</a></li><li><a href="Toolbar.html">Toolbar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#consistentStyle">consistentStyle</a></li><li><a href="global.html#deleteCard">deleteCard</a></li><li><a href="global.html#deleteDialog">deleteDialog</a></li><li><a href="global.html#downloadCardJSON">downloadCardJSON</a></li><li><a href="global.html#downloadURL">downloadURL</a></li><li><a href="global.html#exportCardsList">exportCardsList</a></li><li><a href="global.html#exportCurrentCardName">exportCurrentCardName</a></li><li><a href="global.html#getStarStatus">getStarStatus</a></li><li><a href="global.html#handleFiles">handleFiles</a></li><li><a href="global.html#handleStarCard">handleStarCard</a></li><li><a href="global.html#images">images</a></li><li><a href="global.html#importCardsList">importCardsList</a></li><li><a href="global.html#importCurrentCardName">importCurrentCardName</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initListeners">initListeners</a></li><li><a href="global.html#newCard">newCard</a></li><li><a href="global.html#nextUntitled">nextUntitled</a></li><li><a href="global.html#openNew">openNew</a></li><li><a href="global.html#removePopupMenu">removePopupMenu</a></li><li><a href="global.html#renderScaledPreview">renderScaledPreview</a></li><li><a href="global.html#renderYourCard">renderYourCard</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#saveAs">saveAs</a></li><li><a href="global.html#saveCardsList">saveCardsList</a></li><li><a href="global.html#searchLocalStorage">searchLocalStorage</a></li><li><a href="global.html#setCardName">setCardName</a></li><li><a href="global.html#setName">setName</a></li><li><a href="global.html#setSaved">setSaved</a></li><li><a href="global.html#triggerDeleteMenu">triggerDeleteMenu</a></li><li><a href="global.html#triggerOpenMenu">triggerOpenMenu</a></li><li><a href="global.html#triggerSaveAsMenu">triggerSaveAsMenu</a></li><li><a href="global.html#uploadFeature">uploadFeature</a></li><li><a href="global.html#yourCardFeature">yourCardFeature</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Jun 08 2025 15:51:32 GMT-0700 (北美太平洋夏令时间)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

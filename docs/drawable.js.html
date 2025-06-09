@@ -137,64 +137,6 @@ export class Drawable {
 }
 
 /**
- * Deprecated. Used to create a line on the screen.
- */
-export class Line extends Drawable {
-  constructor(parent) {
-    super();
-
-    this.parent = parent;
-    this.canvas = this.parent.canvas;
-
-    this.r = 41;
-    this.g = 165;
-    this.b = 62;
-  }
-
-  init(e) {
-    const scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width;
-    const scaleY = this.canvas.height / this.canvas.getBoundingClientRect().height;
-
-    this.x1 = (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX;
-    this.y1 = (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY;
-    this.x2 = (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX;
-    this.y2 = (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY;
-
-    return true;
-  }
-
-  onMouseDown(e) {
-    return false;
-  }
-
-  onDrag(e) {
-    const scaleX = this.canvas.width / this.canvas.getBoundingClientRect().width;
-    const scaleY = this.canvas.height / this.canvas.getBoundingClientRect().height;
-
-    this.x2 = (e.clientX - this.canvas.getBoundingClientRect().x) * scaleX;
-    this.y2 = (e.clientY - this.canvas.getBoundingClientRect().y) * scaleY;
-  }
-
-  onMouseUp(e) {
-    return false;
-  }
-
-  drawSelf(ctx) {
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
-
-    ctx.beginPath();
-    ctx.moveTo(this.x1, this.y1);
-    ctx.lineTo(this.x2, this.y2);
-    ctx.stroke();
-  }
-
-  drawFocus(ctx) {
-
-  }
-}
-
-/**
  * Creates a box on the screen. Can be locked into shape by holding shift.
  */
 export class Box extends Drawable {
@@ -499,6 +441,7 @@ export class Textbox extends Drawable {
 
     this.bold = false;
     this.italics = false;
+    this.underline = false;
   }
 
   init(e) {
@@ -535,7 +478,8 @@ export class Textbox extends Drawable {
     return this.selected;
   }
 
-  overSelf(x, y) { // probably needs improvement
+  overSelf(x, y) {
+    this.canvas.getContext('2d').font = `${this.bold ? ' bold' : ''} ${this.italics ? ' italic' : ''} ${this.fontSize}px ${this.fontStyle}`;
     return this.x &lt;= x &amp;&amp; x &lt;= this.x + this.canvas.getContext('2d').measureText(this.text).width &amp;&amp; this.y &lt;= y + this.fontSize &amp;&amp; y &lt;= this.y;
   }
 
@@ -544,6 +488,15 @@ export class Textbox extends Drawable {
     ctx.fillStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
 
     ctx.fillText(this.text, this.x, this.y);
+    if (this.underline) {
+      ctx.strokeStyle = `rgb(${this.r}, ${this.g}, ${this.b})`;
+      ctx.lineWidth = this.fontSize / 10;
+
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y + this.fontSize / 8);
+      ctx.lineTo(this.x + ctx.measureText(this.text).width, this.y + this.fontSize / 8);
+      ctx.stroke();
+    }
   }
 
   drawFocus(ctx) {
@@ -600,6 +553,7 @@ export class Textbox extends Drawable {
     if ('size' in data &amp;&amp; typeof data.size === 'number') this.fontSize = data.size;
     if ('bold' in data &amp;&amp; typeof data.bold === 'boolean') this.bold = data.bold;
     if ('italics' in data &amp;&amp; typeof data.italics === 'boolean') this.italics = data.italics;
+    if ('underline' in data &amp;&amp; typeof data.underline === 'boolean') this.underline = data.underline;
     if ('r' in data &amp;&amp; typeof data.r === 'number') this.r = data.r;
     if ('g' in data &amp;&amp; typeof data.g === 'number') this.g = data.g;
     if ('b' in data &amp;&amp; typeof data.b === 'number') this.b = data.b;
@@ -686,13 +640,13 @@ export class Ellipse extends Box {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AttributeMenu.html">AttributeMenu</a></li><li><a href="Box.html">Box</a></li><li><a href="Canvas.html">Canvas</a></li><li><a href="Drawable.html">Drawable</a></li><li><a href="Ellipse.html">Ellipse</a></li><li><a href="Image.html">Image</a></li><li><a href="Line.html">Line</a></li><li><a href="Textbox.html">Textbox</a></li><li><a href="Toolbar.html">Toolbar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#consistentStyle">consistentStyle</a></li><li><a href="global.html#frontCanvas">frontCanvas</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AttributeMenu.html">AttributeMenu</a></li><li><a href="Box.html">Box</a></li><li><a href="Canvas.html">Canvas</a></li><li><a href="Drawable.html">Drawable</a></li><li><a href="Ellipse.html">Ellipse</a></li><li><a href="Image.html">Image</a></li><li><a href="Textbox.html">Textbox</a></li><li><a href="Toolbar.html">Toolbar</a></li></ul><h3>Global</h3><ul><li><a href="global.html#consistentStyle">consistentStyle</a></li><li><a href="global.html#deleteCard">deleteCard</a></li><li><a href="global.html#deleteDialog">deleteDialog</a></li><li><a href="global.html#downloadCardJSON">downloadCardJSON</a></li><li><a href="global.html#downloadURL">downloadURL</a></li><li><a href="global.html#exportCardsList">exportCardsList</a></li><li><a href="global.html#exportCurrentCardName">exportCurrentCardName</a></li><li><a href="global.html#getStarStatus">getStarStatus</a></li><li><a href="global.html#handleFiles">handleFiles</a></li><li><a href="global.html#handleStarCard">handleStarCard</a></li><li><a href="global.html#images">images</a></li><li><a href="global.html#importCardsList">importCardsList</a></li><li><a href="global.html#importCurrentCardName">importCurrentCardName</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initListeners">initListeners</a></li><li><a href="global.html#newCard">newCard</a></li><li><a href="global.html#nextUntitled">nextUntitled</a></li><li><a href="global.html#openNew">openNew</a></li><li><a href="global.html#removePopupMenu">removePopupMenu</a></li><li><a href="global.html#renderScaledPreview">renderScaledPreview</a></li><li><a href="global.html#renderYourCard">renderYourCard</a></li><li><a href="global.html#reset">reset</a></li><li><a href="global.html#saveAs">saveAs</a></li><li><a href="global.html#saveCardsList">saveCardsList</a></li><li><a href="global.html#searchLocalStorage">searchLocalStorage</a></li><li><a href="global.html#setCardName">setCardName</a></li><li><a href="global.html#setName">setName</a></li><li><a href="global.html#setSaved">setSaved</a></li><li><a href="global.html#triggerDeleteMenu">triggerDeleteMenu</a></li><li><a href="global.html#triggerOpenMenu">triggerOpenMenu</a></li><li><a href="global.html#triggerSaveAsMenu">triggerSaveAsMenu</a></li><li><a href="global.html#uploadFeature">uploadFeature</a></li><li><a href="global.html#yourCardFeature">yourCardFeature</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Jun 06 2025 23:49:10 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Jun 08 2025 15:51:32 GMT-0700 (北美太平洋夏令时间)
 </footer>
 
 <script> prettyPrint(); </script>
