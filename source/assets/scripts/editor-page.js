@@ -266,7 +266,10 @@ function init() {
   document.addEventListener('keypress', (e) => {
     const key = e.code;
     console.log(e);
-    if (key === 'KeyS' && (e.ctrlKey || e.altKey)) { saveAs(); }
+    if (key === 'KeyS' && (e.ctrlKey || e.altKey || e.metaKey)) { 
+      e.preventDefault();
+      saveAs(); 
+    }
   });
 
   const root = document.querySelector('html');
