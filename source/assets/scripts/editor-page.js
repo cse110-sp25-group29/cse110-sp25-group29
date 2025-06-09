@@ -266,9 +266,9 @@ function init() {
   document.addEventListener('keypress', (e) => {
     const key = e.code;
     console.log(e);
-    if (key === 'KeyS' && (e.ctrlKey || e.altKey || e.metaKey)) { 
+    if (key === 'KeyS' && (e.ctrlKey || e.altKey || e.metaKey)) {
       e.preventDefault();
-      saveAs(); 
+      saveAs();
     }
   });
 
