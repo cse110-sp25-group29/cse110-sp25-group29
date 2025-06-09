@@ -63,16 +63,16 @@ specs/
 | Subdirectory | Contents |
 | --- | --- |
 | `branding` | Boom Boom Powell team branding materials |
-| `meetings` | all meeting notes and materials |
-| `meetings/img` | images for team meeting notes |
+| `meetings` | All meeting notes and materials |
+| `meetings/img` | Images for team meeting notes |
 | `meetings/sprint-0` | Meeting notes for sprint 0 |
 | `meetings/sprint-1` | Meeting notes for sprint 1 |
 | `meetings/sprint-2` | Meeting notes for sprint 2 |
 | `meetings/sprint-3` | Meeting notes for sprint 3 |
 | `meetings/sprint-4` | Meeting notes for sprint 4 |
-| `misc` | team charter and member acknowledgements |
-| `videos` | videos made for the team |
-| `warmup` | warmup exercise document |
+| `misc` | Team charter and member acknowledgements |
+| `videos` | Videos made for the team |
+| `warmup` | Warmup exercise document |
 
 - `statusvideo1.mp4` has been uploaded to `/admin/videos/statusvideo1.mp4`. Also it's on [YouTube](https://www.youtube.com/watch?v=qB4SBX5r8Ps).
 
@@ -89,9 +89,9 @@ specs/
 
 | Subdirectory | Contents |
 | --- | --- |
-| `assets` | all the peripherals to the HTML |
-| `assets/icons` | image files for the user interface |
-| `assets/images` | non-icon images |
+| `assets` | All the peripherals to the HTML |
+| `assets/icons` | Image files for the user interface |
+| `assets/images` | Non-icon images |
 | `assets/scripts` | JavaScript files |
 | `assets/styles` | CSS files |
 
@@ -101,10 +101,10 @@ specs/
 | Subdirectory | Contents |
 | --- | --- |
 | `adrs` | Architectural Decision Records |
-| `brainstorm` | materials from initial brainstorm sessions |
-| `branding` | project-related branding materials |
+| `brainstorm` | Materials from initial brainstorm sessions |
+| `branding` | Project-related branding materials |
 | `flows` | UX flow charts |
-| `pitch` | materials for the initial product pitch |
+| `pitch` | Materials for the initial product pitch |
 | `wireframes` | High-fidelity UI designs for implementation |
 
 
