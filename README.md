@@ -7,8 +7,8 @@
 ## Home Page
 
 [Quick View of Home Page](https://cse110-sp25-group29.github.io/cse110-sp25-group29/source/assets/homepage.html)
-![light](source/assets/images/dark.png)
-![dark](source/assets/images/light.png)
+![light](source/assets/images/light.png)
+![dark](source/assets/images/dark.png)
 
 
 ## Quick Links
