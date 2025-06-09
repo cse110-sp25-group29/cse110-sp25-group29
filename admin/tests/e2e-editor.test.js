@@ -6,13 +6,12 @@ describe('Basic user flow for Website', () => {
   it('Check if home button goes to correct destination', async() => {
     console.log('Checking the destination...');
 
-    // Finds the class name of the body tag
-    const home = document.querySelector('#home-button');
+     await page.waitForSelector('#home-button');
 
-    home.addEventListener('click', () => {
-      const homeButtonDestination = window.location.href;
-    });
+  // Click the home button
+    await page.click('#home-button');
 
-    expect(homeButtonDestination.tobe('https://cse110-sp25-group29.github.io/cse110-sp25-group29/source/assets/homepage.html'));
+    // Check that the URL is correct
+    expect(page.url()).toBe('https://cse110-sp25-group29.github.io/cse110-sp25-group29/source/assets/homepage.html');
   });
 });

@@ -6,7 +6,7 @@
 
 ## Home Page
 
-[Quick View of Home Page](https://cse110-sp25-group29.github.io/project-homepage/homepage.html)
+[Quick View of Home Page](https://cse110-sp25-group29.github.io/cse110-sp25-group29/source/assets/homepage.html)
 ![light](source/assets/images/dark.png)
 ![dark](source/assets/images/light.png)
 
