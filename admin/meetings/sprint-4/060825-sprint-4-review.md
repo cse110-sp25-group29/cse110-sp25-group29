@@ -17,6 +17,7 @@ Location: Online
 - Hugo
 - Xiaogeng
 - Jeffrey
+- Aarav
 
 ## Topics
 
