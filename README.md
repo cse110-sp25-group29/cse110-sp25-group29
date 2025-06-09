@@ -24,14 +24,20 @@
 ```text
 .github/ISSUE_TEMPLATE
 admin/
-├── adr/
 ├── branding/
+├── cipipeline
 ├── meetings/
 │   ├── img/
-│   └── ui-ux/
-│       └── images/
+│   ├── sprint-0/
+│   ├── sprint-1/
+│   ├── sprint-2/
+│   ├── sprint-3/
+│   └── sprint-4/
 ├── misc/
-└── videos/
+├── tests/
+├── videos/
+└── warmup/
+coverage/
 docs/
 ├── fonts/
 ├── scripts/
@@ -56,14 +62,17 @@ specs/
 
 | Subdirectory | Contents |
 | --- | --- |
-| `adr` | warmup exercise document |
 | `branding` | Boom Boom Powell team branding materials |
 | `meetings` | all meeting notes and materials |
 | `meetings/img` | images for team meeting notes |
-| `meetings/ui-ux` | UI/UX team meeting notes and materials |
-| `meetings/ui-ux/img` | images for UI/UX team meeting notes |
+| `meetings/sprint-0` | Meeting notes for sprint 0 |
+| `meetings/sprint-1` | Meeting notes for sprint 1 |
+| `meetings/sprint-2` | Meeting notes for sprint 2 |
+| `meetings/sprint-3` | Meeting notes for sprint 3 |
+| `meetings/sprint-4` | Meeting notes for sprint 4 |
 | `misc` | team charter and member acknowledgements |
 | `videos` | videos made for the team |
+| `warmup` | warmup exercise document |
 
 - `statusvideo1.mp4` has been uploaded to `/admin/videos/statusvideo1.mp4`. Also it's on [YouTube](https://www.youtube.com/watch?v=qB4SBX5r8Ps).
 
@@ -71,9 +80,9 @@ specs/
 
 | Subdirectory | Contents |
 | --- | --- |
-| `fonts` | TBA |
-| `scripts` | TBA |
-| `styles` | TBA |
+| `fonts` | Fonts used for JSDocs |
+| `scripts` | Scripts used for JSDocs |
+| `styles` | Styles used for JSDocs |
 
 ### `source`
 *Contains the source code of the project. The top level holds the HTML files*
