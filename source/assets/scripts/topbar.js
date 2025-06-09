@@ -385,4 +385,11 @@ export function setName(name) {
   cardTitle.innerHTML = name;
   if (bold) cardTitle.style.fontWeight = 'bold';
   else cardTitle.style.fontWeight = 'normal';
+
+  try {
+    const pageTitle = document.querySelector('#page-title');
+    pageTitle.innerHTML = `Concard | ${name}`;
+  } catch (e) {
+    console.error(e);
+  }
 }
