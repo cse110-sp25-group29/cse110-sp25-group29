@@ -31,7 +31,9 @@ Sprint Retrospective:
   - Very good spot, we have fun with what we do
 
 - Devops: 
-  - *Asynchronous*
+  - Stand ups was consistent
+    - Having meetings after class kept it consistent for us
+  - Communication was good between the team
 
 - Editor:
   - Didn't meet much this past week because of midterms

@@ -40,7 +40,10 @@ Sprint Review:
   - Will be finalizing all the designs by next sprint
 
 - DevOps 
-  - *Asynchronous*
+  - Added homepage unit and E2E testing
+  - Troubles with testing on editor page
+    - The way it has been implemented makes it hard for testing, due to the canvas element
+  - Communication with home page and editor page team to continously update the pipeline 
 
 - Home Page:
   - Upload functionality: can drag & drop or select file to upload

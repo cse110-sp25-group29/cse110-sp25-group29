@@ -6,7 +6,7 @@
 
 ## Home Page
 
-[Quick View of Home Page](https://cse110-sp25-group29.github.io/project-homepage/homepage.html)
+[Quick View of Home Page](https://cse110-sp25-group29.github.io/cse110-sp25-group29/source/assets/homepage.html)
 ![light](source/assets/images/dark.png)
 ![dark](source/assets/images/light.png)
 
@@ -15,8 +15,8 @@
 *See the Table of Contents at the top right corner for easier navigation.*
 
 - [Style Guide](https://github.com/cse110-sp25-group29/cse110-sp25-group29/blob/main/specs/style-guide.md)
-- JSDocs
-- Codacy Coverage Reports
+- [JSDocs](https://cse110-sp25-group29.github.io/cse110-sp25-group29/docs/index.html)
+- [Codacy Coverage Reports](https://cse110-sp25-group29.github.io/cse110-sp25-group29/coverage/lcov-report/index.html)
 - [Team Charter](https://github.com/cse110-sp25-group29/cse110-sp25-group29/blob/main/admin/misc/rules.md)
 - [Project Board](https://github.com/orgs/cse110-sp25-group29/projects/2/)
 
