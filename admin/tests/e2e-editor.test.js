@@ -5,13 +5,8 @@ describe('Basic user flow for Website', () => {
 
   it('Check if home button goes to correct destination', async() => {
     console.log('Checking the destination...');
-
-     await page.waitForSelector('#home-button');
-
-  // Click the home button
+    await page.waitForSelector('#home-button');
     await page.click('#home-button');
-
-    // Check that the URL is correct
     expect(page.url()).toBe('https://cse110-sp25-group29.github.io/cse110-sp25-group29/source/assets/homepage.html');
   });
 });

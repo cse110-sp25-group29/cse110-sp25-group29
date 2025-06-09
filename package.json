@@ -4,6 +4,7 @@
         "@babel/preset-env": "^7.27.2",
         "@eslint/js": "^9.26.0",
         "babel-jest": "^30.0.0-beta.3",
+        "cross-env": "^7.0.3",
         "eslint": "^8.57.1",
         "eslint-config-standard": "^17.1.0",
         "eslint-plugin-import": "^2.31.0",
@@ -20,8 +21,8 @@
         "lint": "eslint . --no-eslintrc --config .CONFIG/.eslintrc.cjs",
         "lint:fix": "eslint . --no-eslintrc --config .CONFIG/.eslintrc.cjs --fix",
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-        "unithometest": "NODE_OPTIONS='--experimental-vm-modules' BABEL_CONFIG_PATH=.CONFIG/babel.config.json jest admin/tests/unit-homepage.test.js --config=.CONFIG/jest.config.js --coverage",
-        "uniteditortest": "NODE_OPTIONS='--experimental-vm-modules' BABEL_CONFIG_PATH=.CONFIG/babel.config.json jest admin/tests/unit-editor.test.js --config=.CONFIG/jest.config.js --coverage",
+        "unithometest": "cross-env NODE_OPTIONS='--experimental-vm-modules' BABEL_CONFIG_PATH=.CONFIG/babel.config.json jest admin/tests/unit-homepage.test.js --config=.CONFIG/jest.config.js --coverage",
+        "uniteditortest": "cross-env NODE_OPTIONS='--experimental-vm-modules' BABEL_CONFIG_PATH=.CONFIG/babel.config.json jest admin/tests/unit-editor.test.js --config=.CONFIG/jest.config.js --coverage",
         "e2ehometest": "jest --config=.CONFIG/jest.e2e.config.js admin/tests/e2e-homepage.test.js",
         "e2eeditortest": "jest admin/tests/e2e-editor.test.js",
         "docs": "jsdoc -c .CONFIG/jsdoc.json"
