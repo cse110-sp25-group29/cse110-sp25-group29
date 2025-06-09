@@ -5,6 +5,18 @@ import * as Topbar from './topbar.js';
 
 window.addEventListener('DOMContentLoaded', init);
 
+export let saved = false;
+export let cardName = 'Untitled';
+export let frontCanvas, backCanvas;
+let cardsList;
+
+/**
+ * Causes the user to download the file at the
+ * given URL under the given name
+ *
+ * @param {String} url The URL to download
+ * @param {String} name The name to download it as
+ */
 export function downloadURL(url, name) {
   const link = document.createElement('a');
   link.download = name;
@@ -14,17 +26,31 @@ export function downloadURL(url, name) {
   document.body.removeChild(link);
 }
 
-export let saved = false;
+/**
+ * Sets the value of saved
+ *
+ * @param {boolean} value Value
+ */
 export function setSaved(value) {
   saved = value;
 }
 
-export let cardName = 'Untitled';
+/**
+ * Sets the name of the current card
+ *
+ * @param {String} name Name to set it to
+ */
 export function setCardName(name) {
   cardName = name;
   Topbar.setName(name);
 }
 
+/**
+ * Creates a copy of the current card with a
+ * new name
+ *
+ * @param {String} name The new name
+ */
 export function saveAs(name) {
   if (name && cardName !== name) {
     cardName = name;
@@ -48,11 +74,22 @@ export function saveAs(name) {
   Topbar.setName(cardName);
 }
 
+/**
+ * Removes the current card from localStorage
+ * and opens up a new card for the user to use
+ */
 export function deleteCard() {
   delete cardsList[cardName];
   openNew();
 }
 
+/**
+ * A helper function to find the first card
+ * name of the form "UntitledX" that isn't
+ * currently used by another card
+ *
+ * @returns The next unused name
+ */
 export function nextUntitled() {
   if (!('Untitled' in cardsList)) {
     return 'Untitled';
@@ -63,6 +100,9 @@ export function nextUntitled() {
   }
 }
 
+/**
+ * Opens a new card
+ */
 export function openNew() {
   cardName = nextUntitled();
 
@@ -72,27 +112,59 @@ export function openNew() {
   reset(false);
 }
 
-let cardsList;
+/**
+ * Imports the user's saved cards from localStorage
+ *
+ * @returns A dictionary of card names and their descriptions
+ */
 export function importCardsList() {
   const cardsList = localStorage.getItem('cards');
   if (!cardsList) return {};
   else return JSON.parse(cardsList);
 }
 
+/**
+ * Saves the current value of cardsList to localStorage,
+ * used for saving cards
+ */
 export function exportCardsList() {
   if (cardsList) { localStorage.setItem('cards', JSON.stringify(cardsList)); }
 }
 
+/**
+ * Imports what the last value of current_card was in
+ * localStorage. Used to save session information so
+ * that if a user reloads the screen, they'll stay on the
+ * same card.
+ *
+ * If there is no such value, get the next
+ * unused name with nextUntitled();
+ *
+ * @returns The name of the card to use
+ */
 export function importCurrentCardName() {
   const cardName = localStorage.getItem('current_card');
   if (!cardName) return nextUntitled();
   else return cardName;
 }
 
+/**
+ * Sets the value of current_card to the current
+ * card's name in localStorage
+ */
 export function exportCurrentCardName() {
   localStorage.setItem('current_card', cardName);
 }
 
+/**
+ * Resets the rendering of the current card.
+ * Used to open up new cards without having to
+ * fully create new Canvas objects, which would
+ * be expensive.
+ *
+ * @param {boolean} saved Whether to display the top bar
+ *      as saved or not
+ */
 export function reset(saved = true) {
   console.log('reset');
   frontCanvas.setActive(true);
@@ -117,6 +189,13 @@ export function reset(saved = true) {
   Topbar.setName(cardName);
 }
 
+/**
+ * Preloads the images that can be displayed
+ * as icons on a card. Without this, a user might
+ * add an icon and not have it render until they
+ * do something else to update the card, which
+ * isn't ideal.
+ */
 const images = [];
 function preloadImages(img) {
   for (let i = 0; i < img.length; i++) {
@@ -128,7 +207,6 @@ function preloadImages(img) {
 /**
  * Initializes the objects on the editor page.
  */
-export let frontCanvas, backCanvas;
 function init() {
   preloadImages([
     './icons/instagram.webp',
