@@ -28,7 +28,9 @@ export function initListeners() {
   del.addEventListener('click', triggerDeleteMenu);
 
   const saveNormal = document.querySelector('#save-button');
-  saveNormal.addEventListener('click', Editor.saveAs);
+  saveNormal.addEventListener('click', () => {
+    Editor.saveAs(Editor.cardName);
+  });
 
   const saveAs = document.querySelector('#save-as');
   saveAs.addEventListener('click', triggerSaveAsMenu);
