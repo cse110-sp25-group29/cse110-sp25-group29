@@ -160,7 +160,7 @@ specs/
 
 ## Setup Guide
 
-*To be added.*
+- [Setup Guide](https://github.com/cse110-sp25-group29/cse110-sp25-group29/blob/README-devOps/specs/setup_guide.md)
 
 ## GitHub Usage
 
