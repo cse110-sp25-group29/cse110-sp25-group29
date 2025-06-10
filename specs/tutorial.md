@@ -161,6 +161,9 @@ The top, or navigation, bar contains most file management functions as well as n
     - New - This opens a new untitled card in your current editor.
     - Duplicate - This opens a duplicate of what you were just working on, named "Copy of \[current card\]".
 - **Reset**
+  - The **reset** button is to the right of the **file** button, which discards all unsaved changes. **This is not reversible.**
+- **Delete**
+  - Lastly, the **delete** button is on the **top-right** corner of the page. Clicking this will ask for you to confirm the deletion of the card. **Deletion is not reversible.**
 
 #### Toolbar
 
@@ -203,17 +206,64 @@ The left side of the page is the toolbar, which contains the following tools you
       - Layer - The first two up & down arrows moves the selected element up or down in the layer stack. The last two up & down arrows moves the selected element to the top or the bottom of the layer stack, respectively.
       - Position - You can fine tune the position of your element by changing the x and y coordinates provided. The elements are anchored on the top-left corner, relative to the top-left corner of the canvas.
 
-
+_For information on the keyboard shortcuts in the editor, please view [here](https://cse110-sp25-group29.github.io/cse110-sp25-group29/docs/keyboard-shortcuts.html)._
 
 ## Create a new card
 
+Here are three ways you can create a new card.
+
+1. Home - On the main selection, click the **Create new** button. This will navigate you to the editor and create a new untitled card.
+![A red arrow points to the "create new" button on the home page](../source/assets/images/user-view-home-new.png)
+2. Gallery - On the navigation bar, click the "plus" (+) icon near the top right of the page.
+![A red arrow points to the "create new" button on the gallery](../source/assets/images/user-view-gallery-new.png)
+3. Editor - On the navigation bar, hover over the "file" icon near the top right of the page, and click "New".  
+![A red arrow points to the "New" button on the editor under the "file" button](../source/assets/images/user-view-editor-new.png) 
+   - _You can also create duplicate cards by clicking the "Duplicate" option instead._
+
 ## Set your favorite card
+
+You can set your favorite card in the gallery. If you have one already marked as your favorite, it will be the first card in your gallery, and hovering over it will show that the star is gold to indicate its favorite status. There is only one favorite card, so marking another card as favorite will remove the previously marked card.
+
+1. Hover options - Hover your mouse on the card you would like to set as your favorite. Click the "star" icon to toggle.
+![A red arrow points to the "star" icon on the hover options of a card](../source/assets/images/user-view-star-hover.png)
+3. Card preview - Click the "star" icon near the top left of the card preview to toggle.
+![A red arrow points to the "star" icon on the card preview](../source/assets/images/user-view-star-card.png)
 
 ## Manage your cards
 
+To manage your cards, navigate to the [gallery](#gallery) by clicking the gallery button on the home page.
+![A red arrow points to the "gallery" button on the home page](../source/assets/images/user-view-home-gallery.png)
+
+From here, you can browse, search, edit, favorite, download, and delete your cards.
+
 ## Export your cards
 
+Supported export filetypes:
+- JSON - This is a custom ConCard JSON file.
+- PNG - Lossless high-quality image of your card.
+- JPG - Lossy compressed image of your card perfect for websites.
+
+You can export your cards through the following:
+- Home page "Your Card" viewer as a JSON
+- Gallery card hover options and card preview options as a JSON
+- Editor as JSON, PNG, or JPG
+
 ## Upload your cards
+
+- Click the "Upload" button on the main selection of the home page OR the navigation bar on the gallery to open the upload dialog.
+  ![A red arrow points to the "upload" button on the home page](../source/assets/images/user-view-home-upload.png)
+  ![A red arrow points to the "upload" button on the gallery](../source/assets/images/user-view-gallery-upload.png)
+- You can either:
+  
+  ![Upload dialog box](../source/assets/images/user-view-upload-dialog.png)
+  - Select a file from your computer.
+  - Drag and drop a file into the dialog area.
+- The "Confirm" button remains disabled until a valid file is selected or dropped.
+- To close the dialog:
+  - Click the "Cancel" button, or
+  - Click on the overlay background.
+
+**_ConCard_ will only accept valid JSON files for upload.**
 
 # Conclusion
 
