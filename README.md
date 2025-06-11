@@ -78,6 +78,7 @@ specs/
 
 - `statusvideo1.mp4` has been uploaded to `/admin/videos/statusvideo1.mp4`. Also it's on [YouTube](https://www.youtube.com/watch?v=qB4SBX5r8Ps).
 - [YouTube: Final Video - Private](https://youtu.be/UW5MkuFpdX8)
+- [YouTube: Final Video - Public](https://youtu.be/4yLhV5hrPP4)
 
 ### `coverage`
 *Contains the code coverage results from our tests*
